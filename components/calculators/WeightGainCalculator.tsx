@@ -79,6 +79,577 @@ export default function WeightGainCalculator({ patientInfo }: PatientInfoProps) 
       '5. STRENGTH TRAINING (Progressive overload)'
     ];
 
+    // 7-Day Detailed Meal Plan
+    const mealPlan = {
+      title: '7-DAY WEIGHT GAIN MEAL PLAN',
+      subtitle: `Nigerian-Adapted | ${targetCalories} kcal/day | High Protein for Muscle Growth`,
+      days: [] as any[]
+    };
+
+    // Day 1
+    mealPlan.days.push({
+      day: 'DAY 1',
+      totalCalories: targetCalories,
+      meals: [
+        {
+          time: 'BREAKFAST (7:00 AM)',
+          calories: Math.round(targetCalories * 0.20),
+          items: [
+            '• Yam porridge with fish (200g yam)',
+            '• 3 whole eggs (scrambled)',
+            '• 1 medium avocado',
+            '• Fresh orange juice (homemade)',
+            '• Handful of groundnuts',
+            `Calories: ~${Math.round(targetCalories * 0.20)} | Protein: ~${Math.round(proteinGrams * 0.2)}g`
+          ]
+        },
+        {
+          time: 'MID-MORNING SNACK (10:30 AM)',
+          calories: Math.round(targetCalories * 0.15),
+          items: [
+            '• Protein shake: Whey + banana + peanut butter + full-fat milk',
+            '• 2 slices whole wheat bread with butter',
+            '• Water (500ml)',
+            `Calories: ~${Math.round(targetCalories * 0.15)} | Protein: ~30g`
+          ]
+        },
+        {
+          time: 'LUNCH (1:00 PM)',
+          calories: Math.round(targetCalories * 0.30),
+          items: [
+            '• Large portion rice (250g cooked)',
+            '• Beef stew with plenty of meat (200g)',
+            '• Fried ripe plantain (2 medium)',
+            '• Mixed vegetable salad with olive oil dressing',
+            '• Zobo drink (with honey)',
+            `Calories: ~${Math.round(targetCalories * 0.30)} | Protein: ~${Math.round(proteinGrams * 0.3)}g`
+          ]
+        },
+        {
+          time: 'PRE-WORKOUT SNACK (3:30 PM)',
+          calories: Math.round(targetCalories * 0.10),
+          items: [
+            '• 2 bananas',
+            '• Handful of dates',
+            '• Water',
+            `Calories: ~${Math.round(targetCalories * 0.10)} | Quick energy`
+          ]
+        },
+        {
+          time: 'POST-WORKOUT/DINNER (6:30 PM)',
+          calories: Math.round(targetCalories * 0.20),
+          items: [
+            '• Grilled chicken (250g)',
+            '• Large portion yam or sweet potato (200g)',
+            '• Ugwu (fluted pumpkin) soup with palm oil',
+            '• Protein shake if needed',
+            `Calories: ~${Math.round(targetCalories * 0.20)} | Protein: ~${Math.round(proteinGrams * 0.35)}g`
+          ]
+        },
+        {
+          time: 'BEFORE BED (9:30 PM)',
+          calories: Math.round(targetCalories * 0.05),
+          items: [
+            '• Greek yogurt (full-fat, 200g)',
+            '• Handful of almonds or walnuts',
+            '• Casein protein shake (optional)',
+            `Calories: ~${Math.round(targetCalories * 0.05)} | Protein: ~15g`
+          ]
+        }
+      ]
+    });
+
+    // Day 2
+    mealPlan.days.push({
+      day: 'DAY 2',
+      totalCalories: targetCalories,
+      meals: [
+        {
+          time: 'BREAKFAST (7:00 AM)',
+          calories: Math.round(targetCalories * 0.20),
+          items: [
+            '• Plantain porridge with mackerel (3 ripe plantains)',
+            '• 2 whole eggs (boiled)',
+            '• Full-fat milk (500ml)',
+            '• Bread with peanut butter',
+            `Calories: ~${Math.round(targetCalories * 0.20)} | Protein: ~${Math.round(proteinGrams * 0.2)}g`
+          ]
+        },
+        {
+          time: 'MID-MORNING SNACK (10:30 AM)',
+          calories: Math.round(targetCalories * 0.15),
+          items: [
+            '• Akara (bean cakes) - 6 pieces',
+            '• Pap (ogi) with full-fat milk and sugar',
+            '• Banana',
+            `Calories: ~${Math.round(targetCalories * 0.15)} | Protein: ~25g`
+          ]
+        },
+        {
+          time: 'LUNCH (1:00 PM)',
+          calories: Math.round(targetCalories * 0.30),
+          items: [
+            '• Jollof rice (large portion, 250g)',
+            '• Grilled tilapia fish (whole, 300g)',
+            '• Coleslaw with mayonnaise',
+            '• Fried plantain',
+            '• Fruit juice',
+            `Calories: ~${Math.round(targetCalories * 0.30)} | Protein: ~${Math.round(proteinGrams * 0.3)}g`
+          ]
+        },
+        {
+          time: 'PRE-WORKOUT SNACK (3:30 PM)',
+          calories: Math.round(targetCalories * 0.10),
+          items: [
+            '• Energy bar or granola bar',
+            '• Apple with peanut butter',
+            `Calories: ~${Math.round(targetCalories * 0.10)}`
+          ]
+        },
+        {
+          time: 'POST-WORKOUT/DINNER (6:30 PM)',
+          calories: Math.round(targetCalories * 0.20),
+          items: [
+            '• Pounded yam (large portion)',
+            '• Egusi soup with assorted meat and fish',
+            '• Extra protein shake (whey + milk)',
+            `Calories: ~${Math.round(targetCalories * 0.20)} | Protein: ~${Math.round(proteinGrams * 0.35)}g`
+          ]
+        },
+        {
+          time: 'BEFORE BED (9:30 PM)',
+          calories: Math.round(targetCalories * 0.05),
+          items: [
+            '• Cottage cheese (200g)',
+            '• Mixed nuts (30g)',
+            `Calories: ~${Math.round(targetCalories * 0.05)} | Protein: ~20g`
+          ]
+        }
+      ]
+    });
+
+    // Day 3
+    mealPlan.days.push({
+      day: 'DAY 3',
+      totalCalories: targetCalories,
+      meals: [
+        {
+          time: 'BREAKFAST (7:00 AM)',
+          calories: Math.round(targetCalories * 0.20),
+          items: [
+            '• Oatmeal (100g dry) with full-fat milk',
+            '• 3 scrambled eggs with cheese',
+            '• Sliced banana and berries',
+            '• Honey and almonds on top',
+            '• Orange juice',
+            `Calories: ~${Math.round(targetCalories * 0.20)} | Protein: ~${Math.round(proteinGrams * 0.2)}g`
+          ]
+        },
+        {
+          time: 'MID-MORNING SNACK (10:30 AM)',
+          calories: Math.round(targetCalories * 0.15),
+          items: [
+            '• Meat pie or sausage roll (2 pieces)',
+            '• Banana smoothie with protein powder',
+            `Calories: ~${Math.round(targetCalories * 0.15)} | Protein: ~28g`
+          ]
+        },
+        {
+          time: 'LUNCH (1:00 PM)',
+          calories: Math.round(targetCalories * 0.30),
+          items: [
+            '• Fried rice with chicken (large portion)',
+            '• Beef kebab (suya, 200g)',
+            '• Moi-moi (bean pudding)',
+            '• Chapman drink',
+            `Calories: ~${Math.round(targetCalories * 0.30)} | Protein: ~${Math.round(proteinGrams * 0.3)}g`
+          ]
+        },
+        {
+          time: 'PRE-WORKOUT SNACK (3:30 PM)',
+          calories: Math.round(targetCalories * 0.10),
+          items: [
+            '• Peanut butter sandwich (2 slices)',
+            '• Glass of milk',
+            `Calories: ~${Math.round(targetCalories * 0.10)}`
+          ]
+        },
+        {
+          time: 'POST-WORKOUT/DINNER (6:30 PM)',
+          calories: Math.round(targetCalories * 0.20),
+          items: [
+            '• Grilled turkey (250g)',
+            '• Boiled yam with vegetable sauce (200g yam)',
+            '• Waterleaf soup',
+            '• Protein shake',
+            `Calories: ~${Math.round(targetCalories * 0.20)} | Protein: ~${Math.round(proteinGrams * 0.35)}g`
+          ]
+        },
+        {
+          time: 'BEFORE BED (9:30 PM)',
+          calories: Math.round(targetCalories * 0.05),
+          items: [
+            '• Protein pudding (whey + Greek yogurt)',
+            '• Cashew nuts (handful)',
+            `Calories: ~${Math.round(targetCalories * 0.05)} | Protein: ~18g`
+          ]
+        }
+      ]
+    });
+
+    // Day 4
+    mealPlan.days.push({
+      day: 'DAY 4',
+      totalCalories: targetCalories,
+      meals: [
+        {
+          time: 'BREAKFAST (7:00 AM)',
+          calories: Math.round(targetCalories * 0.20),
+          items: [
+            '• Bean porridge with plantain and fish',
+            '• 2 boiled eggs',
+            '• Bread with butter',
+            '• Full-fat yogurt',
+            `Calories: ~${Math.round(targetCalories * 0.20)} | Protein: ~${Math.round(proteinGrams * 0.2)}g`
+          ]
+        },
+        {
+          time: 'MID-MORNING SNACK (10:30 AM)',
+          calories: Math.round(targetCalories * 0.15),
+          items: [
+            '• Chin-chin or coconut candy',
+            '• Protein shake (whey + peanut butter + banana)',
+            '• Boiled groundnuts',
+            `Calories: ~${Math.round(targetCalories * 0.15)} | Protein: ~30g`
+          ]
+        },
+        {
+          time: 'LUNCH (1:00 PM)',
+          calories: Math.round(targetCalories * 0.30),
+          items: [
+            '• White rice and stew (250g rice)',
+            '• Assorted meat (goat meat, beef, chicken)',
+            '• Fried plantain (2 medium)',
+            '• Coleslaw',
+            `Calories: ~${Math.round(targetCalories * 0.30)} | Protein: ~${Math.round(proteinGrams * 0.3)}g`
+          ]
+        },
+        {
+          time: 'PRE-WORKOUT SNACK (3:30 PM)',
+          calories: Math.round(targetCalories * 0.10),
+          items: [
+            '• Dates and nuts mix',
+            '• Banana',
+            `Calories: ~${Math.round(targetCalories * 0.10)}`
+          ]
+        },
+        {
+          time: 'POST-WORKOUT/DINNER (6:30 PM)',
+          calories: Math.round(targetCalories * 0.20),
+          items: [
+            '• Amala with ewedu and gbegiri soup',
+            '• Assorted meat and fish',
+            '• Large portion (300g swallow)',
+            '• Post-workout shake',
+            `Calories: ~${Math.round(targetCalories * 0.20)} | Protein: ~${Math.round(proteinGrams * 0.35)}g`
+          ]
+        },
+        {
+          time: 'BEFORE BED (9:30 PM)',
+          calories: Math.round(targetCalories * 0.05),
+          items: [
+            '• Full-fat milk (500ml)',
+            '• Digestive biscuits',
+            `Calories: ~${Math.round(targetCalories * 0.05)}`
+          ]
+        }
+      ]
+    });
+
+    // Day 5
+    mealPlan.days.push({
+      day: 'DAY 5',
+      totalCalories: targetCalories,
+      meals: [
+        {
+          time: 'BREAKFAST (7:00 AM)',
+          calories: Math.round(targetCalories * 0.20),
+          items: [
+            '• Pancakes (5 pieces) with honey and butter',
+            '• Scrambled eggs (3 eggs)',
+            '• Sausages (3 pieces)',
+            '• Fresh fruit salad',
+            '• Chocolate milk',
+            `Calories: ~${Math.round(targetCalories * 0.20)} | Protein: ~${Math.round(proteinGrams * 0.2)}g`
+          ]
+        },
+        {
+          time: 'MID-MORNING SNACK (10:30 AM)',
+          calories: Math.round(targetCalories * 0.15),
+          items: [
+            '• Puff-puff (6 pieces)',
+            '• Protein smoothie',
+            '• Boiled peanuts',
+            `Calories: ~${Math.round(targetCalories * 0.15)} | Protein: ~25g`
+          ]
+        },
+        {
+          time: 'LUNCH (1:00 PM)',
+          calories: Math.round(targetCalories * 0.30),
+          items: [
+            '• Coconut rice (large portion)',
+            '• Grilled fish (whole tilapia)',
+            '• Gizdodo (gizzard and plantain)',
+            '• Vegetable salad',
+            `Calories: ~${Math.round(targetCalories * 0.30)} | Protein: ~${Math.round(proteinGrams * 0.3)}g`
+          ]
+        },
+        {
+          time: 'PRE-WORKOUT SNACK (3:30 PM)',
+          calories: Math.round(targetCalories * 0.10),
+          items: [
+            '• Granola bar',
+            '• Apple',
+            '• Water',
+            `Calories: ~${Math.round(targetCalories * 0.10)}`
+          ]
+        },
+        {
+          time: 'POST-WORKOUT/DINNER (6:30 PM)',
+          calories: Math.round(targetCalories * 0.20),
+          items: [
+            '• Eba with afang soup',
+            '• Plenty of meat and fish',
+            '• Large portion (250g eba)',
+            '• Protein shake',
+            `Calories: ~${Math.round(targetCalories * 0.20)} | Protein: ~${Math.round(proteinGrams * 0.35)}g`
+          ]
+        },
+        {
+          time: 'BEFORE BED (9:30 PM)',
+          calories: Math.round(targetCalories * 0.05),
+          items: [
+            '• Greek yogurt with granola',
+            '• Mixed nuts',
+            `Calories: ~${Math.round(targetCalories * 0.05)} | Protein: ~17g`
+          ]
+        }
+      ]
+    });
+
+    // Day 6
+    mealPlan.days.push({
+      day: 'DAY 6',
+      totalCalories: targetCalories,
+      meals: [
+        {
+          time: 'BREAKFAST (7:00 AM)',
+          calories: Math.round(targetCalories * 0.20),
+          items: [
+            '• Bread with egg and sardine sauce',
+            '• Fried plantain',
+            '• Full-fat milk',
+            '• Orange',
+            `Calories: ~${Math.round(targetCalories * 0.20)} | Protein: ~${Math.round(proteinGrams * 0.2)}g`
+          ]
+        },
+        {
+          time: 'MID-MORNING SNACK (10:30 AM)',
+          calories: Math.round(targetCalories * 0.15),
+          items: [
+            '• Moi-moi (2 wraps)',
+            '• Banana smoothie with protein',
+            '• Groundnut cake',
+            `Calories: ~${Math.round(targetCalories * 0.15)} | Protein: ~28g`
+          ]
+        },
+        {
+          time: 'LUNCH (1:00 PM)',
+          calories: Math.round(targetCalories * 0.30),
+          items: [
+            '• Spaghetti with chicken sauce (large portion)',
+            '• Grilled chicken (2 pieces)',
+            '• Coleslaw',
+            '• Soft drink or juice',
+            `Calories: ~${Math.round(targetCalories * 0.30)} | Protein: ~${Math.round(proteinGrams * 0.3)}g`
+          ]
+        },
+        {
+          time: 'PRE-WORKOUT SNACK (3:30 PM)',
+          calories: Math.round(targetCalories * 0.10),
+          items: [
+            '• Energy drink (natural)',
+            '• Trail mix (nuts and dried fruit)',
+            `Calories: ~${Math.round(targetCalories * 0.10)}`
+          ]
+        },
+        {
+          time: 'POST-WORKOUT/DINNER (6:30 PM)',
+          calories: Math.round(targetCalories * 0.20),
+          items: [
+            '• Fufu with oha soup',
+            '• Stockfish, dry fish, and beef',
+            '• Large portion',
+            '• Protein shake',
+            `Calories: ~${Math.round(targetCalories * 0.20)} | Protein: ~${Math.round(proteinGrams * 0.35)}g`
+          ]
+        },
+        {
+          time: 'BEFORE BED (9:30 PM)',
+          calories: Math.round(targetCalories * 0.05),
+          items: [
+            '• Cottage cheese',
+            '• Honey and almonds',
+            `Calories: ~${Math.round(targetCalories * 0.05)} | Protein: ~19g`
+          ]
+        }
+      ]
+    });
+
+    // Day 7
+    mealPlan.days.push({
+      day: 'DAY 7',
+      totalCalories: targetCalories,
+      meals: [
+        {
+          time: 'BREAKFAST (7:00 AM)',
+          calories: Math.round(targetCalories * 0.20),
+          items: [
+            '• Indomie noodles (2 packs) with eggs (3 eggs)',
+            '• Sausages',
+            '• Fried plantain',
+            '• Orange juice',
+            `Calories: ~${Math.round(targetCalories * 0.20)} | Protein: ~${Math.round(proteinGrams * 0.2)}g`
+          ]
+        },
+        {
+          time: 'MID-MORNING SNACK (10:30 AM)',
+          calories: Math.round(targetCalories * 0.15),
+          items: [
+            '• Protein shake (double scoop)',
+            '• Banana and peanut butter',
+            '• Boiled eggs (2)',
+            `Calories: ~${Math.round(targetCalories * 0.15)} | Protein: ~35g`
+          ]
+        },
+        {
+          time: 'LUNCH (1:00 PM)',
+          calories: Math.round(targetCalories * 0.30),
+          items: [
+            '• Party jollof rice (large portion)',
+            '• Fried chicken (2 pieces)',
+            '• Moi-moi',
+            '• Fried plantain',
+            '• Coleslaw',
+            '• Zobo drink',
+            `Calories: ~${Math.round(targetCalories * 0.30)} | Protein: ~${Math.round(proteinGrams * 0.3)}g`
+          ]
+        },
+        {
+          time: 'PRE-WORKOUT SNACK (3:30 PM)',
+          calories: Math.round(targetCalories * 0.10),
+          items: [
+            '• Sweet potato (boiled, 200g)',
+            '• Honey',
+            `Calories: ~${Math.round(targetCalories * 0.10)}`
+          ]
+        },
+        {
+          time: 'POST-WORKOUT/DINNER (6:30 PM)',
+          calories: Math.round(targetCalories * 0.20),
+          items: [
+            '• Semovita with okro soup',
+            '• Assorted meat and fish',
+            '• Palm oil base',
+            '• Post-workout protein shake',
+            `Calories: ~${Math.round(targetCalories * 0.20)} | Protein: ~${Math.round(proteinGrams * 0.35)}g`
+          ]
+        },
+        {
+          time: 'BEFORE BED (9:30 PM)',
+          calories: Math.round(targetCalories * 0.05),
+          items: [
+            '• Casein protein shake',
+            '• Walnuts',
+            `Calories: ~${Math.round(targetCalories * 0.05)} | Protein: ~20g`
+          ]
+        }
+      ]
+    });
+
+    const foodRecommendations = [
+      'HIGH-CALORIE, HIGH-PROTEIN NIGERIAN FOODS:',
+      '',
+      'PROTEIN SOURCES (Eat abundantly):',
+      '• Fish: Mackerel, tilapia, catfish, stockfish',
+      '• Meat: Beef, goat meat, chicken (with skin)',
+      '• Eggs: 3-5 whole eggs daily',
+      '• Beans and lentils: Protein and calories',
+      '• Full-fat dairy: Milk, yogurt, cheese',
+      '',
+      'CALORIE-DENSE CARBOHYDRATES:',
+      '• Rice: White rice, jollof rice, fried rice',
+      '• Yam: Pounded, boiled, porridge',
+      '• Plantain: Ripe plantain (higher calories)',
+      '• Swallow foods: Eba, fufu, amala, semovita',
+      '• Bread and pasta: Whole wheat preferred',
+      '',
+      'HEALTHY FATS (Essential for weight gain):',
+      '• Palm oil: Traditional, healthy, calorie-dense',
+      '• Groundnut: Raw, boiled, or as paste',
+      '• Avocado: Very calorie-dense',
+      '• Coconut: Oil and fresh coconut',
+      '• Nuts: Cashews, almonds, walnuts',
+      '',
+      'CALORIE BOOSTERS:',
+      '• Add peanut butter to shakes',
+      '• Use full-fat milk instead of water',
+      '• Cook with generous palm oil',
+      '• Add cheese to meals',
+      '• Dried fruits for snacks'
+    ];
+
+    const trainingGuidelines = [
+      'STRENGTH TRAINING PROTOCOL:',
+      '',
+      '1. FREQUENCY: 4-5 days per week',
+      '2. FOCUS: Compound movements (squats, deadlifts, bench press)',
+      '3. INTENSITY: Progressive overload - increase weight weekly',
+      '4. REP RANGE: 8-12 reps for muscle growth',
+      '5. REST: 48 hours between same muscle groups',
+      '',
+      'CARDIO: Minimal',
+      '• Only 2 days/week, 20 minutes light',
+      '• Focus on weights, not cardio',
+      '',
+      'RECOVERY:',
+      '• Sleep 8-9 hours nightly',
+      '• Rest days are muscle-building days',
+      '• Stretching and mobility work'
+    ];
+
+    const supplementRecommendations = [
+      'RECOMMENDED SUPPLEMENTS:',
+      '',
+      '1. WHEY PROTEIN:',
+      '   • 2 scoops daily (post-workout + snack)',
+      '   • Helps reach protein targets',
+      '',
+      '2. CREATINE MONOHYDRATE:',
+      '   • 5g daily',
+      '   • Proven muscle and strength gains',
+      '',
+      '3. MASS GAINER (If poor appetite):',
+      '   • 1-2 servings between meals',
+      '   • Easy way to add 500-1000 calories',
+      '',
+      '4. MULTIVITAMIN:',
+      '   • Daily for overall health',
+      '',
+      '5. FISH OIL:',
+      '   • Omega-3 for recovery and health'
+    ];
+
     setResult({
       currentWeight: currentWt,
       currentBMI: currentBMI.toFixed(1),
@@ -95,7 +666,11 @@ export default function WeightGainCalculator({ patientInfo }: PatientInfoProps) 
       carbGrams,
       fatGrams,
       nutritionalTargets,
-      guidelines
+      guidelines,
+      mealPlan,
+      foodRecommendations,
+      trainingGuidelines,
+      supplementRecommendations
     });
   };
 
@@ -249,9 +824,61 @@ export default function WeightGainCalculator({ patientInfo }: PatientInfoProps) 
               ))}
             </div>
 
+            {result.mealPlan && (
+              <div className="bg-gradient-to-br from-green-50 to-yellow-50 p-6 rounded-lg border-2 border-green-400">
+                <h3 className="text-2xl font-bold text-green-800 mb-2">{result.mealPlan.title}</h3>
+                <p className="text-sm text-green-700 mb-4">{result.mealPlan.subtitle}</p>
+                
+                {result.mealPlan.days.map((dayPlan: any, dayIndex: number) => (
+                  <div key={dayIndex} className="bg-white rounded-lg p-4 mb-4 border-2 border-green-300">
+                    <h4 className="text-xl font-bold text-green-700 mb-3">{dayPlan.day}</h4>
+                    <p className="text-sm text-gray-600 mb-3">Total: ~{dayPlan.totalCalories} kcal</p>
+                    
+                    {dayPlan.meals.map((meal: any, mealIndex: number) => (
+                      <div key={mealIndex} className="mb-4 bg-green-50 p-3 rounded">
+                        <p className="font-bold text-green-800">{meal.time}</p>
+                        <ul className="mt-2 space-y-1">
+                          {meal.items.map((item: string, itemIndex: number) => (
+                            <li key={itemIndex} className="text-sm text-gray-700">{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {result.foodRecommendations && (
+              <div className="bg-yellow-50 p-4 rounded border-2 border-yellow-300">
+                <h3 className="font-bold text-lg mb-2 text-yellow-900">Food Recommendations</h3>
+                {result.foodRecommendations.map((rec: string, i: number) => (
+                  <div key={i} className={rec.includes(':') && !rec.includes('•') ? 'font-semibold mt-3 text-yellow-900' : 'text-sm text-gray-700'}>{rec}</div>
+                ))}
+              </div>
+            )}
+
+            {result.trainingGuidelines && (
+              <div className="bg-purple-50 p-4 rounded border-2 border-purple-300">
+                <h3 className="font-bold text-lg mb-2 text-purple-900">Training Guidelines</h3>
+                {result.trainingGuidelines.map((guide: string, i: number) => (
+                  <div key={i} className={guide.includes(':') && !guide.includes('•') ? 'font-semibold mt-3 text-purple-900' : 'text-sm text-gray-700'}>{guide}</div>
+                ))}
+              </div>
+            )}
+
+            {result.supplementRecommendations && (
+              <div className="bg-orange-50 p-4 rounded border-2 border-orange-300">
+                <h3 className="font-bold text-lg mb-2 text-orange-900">Supplement Recommendations</h3>
+                {result.supplementRecommendations.map((supp: string, i: number) => (
+                  <div key={i} className={supp.includes('SUPPLEMENTS') || supp.match(/^\d\./) ? 'font-semibold mt-2 text-orange-900' : 'text-sm text-gray-700'}>{supp}</div>
+                ))}
+              </div>
+            )}
+
             <button onClick={handleDownloadPDF} className="w-full bg-green-600 text-white py-3 rounded hover:bg-green-700 flex items-center justify-center font-bold">
               <Download className="w-5 h-5 mr-2" />
-              Download Weight Gain Plan PDF
+              Download Complete Weight Gain Plan PDF
             </button>
           </div>
         )}

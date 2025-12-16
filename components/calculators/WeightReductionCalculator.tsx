@@ -314,6 +314,241 @@ export default function WeightReductionCalculator({ patientInfo }: PatientInfoPr
       ]
     });
 
+    // Day 4
+    mealPlan.days.push({
+      day: 'DAY 4',
+      totalCalories: finalCalories,
+      meals: [
+        {
+          time: 'BREAKFAST (7:00 AM)',
+          calories: Math.round(finalCalories * 0.25),
+          items: [
+            '• Scrambled egg whites (4 whites + 1 yolk)',
+            '• 1 slice whole wheat toast',
+            '• Half avocado',
+            '• Tomato slices',
+            '• Green tea',
+            `Calories: ~${Math.round(finalCalories * 0.25)} | Protein: ~${Math.round(proteinGrams * 0.3)}g`
+          ]
+        },
+        {
+          time: 'MID-MORNING SNACK (10:30 AM)',
+          calories: Math.round(finalCalories * 0.1),
+          items: [
+            '• Cucumber and carrot sticks',
+            '• 2 tbsp hummus or bean dip',
+            '• Water',
+            `Calories: ~${Math.round(finalCalories * 0.1)}`
+          ]
+        },
+        {
+          time: 'LUNCH (1:00 PM)',
+          calories: Math.round(finalCalories * 0.35),
+          items: [
+            '• Banga soup with minimal oil',
+            '• Small portion wheat swallow (100g)',
+            '• Grilled catfish',
+            '• Steamed vegetables',
+            `Calories: ~${Math.round(finalCalories * 0.35)} | Protein: ~${Math.round(proteinGrams * 0.35)}g`
+          ]
+        },
+        {
+          time: 'AFTERNOON SNACK (4:00 PM)',
+          calories: Math.round(finalCalories * 0.1),
+          items: [
+            '• Sugar-free protein bar',
+            '• Small apple',
+            `Calories: ~${Math.round(finalCalories * 0.1)} | Protein: ~12g`
+          ]
+        },
+        {
+          time: 'DINNER (7:00 PM)',
+          calories: Math.round(finalCalories * 0.2),
+          items: [
+            '• Grilled turkey breast (120g)',
+            '• Cauliflower mash',
+            '• Green beans and carrots (steamed)',
+            '• Light vegetable soup',
+            `Calories: ~${Math.round(finalCalories * 0.2)} | Protein: ~${Math.round(proteinGrams * 0.25)}g`
+          ]
+        }
+      ]
+    });
+
+    // Day 5
+    mealPlan.days.push({
+      day: 'DAY 5',
+      totalCalories: finalCalories,
+      meals: [
+        {
+          time: 'BREAKFAST (7:00 AM)',
+          calories: Math.round(finalCalories * 0.25),
+          items: [
+            '• Protein smoothie (whey + spinach + berries + water)',
+            '• 1 boiled egg',
+            '• Small banana',
+            '• 10 almonds',
+            `Calories: ~${Math.round(finalCalories * 0.25)} | Protein: ~${Math.round(proteinGrams * 0.3)}g`
+          ]
+        },
+        {
+          time: 'MID-MORNING SNACK (10:30 AM)',
+          calories: Math.round(finalCalories * 0.1),
+          items: [
+            '• Watermelon slices (200g)',
+            '• Handful of pumpkin seeds',
+            `Calories: ~${Math.round(finalCalories * 0.1)}`
+          ]
+        },
+        {
+          time: 'LUNCH (1:00 PM)',
+          calories: Math.round(finalCalories * 0.35),
+          items: [
+            '• Edikang ikong soup (minimal oil)',
+            '• Small portion eba (100g)',
+            '• Grilled fish and snail',
+            '• Large cucumber salad',
+            `Calories: ~${Math.round(finalCalories * 0.35)} | Protein: ~${Math.round(proteinGrams * 0.35)}g`
+          ]
+        },
+        {
+          time: 'AFTERNOON SNACK (4:00 PM)',
+          calories: Math.round(finalCalories * 0.1),
+          items: [
+            '• 2 boiled egg whites',
+            '• Cherry tomatoes',
+            `Calories: ~${Math.round(finalCalories * 0.1)} | Protein: ~10g`
+          ]
+        },
+        {
+          time: 'DINNER (7:00 PM)',
+          calories: Math.round(finalCalories * 0.2),
+          items: [
+            '• Grilled chicken salad (large)',
+            '• Lemon and olive oil dressing (light)',
+            '• Small sweet potato (80g)',
+            `Calories: ~${Math.round(finalCalories * 0.2)} | Protein: ~${Math.round(proteinGrams * 0.25)}g`
+          ]
+        }
+      ]
+    });
+
+    // Day 6
+    mealPlan.days.push({
+      day: 'DAY 6',
+      totalCalories: finalCalories,
+      meals: [
+        {
+          time: 'BREAKFAST (7:00 AM)',
+          calories: Math.round(finalCalories * 0.25),
+          items: [
+            '• Moi-moi (1 wrap, oil-free)',
+            '• 2 boiled eggs (1 yolk only)',
+            '• Pawpaw slices',
+            '• Unsweetened zobo',
+            `Calories: ~${Math.round(finalCalories * 0.25)} | Protein: ~${Math.round(proteinGrams * 0.3)}g`
+          ]
+        },
+        {
+          time: 'MID-MORNING SNACK (10:30 AM)',
+          calories: Math.round(finalCalories * 0.1),
+          items: [
+            '• Orange',
+            '• 6 cashew nuts',
+            `Calories: ~${Math.round(finalCalories * 0.1)}`
+          ]
+        },
+        {
+          time: 'LUNCH (1:00 PM)',
+          calories: Math.round(finalCalories * 0.35),
+          items: [
+            '• Ofada rice (small portion, 100g)',
+            '• Ayamase sauce (reduced oil)',
+            '• Grilled assorted meat (lean cuts)',
+            '• Garden egg and ugwu salad',
+            `Calories: ~${Math.round(finalCalories * 0.35)} | Protein: ~${Math.round(proteinGrams * 0.35)}g`
+          ]
+        },
+        {
+          time: 'AFTERNOON SNACK (4:00 PM)',
+          calories: Math.round(finalCalories * 0.1),
+          items: [
+            '• Low-fat yogurt (plain)',
+            '• Blueberries',
+            `Calories: ~${Math.round(finalCalories * 0.1)} | Protein: ~10g`
+          ]
+        },
+        {
+          time: 'DINNER (7:00 PM)',
+          calories: Math.round(finalCalories * 0.2),
+          items: [
+            '• Pepper soup (chicken, lean)',
+            '• Unripe plantain (1 small, boiled)',
+            '• Vegetable side',
+            `Calories: ~${Math.round(finalCalories * 0.2)} | Protein: ~${Math.round(proteinGrams * 0.25)}g`
+          ]
+        }
+      ]
+    });
+
+    // Day 7
+    mealPlan.days.push({
+      day: 'DAY 7',
+      totalCalories: finalCalories,
+      meals: [
+        {
+          time: 'BREAKFAST (7:00 AM)',
+          calories: Math.round(finalCalories * 0.25),
+          items: [
+            '• Vegetable omelet (3 eggs, spinach, tomatoes, onions)',
+            '• 1 slice whole grain bread',
+            '• Grapefruit (half)',
+            '• Black coffee or green tea',
+            `Calories: ~${Math.round(finalCalories * 0.25)} | Protein: ~${Math.round(proteinGrams * 0.3)}g`
+          ]
+        },
+        {
+          time: 'MID-MORNING SNACK (10:30 AM)',
+          calories: Math.round(finalCalories * 0.1),
+          items: [
+            '• Celery sticks with almond butter (1 tbsp)',
+            '• Water with lemon',
+            `Calories: ~${Math.round(finalCalories * 0.1)}`
+          ]
+        },
+        {
+          time: 'LUNCH (1:00 PM)',
+          calories: Math.round(finalCalories * 0.35),
+          items: [
+            '• Grilled fish (tilapia, 200g)',
+            '• Nigerian salad (cabbage, carrots, green beans)',
+            '• Small portion brown rice (80g)',
+            '• Light tomato sauce',
+            `Calories: ~${Math.round(finalCalories * 0.35)} | Protein: ~${Math.round(proteinGrams * 0.35)}g`
+          ]
+        },
+        {
+          time: 'AFTERNOON SNACK (4:00 PM)',
+          calories: Math.round(finalCalories * 0.1),
+          items: [
+            '• Protein shake (whey + water)',
+            '• Small handful berries',
+            `Calories: ~${Math.round(finalCalories * 0.1)} | Protein: ~20g`
+          ]
+        },
+        {
+          time: 'DINNER (7:00 PM)',
+          calories: Math.round(finalCalories * 0.2),
+          items: [
+            '• Grilled chicken breast (120g)',
+            '• Roasted vegetables (zucchini, bell peppers, eggplant)',
+            '• Small portion quinoa or cauliflower rice',
+            `Calories: ~${Math.round(finalCalories * 0.2)} | Protein: ~${Math.round(proteinGrams * 0.25)}g`
+          ]
+        }
+      ]
+    });
+
     // Food recommendations
     foodRecommendations.push('HIGH-PROTEIN, LOW-CALORIE NIGERIAN FOODS:');
     foodRecommendations.push('');
