@@ -60,13 +60,13 @@ export default function WeightGainCalculator({ patientInfo }: PatientInfoProps) 
     const carbGrams = Math.round((targetCalories - (proteinGrams * 4) - (fatGrams * 9)) / 4);
 
     const nutritionalTargets = [
-      \`DAILY CALORIC TARGET: \${targetCalories} kcal/day (Surplus: +500 kcal)\`,
-      \`PROTEIN: \${proteinGrams}g/day (2.0g/kg for muscle growth)\`,
-      \`CARBOHYDRATES: \${carbGrams}g/day (Energy for workouts)\`,
-      \`FATS: \${fatGrams}g/day (Hormone production)\`,
+      `DAILY CALORIC TARGET: ${targetCalories} kcal/day (Surplus: +500 kcal)`,
+      `PROTEIN: ${proteinGrams}g/day (2.0g/kg for muscle growth)`,
+      `CARBOHYDRATES: ${carbGrams}g/day (Energy for workouts)`,
+      `FATS: ${fatGrams}g/day (Hormone production)`,
       '',
-      \`PROJECTED WEIGHT GAIN: \${weightToGain.toFixed(1)}kg in \${weeks} weeks\`,
-      \`WEEKLY TARGET: \${weeklyTarget.toFixed(2)}kg/week (\${safetyRating})\`
+      `PROJECTED WEIGHT GAIN: ${weightToGain.toFixed(1)}kg in ${weeks} weeks`,
+      `WEEKLY TARGET: ${weeklyTarget.toFixed(2)}kg/week (${safetyRating})`
     ];
 
     const guidelines = [

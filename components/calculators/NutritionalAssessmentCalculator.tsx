@@ -396,7 +396,7 @@ export default function NutritionalAssessmentCalculator({ patientInfo }: Patient
 
         <button
           onClick={calculateMUST}
-          disabled={!bmi}
+          disabled={!weight || !height}
           className="w-full bg-orange-600 text-white py-2 rounded hover:bg-orange-700 disabled:bg-gray-400"
         >
           Calculate Nutritional Risk
