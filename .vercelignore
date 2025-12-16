@@ -1,0 +1,11 @@
+# Clinical Critical Calculator
+
+## Production Deployment
+
+This app is deployed on Vercel at: [Your URL]
+
+## Environment
+
+- Node.js 18+
+- Next.js 15
+- No environment variables required
