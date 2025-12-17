@@ -100,6 +100,12 @@ const withPWA = require('next-pwa')({
 });
 
 const nextConfig = {
+  output: 'export',
+  basePath: '/CRITICALCARECALCULATOR',
+  images: {
+    unoptimized: true,
+  },
+  trailingSlash: true,
   reactStrictMode: true,
   ...(process.env.NODE_ENV === 'production' && {
     compiler: {
