@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Download, AlertCircle, Heart, Droplet, Apple, Activity, Shield, TrendingUp, Info } from 'lucide-react';
-import { generateSickleCellPDF } from '@/lib/pdfGenerator';
+import { Download, AlertCircle, Heart, Droplet, Apple, Activity, Shield, TrendingUp, Info, Mail } from 'lucide-react';
+import { generateSickleCellPDF, generateConsultLetterPDF } from '@/lib/pdfGenerator';
 
 interface PatientInfoProps {
   patientInfo?: any;
@@ -21,6 +21,14 @@ export default function SickleCellManagementCalculator({ patientInfo }: PatientI
   const [weight, setWeight] = useState<string>('');
   
   const [result, setResult] = useState<any>(null);
+
+  // Consult Letter State
+  const [showConsultModal, setShowConsultModal] = useState(false);
+  const [fromUnit, setFromUnit] = useState('');
+  const [toUnit, setToUnit] = useState('');
+  const [consultReason, setConsultReason] = useState('');
+  const [clinicalFindings, setClinicalFindings] = useState('');
+  const [recommendations, setRecommendations] = useState('');
 
   const calculateManagementPlan = () => {
     const wt = parseFloat(weight);
@@ -217,6 +225,64 @@ export default function SickleCellManagementCalculator({ patientInfo }: PatientI
     if (result) {
       generateSickleCellPDF(result, patientInfo);
     }
+  };
+
+  const handleConsultLetter = () => {
+    if (!result) {
+      alert('Please generate management plan first');
+      return;
+    }
+    setShowConsultModal(true);
+  };
+
+  const handleGenerateConsultLetter = () => {
+    if (!fromUnit || !toUnit || !consultReason) {
+      alert('Please fill in all required fields (From Unit, To Unit, and Reason for Consultation)');
+      return;
+    }
+
+    const calculatorResultsText = `
+Sickle Cell Disease Management Assessment:
+
+Crisis Risk: ${result.crisisRisk}
+Annual Crisis Frequency: ${crisisFrequency} times per year
+Current Hemoglobin: ${currentHb} g/dL
+
+Nutritional Requirements:
+- Daily Fluid: ${result.fluidLiters}L (minimum)
+- Total Calories: ${result.totalCalories} kcal/day
+- Protein: ${result.proteinGrams}g/day
+- Folic Acid: 5mg daily
+
+${hasUlcers ? `
+Ulcer Assessment:
+- Location: ${ulcerLocation}
+- Size: ${ulcerSize} cm
+- Duration: ${ulcerDuration} weeks
+- Pain Level: ${painLevel}/10
+` : 'No active ulcers reported'}
+
+Hydration Status: ${hydrationLevel}
+    `.trim();
+
+    generateConsultLetterPDF(
+      patientInfo,
+      fromUnit,
+      toUnit,
+      consultReason,
+      clinicalFindings || calculatorResultsText,
+      recommendations,
+      'Sickle_Cell_Management',
+      calculatorResultsText
+    );
+
+    setShowConsultModal(false);
+    // Reset form
+    setFromUnit('');
+    setToUnit('');
+    setConsultReason('');
+    setClinicalFindings('');
+    setRecommendations('');
   };
 
   return (
@@ -569,6 +635,111 @@ export default function SickleCellManagementCalculator({ patientInfo }: PatientI
             <Download className="w-5 h-5" />
             Download Comprehensive Management Plan (PDF)
           </button>
+
+          {/* Generate Consult Letter */}
+          <button
+            onClick={handleConsultLetter}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-lg"
+          >
+            <Mail className="w-5 h-5" />
+            Generate Consultation Letter
+          </button>
+        </div>
+      )}
+
+      {/* Consultation Letter Modal */}
+      {showConsultModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <Mail className="w-6 h-6 text-blue-600" />
+                Generate Consultation Letter
+              </h3>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    From Unit (Consulting Unit) *
+                  </label>
+                  <input
+                    type="text"
+                    value={fromUnit}
+                    onChange={(e) => setFromUnit(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                    placeholder="e.g., Internal Medicine Ward"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    To Unit (Unit Being Consulted) *
+                  </label>
+                  <input
+                    type="text"
+                    value={toUnit}
+                    onChange={(e) => setToUnit(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                    placeholder="e.g., Hematology Department"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Reason for Consultation *
+                  </label>
+                  <textarea
+                    value={consultReason}
+                    onChange={(e) => setConsultReason(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                    rows={3}
+                    placeholder="e.g., Management of recurrent sickle cell crises and leg ulcers"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Clinical Findings (Optional - Management plan will be included automatically)
+                  </label>
+                  <textarea
+                    value={clinicalFindings}
+                    onChange={(e) => setClinicalFindings(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                    rows={4}
+                    placeholder="e.g., Patient with frequent painful crises, current Hb 7.5 g/dL, bilateral leg ulcers..."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Specific Recommendations Requested (Optional)
+                  </label>
+                  <textarea
+                    value={recommendations}
+                    onChange={(e) => setRecommendations(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                    rows={3}
+                    placeholder="e.g., Please advise on hydroxyurea therapy, transfusion requirements, and ulcer management"
+                  />
+                </div>
+              </div>
+
+              <div className="flex gap-3 mt-6">
+                <button
+                  onClick={handleGenerateConsultLetter}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md transition-colors"
+                >
+                  Generate Letter
+                </button>
+                <button
+                  onClick={() => setShowConsultModal(false)}
+                  className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-6 rounded-md transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 

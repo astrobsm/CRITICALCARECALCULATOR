@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Calculator, FileText, AlertCircle, CheckCircle, Download, Activity } from 'lucide-react';
-import { generateGFRPDF } from '@/lib/pdfGenerator';
+import { Calculator, FileText, AlertCircle, CheckCircle, Download, Activity, Mail } from 'lucide-react';
+import { generateGFRPDF, generateConsultLetterPDF } from '@/lib/pdfGenerator';
 import { PatientInfoProps } from '@/lib/types';
 
 type Gender = 'male' | 'female';
@@ -16,6 +16,14 @@ export default function GFRCalculator({ patientInfo }: PatientInfoProps) {
   const [gender, setGender] = useState<Gender>('male');
   const [race, setRace] = useState<Race>('other');
   const [result, setResult] = useState<any>(null);
+
+  // Consult Letter State
+  const [showConsultModal, setShowConsultModal] = useState(false);
+  const [fromUnit, setFromUnit] = useState('');
+  const [toUnit, setToUnit] = useState('');
+  const [consultReason, setConsultReason] = useState('');
+  const [clinicalFindings, setClinicalFindings] = useState('');
+  const [recommendations, setRecommendations] = useState('');
 
   const calculateGFR = () => {
     const cr = parseFloat(creatinine);
@@ -129,6 +137,52 @@ export default function GFRCalculator({ patientInfo }: PatientInfoProps) {
     if (result) {
       generateGFRPDF(result, patientInfo);
     }
+  };
+
+  const handleConsultLetter = () => {
+    if (!result) {
+      alert('Please calculate GFR first');
+      return;
+    }
+    setShowConsultModal(true);
+  };
+
+  const handleGenerateConsultLetter = () => {
+    if (!fromUnit || !toUnit || !consultReason) {
+      alert('Please fill in all required fields (From Unit, To Unit, and Reason for Consultation)');
+      return;
+    }
+
+    const calculatorResultsText = `
+GFR Assessment Results:
+- CKD-EPI GFR: ${result.ckdEpi} mL/min/1.73m²
+- Cockcroft-Gault: ${result.cockcroftGault} mL/min
+- MDRD: ${result.mdrd} mL/min/1.73m²
+- CKD Stage: ${result.stage} (${result.description})
+- Serum Creatinine: ${result.creatinine} mg/dL
+${result.bun ? `- BUN: ${result.bun} mg/dL` : ''}
+${result.bunCreatRatio ? `- BUN/Creatinine Ratio: ${result.bunCreatRatio}` : ''}
+${result.bunInterpretation ? `- Interpretation: ${result.bunInterpretation}` : ''}
+    `.trim();
+
+    generateConsultLetterPDF(
+      patientInfo,
+      fromUnit,
+      toUnit,
+      consultReason,
+      clinicalFindings || calculatorResultsText,
+      recommendations,
+      'GFR_Assessment',
+      calculatorResultsText
+    );
+
+    setShowConsultModal(false);
+    // Reset form
+    setFromUnit('');
+    setToUnit('');
+    setConsultReason('');
+    setClinicalFindings('');
+    setRecommendations('');
   };
 
   return (
@@ -330,6 +384,111 @@ export default function GFRCalculator({ patientInfo }: PatientInfoProps) {
             <Download className="w-5 h-5" />
             Download PDF Report
           </button>
+
+          {/* Generate Consult Letter */}
+          <button
+            onClick={handleConsultLetter}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md transition-colors flex items-center justify-center gap-2"
+          >
+            <Mail className="w-5 h-5" />
+            Generate Consultation Letter
+          </button>
+        </div>
+      )}
+
+      {/* Consultation Letter Modal */}
+      {showConsultModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <Mail className="w-6 h-6 text-blue-600" />
+                Generate Consultation Letter
+              </h3>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    From Unit (Consulting Unit) *
+                  </label>
+                  <input
+                    type="text"
+                    value={fromUnit}
+                    onChange={(e) => setFromUnit(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                    placeholder="e.g., Internal Medicine Ward"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    To Unit (Unit Being Consulted) *
+                  </label>
+                  <input
+                    type="text"
+                    value={toUnit}
+                    onChange={(e) => setToUnit(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                    placeholder="e.g., Nephrology Department"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Reason for Consultation *
+                  </label>
+                  <textarea
+                    value={consultReason}
+                    onChange={(e) => setConsultReason(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                    rows={3}
+                    placeholder="e.g., Evaluation and management of declining renal function"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Clinical Findings (Optional - GFR results will be included automatically)
+                  </label>
+                  <textarea
+                    value={clinicalFindings}
+                    onChange={(e) => setClinicalFindings(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                    rows={4}
+                    placeholder="e.g., Patient presented with progressive fatigue, nausea, and elevated blood pressure..."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Specific Recommendations Requested (Optional)
+                  </label>
+                  <textarea
+                    value={recommendations}
+                    onChange={(e) => setRecommendations(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                    rows={3}
+                    placeholder="e.g., Please advise on further investigation, medication adjustments, and follow-up plan"
+                  />
+                </div>
+              </div>
+
+              <div className="flex gap-3 mt-6">
+                <button
+                  onClick={handleGenerateConsultLetter}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md transition-colors"
+                >
+                  Generate Letter
+                </button>
+                <button
+                  onClick={() => setShowConsultModal(false)}
+                  className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-6 rounded-md transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

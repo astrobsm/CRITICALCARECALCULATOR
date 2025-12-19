@@ -2332,3 +2332,177 @@ export function generateSickleCellPDF(result: any, patientInfo?: any) {
   doc.save(filename);
 }
 
+// Consultation Letter PDF Generator
+export function generateConsultLetterPDF(
+  patientInfo: any,
+  fromUnit: string,
+  toUnit: string,
+  consultReason: string,
+  clinicalFindings: string,
+  recommendations: string,
+  calculatorType: string,
+  calculatorResults?: any
+) {
+  const doc = new jsPDF();
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+  });
+  const formattedTime = currentDate.toLocaleTimeString('en-GB', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  // Add logo
+  addLogo(doc);
+
+  // Hospital Header
+  doc.setFontSize(16);
+  doc.setFont('helvetica', 'bold');
+  doc.text(patientInfo?.hospital || 'Hospital Name', 105, 15, { align: 'center' });
+  
+  doc.setFontSize(12);
+  doc.setFont('helvetica', 'bold');
+  doc.text('CONSULTATION LETTER', 105, 25, { align: 'center' });
+  
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'normal');
+  doc.text(`Date: ${formattedDate} at ${formattedTime}`, 105, 32, { align: 'center' });
+
+  // From/To Section
+  let yPos = 45;
+  doc.setFontSize(11);
+  doc.setFont('helvetica', 'bold');
+  doc.text('FROM:', 14, yPos);
+  doc.setFont('helvetica', 'normal');
+  doc.text(fromUnit, 35, yPos);
+  
+  yPos += 7;
+  doc.setFont('helvetica', 'bold');
+  doc.text('TO:', 14, yPos);
+  doc.setFont('helvetica', 'normal');
+  doc.text(toUnit, 35, yPos);
+
+  yPos += 10;
+  doc.setFont('helvetica', 'bold');
+  doc.text('RE: PATIENT CONSULTATION REQUEST', 14, yPos);
+
+  // Patient Information Box
+  yPos += 8;
+  autoTable(doc, {
+    startY: yPos,
+    head: [['Patient Information', 'Details']],
+    body: [
+      ['Patient Name', patientInfo?.name || 'N/A'],
+      ['Hospital Number', patientInfo?.hospitalNumber || 'N/A'],
+      ['Age', patientInfo?.age ? `${patientInfo.age} years` : 'N/A'],
+      ['Gender', patientInfo?.gender === 'male' ? 'Male' : patientInfo?.gender === 'female' ? 'Female' : 'N/A'],
+      ['Primary Diagnosis', patientInfo?.diagnosis || 'N/A'],
+      ...(patientInfo?.comorbidities && patientInfo.comorbidities.length > 0 
+        ? [['Comorbidities', patientInfo.comorbidities.join(', ')]] 
+        : [])
+    ],
+    theme: 'striped',
+    headStyles: { fillColor: [59, 130, 246], fontSize: 11 },
+    margin: { left: 14, right: 14 },
+  });
+
+  // Reason for Consultation
+  yPos = (doc as any).lastAutoTable.finalY + 10;
+  doc.setFontSize(12);
+  doc.setFont('helvetica', 'bold');
+  doc.text('REASON FOR CONSULTATION:', 14, yPos);
+  
+  yPos += 7;
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'normal');
+  const consultReasonLines = doc.splitTextToSize(consultReason, 180);
+  doc.text(consultReasonLines, 14, yPos);
+  yPos += consultReasonLines.length * 5 + 5;
+
+  // Clinical Findings
+  if (yPos > 250) {
+    doc.addPage();
+    yPos = 20;
+  }
+  doc.setFontSize(12);
+  doc.setFont('helvetica', 'bold');
+  doc.text('CLINICAL FINDINGS & ASSESSMENT:', 14, yPos);
+  
+  yPos += 7;
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'normal');
+  const findingsLines = doc.splitTextToSize(clinicalFindings, 180);
+  doc.text(findingsLines, 14, yPos);
+  yPos += findingsLines.length * 5 + 5;
+
+  // Calculator Results (if provided)
+  if (calculatorResults) {
+    if (yPos > 240) {
+      doc.addPage();
+      yPos = 20;
+    }
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`${calculatorType.toUpperCase()} RESULTS:`, 14, yPos);
+    yPos += 7;
+    
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    const resultsText = typeof calculatorResults === 'string' 
+      ? calculatorResults 
+      : JSON.stringify(calculatorResults, null, 2);
+    const resultsLines = doc.splitTextToSize(resultsText, 180);
+    doc.text(resultsLines, 14, yPos);
+    yPos += resultsLines.length * 5 + 5;
+  }
+
+  // Recommendations/Questions
+  if (yPos > 240) {
+    doc.addPage();
+    yPos = 20;
+  }
+  doc.setFontSize(12);
+  doc.setFont('helvetica', 'bold');
+  doc.text('SPECIFIC RECOMMENDATIONS REQUESTED:', 14, yPos);
+  
+  yPos += 7;
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'normal');
+  const recommendationsLines = doc.splitTextToSize(recommendations, 180);
+  doc.text(recommendationsLines, 14, yPos);
+  yPos += recommendationsLines.length * 5 + 10;
+
+  // Signature Section
+  if (yPos > 250) {
+    doc.addPage();
+    yPos = 20;
+  }
+  doc.setFont('helvetica', 'normal');
+  doc.text('Thank you for your assistance with this patient.', 14, yPos);
+  yPos += 10;
+  doc.text('Yours sincerely,', 14, yPos);
+  yPos += 15;
+  doc.text('_______________________________', 14, yPos);
+  yPos += 5;
+  doc.text('Signature', 14, yPos);
+  yPos += 7;
+  doc.text(fromUnit, 14, yPos);
+
+  // Footer on all pages
+  const pageCount = (doc as any).internal.getNumberOfPages();
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'italic');
+    doc.setTextColor(100, 100, 100);
+    doc.text('Generated by Clinical Critical Calculator - For healthcare professionals only.', 105, 285, { align: 'center' });
+    doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: 'center' });
+  }
+
+  const filename = createFilename(patientInfo?.name, `Consult_Letter_${calculatorType}`);
+  doc.save(filename);
+}
+
