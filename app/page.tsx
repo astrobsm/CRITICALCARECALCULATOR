@@ -102,6 +102,17 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Scrolling Banner */}
+      <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-600 text-white overflow-hidden no-print">
+        <div className="py-2">
+          <div className="animate-scroll whitespace-nowrap inline-block">
+            <span className="text-sm font-semibold tracking-wide">
+              POWERED BY BONNESANTE MEDICALS... caring for and healing with passion ✦ POWERED BY BONNESANTE MEDICALS... caring for and healing with passion ✦ POWERED BY BONNESANTE MEDICALS... caring for and healing with passion ✦ 
+            </span>
+          </div>
+        </div>
+      </div>
+
       {/* Patient Information Banner */}
       {patientInfo.name && (
         <div className="bg-gradient-to-r from-blue-100 to-blue-50 border-b-2 border-blue-300 no-print">

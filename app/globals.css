@@ -149,3 +149,17 @@ select:focus {
   }
 }
 
+/* Scrolling banner animation */
+@keyframes scroll-text {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll-text 20s linear infinite;
+}
+
