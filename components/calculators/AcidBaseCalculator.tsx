@@ -215,7 +215,7 @@ export default function AcidBaseCalculator({ patientInfo }: PatientInfoProps) {
             type="number"
             value={ph}
             onChange={(e) => setPh(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
             placeholder="e.g., 7.25"
             step="0.01"
           />
@@ -229,7 +229,7 @@ export default function AcidBaseCalculator({ patientInfo }: PatientInfoProps) {
             type="number"
             value={hco3}
             onChange={(e) => setHco3(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
             placeholder="e.g., 15"
             step="0.1"
           />
@@ -243,7 +243,7 @@ export default function AcidBaseCalculator({ patientInfo }: PatientInfoProps) {
             type="number"
             value={pco2}
             onChange={(e) => setPco2(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
             placeholder="e.g., 32"
             step="0.1"
           />
@@ -257,7 +257,7 @@ export default function AcidBaseCalculator({ patientInfo }: PatientInfoProps) {
             type="number"
             value={na}
             onChange={(e) => setNa(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
             placeholder="e.g., 140"
             step="0.1"
           />
@@ -271,7 +271,7 @@ export default function AcidBaseCalculator({ patientInfo }: PatientInfoProps) {
             type="number"
             value={cl}
             onChange={(e) => setCl(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
             placeholder="e.g., 105"
             step="0.1"
           />
@@ -285,7 +285,7 @@ export default function AcidBaseCalculator({ patientInfo }: PatientInfoProps) {
             type="number"
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
             placeholder="e.g., 70"
             step="0.1"
           />

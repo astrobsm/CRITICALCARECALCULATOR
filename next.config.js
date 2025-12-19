@@ -100,12 +100,15 @@ const withPWA = require('next-pwa')({
 });
 
 const nextConfig = {
-  output: 'export',
-  basePath: '/CRITICALCARECALCULATOR',
+  // Only use basePath for GitHub Pages production builds
+  ...(process.env.GITHUB_ACTIONS && {
+    output: 'export',
+    basePath: '/CRITICALCARECALCULATOR',
+    trailingSlash: true,
+  }),
   images: {
     unoptimized: true,
   },
-  trailingSlash: true,
   reactStrictMode: true,
   ...(process.env.NODE_ENV === 'production' && {
     compiler: {

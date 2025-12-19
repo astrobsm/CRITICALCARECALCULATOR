@@ -15,11 +15,12 @@ import NutritionalAssessmentCalculator from '@/components/calculators/Nutritiona
 import WoundHealingMealPlanCalculator from '@/components/calculators/WoundHealingMealPlanCalculator';
 import WeightReductionCalculator from '@/components/calculators/WeightReductionCalculator';
 import WeightGainCalculator from '@/components/calculators/WeightGainCalculator';
+import SickleCellManagementCalculator from '@/components/calculators/SickleCellManagementCalculator';
 import InstallPrompt from '@/components/InstallPrompt';
 import { Activity, Droplet, Zap, FlaskConical, Pill, Flame, UtensilsCrossed, User, Heart, Bed, Apple, Soup, TrendingDown, TrendingUp } from 'lucide-react';
 import { PatientInfo } from '@/lib/types';
 
-type CalculatorTab = 'sodium' | 'potassium' | 'acidbase' | 'gfr' | 'bnf' | 'burns' | 'nutrition' | 'dvt' | 'pressuresore' | 'nutritionalassessment' | 'woundmealplan' | 'weightloss' | 'weightgain';
+type CalculatorTab = 'sodium' | 'potassium' | 'acidbase' | 'gfr' | 'bnf' | 'burns' | 'nutrition' | 'dvt' | 'pressuresore' | 'nutritionalassessment' | 'woundmealplan' | 'weightloss' | 'weightgain' | 'sicklecell';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<CalculatorTab>('sodium');
@@ -49,7 +50,8 @@ export default function Home() {
     'Malnutrition',
     'HIV/AIDS',
     'Cancer',
-    'Immunosuppression'
+    'Immunosuppression',
+    'Sickle Cell Disease'
   ];
 
   const toggleComorbidity = (comorbidity: string) => {
@@ -75,6 +77,7 @@ export default function Home() {
     { id: 'woundmealplan' as CalculatorTab, label: 'Wound Meal Plan', icon: Soup },
     { id: 'weightloss' as CalculatorTab, label: 'Weight Loss', icon: TrendingDown },
     { id: 'weightgain' as CalculatorTab, label: 'Weight Gain', icon: TrendingUp },
+    { id: 'sicklecell' as CalculatorTab, label: 'Sickle Cell', icon: Heart },
   ];
 
   return (
@@ -313,6 +316,7 @@ export default function Home() {
           {activeTab === 'woundmealplan' && <WoundHealingMealPlanCalculator patientInfo={patientInfo} />}
           {activeTab === 'weightloss' && <WeightReductionCalculator patientInfo={patientInfo} />}
           {activeTab === 'weightgain' && <WeightGainCalculator patientInfo={patientInfo} />}
+          {activeTab === 'sicklecell' && <SickleCellManagementCalculator patientInfo={patientInfo} />}
         </div>
       </div>
 

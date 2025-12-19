@@ -6,11 +6,12 @@ const LOGO_BASE64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAA
 
 // Helper function to add logo to PDF header
 function addLogo(doc: jsPDF, xPos: number = 14, yPos: number = 10, width: number = 12, height: number = 12) {
-  try {
-    doc.addImage(LOGO_BASE64, 'PNG', xPos, yPos, width, height);
-  } catch (error) {
-    console.error('Error adding logo to PDF:', error);
-  }
+  // Logo temporarily disabled - will be re-enabled with proper base64
+  // try {
+  //   doc.addImage(LOGO_BASE64, 'PNG', xPos, yPos, width, height);
+  // } catch (error) {
+  //   console.error('Error adding logo to PDF:', error);
+  // }
 }
 
 // Helper function to create safe filename from patient name
@@ -2132,6 +2133,202 @@ export function generateWeightGainPDF(result: any, patientInfo: any) {
   }
 
   const filename = createFilename(patientInfo?.name, 'Weight_Gain_Plan');
+  doc.save(filename);
+}
+
+// Sickle Cell Disease Management PDF Generator
+export function generateSickleCellPDF(result: any, patientInfo?: any) {
+  const doc = new jsPDF();
+  const timestamp = new Date().toLocaleString();
+
+  addLogo(doc);
+
+  doc.setFontSize(18);
+  doc.setFont('helvetica', 'bold');
+  doc.text('SICKLE CELL DISEASE MANAGEMENT PLAN', 105, 20, { align: 'center' });
+  
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'normal');
+  doc.text('WHO-Aligned Protocol - Haemoglobinopathic Ulcer Management', 105, 27, { align: 'center' });
+  doc.text(`Generated: ${timestamp}`, 105, 33, { align: 'center' });
+
+  let yPos = 45;
+
+  if (patientInfo && patientInfo.name) {
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('PATIENT INFORMATION', 14, yPos);
+    
+    autoTable(doc, {
+      startY: yPos + 5,
+      head: [['Field', 'Value']],
+      body: [
+        ['Name', patientInfo.name],
+        ['Age', patientInfo.age || 'N/A'],
+        ['Hospital', patientInfo.hospital || 'N/A'],
+        ['Hospital Number', patientInfo.hospitalNumber || 'N/A'],
+        ['Diagnosis', patientInfo.diagnosis || 'Sickle Cell Disease'],
+        ['Comorbidities', patientInfo.comorbidities?.join(', ') || 'None listed']
+      ],
+      theme: 'grid',
+      headStyles: { fillColor: [220, 38, 38] },
+    });
+
+    yPos = (doc as any).lastAutoTable.finalY + 10;
+  }
+
+  doc.setFontSize(14);
+  doc.setFont('helvetica', 'bold');
+  doc.text('CRISIS RISK ASSESSMENT', 14, yPos);
+
+  autoTable(doc, {
+    startY: yPos + 5,
+    head: [['Parameter', 'Value']],
+    body: [
+      ['Crisis Risk Level', result.crisisRisk],
+      ['Annual Crisis Frequency', `${result.crisisPerYear} per year`],
+      ['Current Hemoglobin', `${result.hb} g/dL`],
+      ['Hydration Status', result.hydrationLevel],
+    ],
+    theme: 'grid',
+    headStyles: { fillColor: [220, 38, 38] },
+  });
+
+  yPos = (doc as any).lastAutoTable.finalY + 10;
+
+  if (result.hasUlcers) {
+    doc.addPage();
+    yPos = 20;
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('LEG ULCER ASSESSMENT', 14, yPos);
+
+    autoTable(doc, {
+      startY: yPos + 5,
+      head: [['Parameter', 'Value']],
+      body: [
+        ['Location', result.ulcerLocation],
+        ['Size', `${result.ulcerSizeCm} cm diameter`],
+        ['Duration', `${result.ulcerWeeks} weeks`],
+        ['Healing Prognosis', result.healingPrognosis],
+        ['Estimated Healing Time', `${result.healingWeeks} weeks`],
+      ],
+      theme: 'grid',
+      headStyles: { fillColor: [249, 115, 22] },
+    });
+
+    yPos = (doc as any).lastAutoTable.finalY + 10;
+  }
+
+  if (yPos > 240) {
+    doc.addPage();
+    yPos = 20;
+  }
+
+  doc.setFontSize(14);
+  doc.setFont('helvetica', 'bold');
+  doc.text('DAILY REQUIREMENTS', 14, yPos);
+
+  autoTable(doc, {
+    startY: yPos + 5,
+    head: [['Requirement', 'Target']],
+    body: [
+      ['Hydration', `${result.fluidLiters} Liters daily (minimum)`],
+      ['Calories', `${result.totalCalories} kcal/day`],
+      ['Protein', `${result.proteinGrams}g/day`],
+    ],
+    theme: 'grid',
+    headStyles: { fillColor: [59, 130, 246] },
+  });
+
+  yPos = (doc as any).lastAutoTable.finalY + 10;
+
+  const addSection = (title: string, items: string[]) => {
+    if (yPos > 240) {
+      doc.addPage();
+      yPos = 20;
+    }
+
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text(title.toUpperCase(), 14, yPos);
+
+    const body = items.map(item => {
+      const cleanItem = item.replace(/[^\x00-\x7F]/g, '');
+      return [cleanItem];
+    });
+
+    autoTable(doc, {
+      startY: yPos + 5,
+      body: body,
+      theme: 'plain',
+      styles: { fontSize: 9, cellPadding: 2 },
+      columnStyles: { 0: { cellWidth: 180 } }
+    });
+
+    yPos = (doc as any).lastAutoTable.finalY + 8;
+  };
+
+  doc.addPage();
+  yPos = 20;
+  addSection('Lifestyle Modifications', result.lifestyleChanges);
+  
+  if (yPos > 240) { doc.addPage(); yPos = 20; }
+  addSection('Hydration Protocol', result.hydrationProtocol);
+  
+  if (yPos > 240) { doc.addPage(); yPos = 20; }
+  addSection('Nutrition Plan', result.nutritionPlan);
+  
+  if (yPos > 240) { doc.addPage(); yPos = 20; }
+  addSection('Essential Supplements', result.supplements);
+  
+  if (yPos > 240) { doc.addPage(); yPos = 20; }
+  addSection('Crisis Prevention', result.crisisPrevention);
+  
+  if (yPos > 240) { doc.addPage(); yPos = 20; }
+  addSection('Wound Healing Nutrients', result.woundHealingNutrients);
+  
+  if (result.hasUlcers) {
+    if (yPos > 240) { doc.addPage(); yPos = 20; }
+    addSection('Ulcer Management Protocol', result.ulcerManagement);
+  }
+  
+  if (yPos > 240) { doc.addPage(); yPos = 20; }
+  addSection('Monitoring Schedule', result.monitoringSchedule);
+
+  doc.addPage();
+  yPos = 20;
+  doc.setFontSize(14);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(220, 38, 38);
+  doc.text('EMERGENCY WARNING SIGNS', 14, yPos);
+  doc.setTextColor(0, 0, 0);
+
+  const warningBody = result.urgentWarnings.map((w: string) => {
+    const cleanWarning = w.replace(/[^\x00-\x7F]/g, '');
+    return [cleanWarning];
+  });
+
+  autoTable(doc, {
+    startY: yPos + 5,
+    body: warningBody,
+    theme: 'striped',
+    styles: { fontSize: 10, cellPadding: 3, textColor: [127, 29, 29] },
+    columnStyles: { 0: { cellWidth: 180, fontStyle: 'bold' } },
+    headStyles: { fillColor: [220, 38, 38] },
+  });
+
+  const pageCount = (doc as any).internal.getNumberOfPages();
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'italic');
+    doc.setTextColor(0, 0, 0);
+    doc.text('Sickle Cell Disease Management - WHO Guidelines - For healthcare professionals only.', 105, 285, { align: 'center' });
+    doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: 'center' });
+  }
+
+  const filename = createFilename(patientInfo?.name, 'SCD_Management_Plan');
   doc.save(filename);
 }
 

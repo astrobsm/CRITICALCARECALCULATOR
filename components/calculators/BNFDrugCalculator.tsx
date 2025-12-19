@@ -839,7 +839,7 @@ export default function BNFDrugCalculator({ patientInfo }: PatientInfoProps) {
           step="0.1"
           value={gfr}
           onChange={(e) => setGfr(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
           placeholder="Enter GFR value (e.g., 45)"
         />
         <p className="text-xs text-gray-500 mt-1">
@@ -856,7 +856,7 @@ export default function BNFDrugCalculator({ patientInfo }: PatientInfoProps) {
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
           placeholder="Search by drug name or indication..."
         />
       </div>

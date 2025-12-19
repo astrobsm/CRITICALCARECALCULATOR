@@ -168,7 +168,7 @@ export default function PotassiumCalculator({ patientInfo }: PatientInfoProps) {
             type="number"
             value={currentK}
             onChange={(e) => setCurrentK(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
             placeholder="e.g., 2.8"
             step="0.1"
           />
@@ -182,7 +182,7 @@ export default function PotassiumCalculator({ patientInfo }: PatientInfoProps) {
             type="number"
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
             placeholder="e.g., 70"
             step="0.1"
           />
@@ -198,7 +198,7 @@ export default function PotassiumCalculator({ patientInfo }: PatientInfoProps) {
               setEcgFinding(e.target.value);
               setHasECGChanges(e.target.value !== 'none');
             }}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
           >
             <option value="none">No ECG changes</option>
             <option value="peaked-t">Peaked T waves (Early)</option>

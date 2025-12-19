@@ -646,7 +646,7 @@ export default function DVTRiskCalculator({ patientInfo }: PatientInfoProps) {
               type="number"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded text-gray-900"
               placeholder="Enter age"
             />
             <p className="text-xs text-gray-500 mt-1">41-60: +2, 61-74: +3, ≥75: +5 points</p>
@@ -659,7 +659,7 @@ export default function DVTRiskCalculator({ patientInfo }: PatientInfoProps) {
               step="0.1"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded text-gray-900"
               placeholder="Enter weight"
             />
             {weight && height && (
@@ -674,7 +674,7 @@ export default function DVTRiskCalculator({ patientInfo }: PatientInfoProps) {
               step="0.1"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded text-gray-900"
               placeholder="Enter height"
             />
             <p className="text-xs text-gray-500 mt-1">BMI ≥25: +1 point</p>

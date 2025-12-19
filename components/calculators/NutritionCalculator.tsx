@@ -390,7 +390,7 @@ export default function NutritionCalculator({ patientInfo }: PatientInfoProps) {
               step="0.5"
               value={burnBSA}
               onChange={(e) => setBurnBSA(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="e.g., 25"
             />
             <p className="text-xs text-gray-500 mt-1">
@@ -407,7 +407,7 @@ export default function NutritionCalculator({ patientInfo }: PatientInfoProps) {
               step="0.1"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="e.g., 70"
             />
           </div>
@@ -420,7 +420,7 @@ export default function NutritionCalculator({ patientInfo }: PatientInfoProps) {
               type="number"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="e.g., 35"
             />
           </div>
@@ -434,7 +434,7 @@ export default function NutritionCalculator({ patientInfo }: PatientInfoProps) {
             <select
               value={activityLevel}
               onChange={(e) => setActivityLevel(e.target.value as any)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
             >
               <option value="sedentary">Bedbound/Sedentary</option>
               <option value="light">Light Activity (sitting, limited movement)</option>

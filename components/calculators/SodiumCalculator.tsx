@@ -148,7 +148,7 @@ export default function SodiumCalculator({ patientInfo }: PatientInfoProps) {
             type="number"
             value={currentNa}
             onChange={(e) => setCurrentNa(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
             placeholder="e.g., 118"
             step="0.1"
           />
@@ -162,7 +162,7 @@ export default function SodiumCalculator({ patientInfo }: PatientInfoProps) {
             type="number"
             value={targetNa}
             onChange={(e) => setTargetNa(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
             placeholder="e.g., 124"
             step="0.1"
           />
@@ -176,7 +176,7 @@ export default function SodiumCalculator({ patientInfo }: PatientInfoProps) {
             type="number"
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
             placeholder="e.g., 70"
             step="0.1"
           />
@@ -189,7 +189,7 @@ export default function SodiumCalculator({ patientInfo }: PatientInfoProps) {
           <select
             value={gender}
             onChange={(e) => setGender(e.target.value as Gender)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
           >
             <option value="male">Adult Male (TBW: 60%)</option>
             <option value="female">Adult Female (TBW: 50%)</option>
@@ -205,7 +205,7 @@ export default function SodiumCalculator({ patientInfo }: PatientInfoProps) {
           <select
             value={volumeStatus}
             onChange={(e) => setVolumeStatus(e.target.value as VolumeStatus)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
           >
             <option value="hypovolemic">Hypovolemic</option>
             <option value="euvolemic">Euvolemic</option>

@@ -5,6 +5,9 @@ A **robust, mobile-first Progressive Web App (PWA)** for critical care calculati
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Version](https://img.shields.io/badge/version-1.0.0-green.svg)
 ![Medical](https://img.shields.io/badge/use-healthcare_professionals_only-red.svg)
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![PWA](https://img.shields.io/badge/PWA-enabled-blueviolet.svg)
+![Calculators](https://img.shields.io/badge/calculators-13-blue.svg)
 
 ## 🏥 Features
 

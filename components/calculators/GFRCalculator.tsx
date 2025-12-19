@@ -150,7 +150,7 @@ export default function GFRCalculator({ patientInfo }: PatientInfoProps) {
               step="0.1"
               value={creatinine}
               onChange={(e) => setCreatinine(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="e.g., 1.2"
             />
           </div>
@@ -164,7 +164,7 @@ export default function GFRCalculator({ patientInfo }: PatientInfoProps) {
               step="0.1"
               value={urea}
               onChange={(e) => setUrea(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="e.g., 20"
             />
           </div>
@@ -177,7 +177,7 @@ export default function GFRCalculator({ patientInfo }: PatientInfoProps) {
               type="number"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="e.g., 65"
             />
           </div>
@@ -191,7 +191,7 @@ export default function GFRCalculator({ patientInfo }: PatientInfoProps) {
               step="0.1"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="e.g., 70"
             />
           </div>
@@ -206,7 +206,7 @@ export default function GFRCalculator({ patientInfo }: PatientInfoProps) {
             <select
               value={gender}
               onChange={(e) => setGender(e.target.value as Gender)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
             >
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -220,7 +220,7 @@ export default function GFRCalculator({ patientInfo }: PatientInfoProps) {
             <select
               value={race}
               onChange={(e) => setRace(e.target.value as Race)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
             >
               <option value="other">Non-Black</option>
               <option value="black">Black/African American</option>

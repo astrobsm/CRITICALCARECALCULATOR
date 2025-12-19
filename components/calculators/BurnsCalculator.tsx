@@ -14,6 +14,9 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
   const [age, setAge] = useState<string>('');
   const [weight, setWeight] = useState<string>('');
   const [gender, setGender] = useState<'adult' | 'child'>('adult');
+  const [burnType, setBurnType] = useState<'thermal' | 'electrical' | 'chemical'>('thermal');
+  const [chemicalAgent, setChemicalAgent] = useState<string>('');
+  const [electricalVoltage, setElectricalVoltage] = useState<string>('');
   
   // Body areas for Rule of Nines
   const [head, setHead] = useState<number>(0);
@@ -24,6 +27,13 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
   const [legRight, setLegRight] = useState<number>(0);
   const [legLeft, setLegLeft] = useState<number>(0);
   const [perineum, setPerineum] = useState<number>(0);
+  
+  // Sepsis monitoring
+  const [temperature, setTemperature] = useState<string>('');
+  const [heartRate, setHeartRate] = useState<string>('');
+  const [respiratoryRate, setRespiratoryRate] = useState<string>('');
+  const [wbcCount, setWbcCount] = useState<string>('');
+  const [hasSepsisSign, setHasSepsisSign] = useState<boolean>(false);
 
   const [result, setResult] = useState<any>(null);
 
@@ -199,7 +209,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               step="0.1"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="e.g., 70"
             />
           </div>
@@ -212,7 +222,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               type="number"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="e.g., 35"
             />
           </div>
@@ -224,7 +234,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
             <select
               value={gender}
               onChange={(e) => setGender(e.target.value as 'adult' | 'child')}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
             >
               <option value="adult">Adult</option>
               <option value="child">Child</option>
@@ -246,7 +256,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max={gender === 'child' ? 18 : 9}
               value={head}
               onChange={(e) => setHead(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="0"
             />
           </div>
@@ -261,7 +271,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max="18"
               value={torsoFront}
               onChange={(e) => setTorsoFront(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="0"
             />
           </div>
@@ -276,7 +286,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max="18"
               value={torsoBack}
               onChange={(e) => setTorsoBack(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="0"
             />
           </div>
@@ -296,7 +306,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max="9"
               value={armRight}
               onChange={(e) => setArmRight(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="0"
             />
           </div>
@@ -311,7 +321,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max="9"
               value={armLeft}
               onChange={(e) => setArmLeft(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="0"
             />
           </div>
@@ -326,7 +336,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max={gender === 'child' ? 13.5 : 18}
               value={legRight}
               onChange={(e) => setLegRight(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="0"
             />
           </div>
@@ -341,7 +351,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max={gender === 'child' ? 13.5 : 18}
               value={legLeft}
               onChange={(e) => setLegLeft(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="0"
             />
           </div>
@@ -356,7 +366,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max="1"
               value={perineum}
               onChange={(e) => setPerineum(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
               placeholder="0"
             />
           </div>

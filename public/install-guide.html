@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Install Test - Clinical Critical Calculator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        h1 { margin-top: 0; font-size: 2em; }
+        .button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px 5px;
+            display: inline-block;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .button:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .button.secondary {
+            background: #3b82f6;
+        }
+        .button.secondary:hover {
+            background: #2563eb;
+        }
+        .status {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .check { color: #10b981; font-size: 24px; }
+        .cross { color: #ef4444; font-size: 24px; }
+        .info {
+            background: rgba(59, 130, 246, 0.2);
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .warning {
+            background: rgba(245, 158, 11, 0.2);
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .method {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 4px solid #10b981;
+        }
+        code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 Clinical Critical Calculator</h1>
+        <h2>PWA Installation Guide</h2>
+
+        <div class="status" id="installStatus">
+            <h3>Installation Status:</h3>
+            <p id="statusText">Checking...</p>
+        </div>
+
+        <div class="info">
+            <strong>📱 Your App URL:</strong><br>
+            <a href="https://critical-care-calculator-inwsp8kib.vercel.app" style="color: #60a5fa; word-break: break-all;">
+                https://critical-care-calculator-inwsp8kib.vercel.app
+            </a>
+        </div>
+
+        <button id="installButton" class="button" style="display:none;">
+            📥 Install App Now
+        </button>
+
+        <div class="warning">
+            <strong>⚠️ No Automatic Prompt?</strong><br>
+            Don't worry! This is normal. Use the manual methods below.
+        </div>
+
+        <h3>📱 Manual Installation Methods:</h3>
+
+        <div class="method">
+            <strong>Chrome/Edge (Desktop):</strong>
+            <ol>
+                <li>Click the <strong>⋮</strong> menu (top right)</li>
+                <li>Select <strong>"Install Clinical Critical Calculator..."</strong></li>
+                <li>Click "Install"</li>
+            </ol>
+            <p>OR look for the <strong>install icon</strong> (⊕ or 💻) in the address bar</p>
+        </div>
+
+        <div class="method">
+            <strong>Chrome (Android):</strong>
+            <ol>
+                <li>Tap <strong>⋮</strong> menu</li>
+                <li>Tap <strong>"Add to Home screen"</strong></li>
+                <li>Tap "Add"</li>
+            </ol>
+        </div>
+
+        <div class="method">
+            <strong>Safari (iOS):</strong>
+            <ol>
+                <li>Tap the <strong>Share</strong> button (⬆️)</li>
+                <li>Scroll and tap <strong>"Add to Home Screen"</strong></li>
+                <li>Tap "Add"</li>
+            </ol>
+        </div>
+
+        <div class="method">
+            <strong>Firefox (Desktop):</strong>
+            <ol>
+                <li>Click <strong>☰</strong> menu</li>
+                <li>Select <strong>"Install Clinical Critical Calculator"</strong></li>
+            </ol>
+        </div>
+
+        <h3>🔍 Verify Installation:</h3>
+        <div class="info">
+            <strong>After Installing:</strong>
+            <ul>
+                <li>✅ App appears on desktop/home screen</li>
+                <li>✅ Opens in standalone window (no browser UI)</li>
+                <li>✅ Works offline</li>
+                <li>✅ Fast loading from cache</li>
+            </ul>
+        </div>
+
+        <a href="https://critical-care-calculator-inwsp8kib.vercel.app" class="button">
+            🌐 Open App
+        </a>
+
+        <a href="https://vercel.com/sylvia4douglas-gmailcoms-projects/critical-care-calculator" class="button secondary">
+            ⚙️ Vercel Dashboard
+        </a>
+
+        <h3 style="margin-top: 40px;">🧪 Test PWA Features:</h3>
+        <div class="status">
+            <p><span id="httpsCheck">⏳</span> HTTPS Enabled</p>
+            <p><span id="manifestCheck">⏳</span> Manifest Loaded</p>
+            <p><span id="swCheck">⏳</span> Service Worker Active</p>
+            <p><span id="installableCheck">⏳</span> App Installable</p>
+        </div>
+    </div>
+
+    <script>
+        // Check PWA features
+        let deferredPrompt;
+
+        window.addEventListener('load', async () => {
+            // Check HTTPS
+            const isHttps = location.protocol === 'https:';
+            document.getElementById('httpsCheck').innerHTML = isHttps ? '<span class="check">✅</span>' : '<span class="cross">❌</span>';
+
+            // Check manifest
+            const manifestLink = document.querySelector('link[rel="manifest"]');
+            const hasManifest = manifestLink !== null;
+            document.getElementById('manifestCheck').innerHTML = hasManifest ? '<span class="check">✅</span>' : '<span class="cross">❌</span>';
+
+            // Check service worker
+            if ('serviceWorker' in navigator) {
+                try {
+                    const registration = await navigator.serviceWorker.getRegistration();
+                    const hasSW = registration && registration.active;
+                    document.getElementById('swCheck').innerHTML = hasSW ? '<span class="check">✅</span>' : '<span class="cross">❌</span>';
+                } catch (e) {
+                    document.getElementById('swCheck').innerHTML = '<span class="cross">❌</span>';
+                }
+            } else {
+                document.getElementById('swCheck').innerHTML = '<span class="cross">❌</span>';
+            }
+
+            // Update status
+            updateStatus();
+        });
+
+        // Listen for install prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installButton').style.display = 'inline-block';
+            document.getElementById('installableCheck').innerHTML = '<span class="check">✅</span>';
+            updateStatus();
+        });
+
+        // Install button click
+        document.getElementById('installButton').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response: ${outcome}`);
+                deferredPrompt = null;
+                document.getElementById('installButton').style.display = 'none';
+            }
+        });
+
+        // Check if already installed
+        window.addEventListener('appinstalled', () => {
+            document.getElementById('installableCheck').innerHTML = '<span class="check">✅</span>';
+            updateStatus();
+            alert('App installed successfully! 🎉');
+        });
+
+        function updateStatus() {
+            const statusText = document.getElementById('statusText');
+            
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                statusText.innerHTML = '<span class="check">✅</span> <strong>App is installed and running!</strong>';
+            } else if (deferredPrompt) {
+                statusText.innerHTML = '<span class="check">✅</span> <strong>Ready to install!</strong> Click the button above.';
+                document.getElementById('installableCheck').innerHTML = '<span class="check">✅</span>';
+            } else {
+                statusText.innerHTML = '⚠️ <strong>No automatic prompt detected.</strong> Use manual installation methods below.';
+                document.getElementById('installableCheck').innerHTML = '<span class="cross">❌</span> (Use manual method)';
+            }
+        }
+
+        // Initial status check
+        setTimeout(updateStatus, 500);
+    </script>
+</body>
+</html>
