@@ -1,33 +1,63 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Download, X } from 'lucide-react';
+import { Download, X, Share } from 'lucide-react';
 
 export default function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showPrompt, setShowPrompt] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
 
   useEffect(() => {
+    // Detect iOS
+    const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    setIsIOS(iOS);
+
     // Check if already installed
     if (window.matchMedia('(display-mode: standalone)').matches) {
       setIsInstalled(true);
       return;
     }
 
-    // Listen for the beforeinstallprompt event
+    // Check if running in iOS standalone mode
+    if (iOS && (navigator as any).standalone) {
+      setIsInstalled(true);
+      return;
+    }
+
+    // For iOS, show prompt after delay if not dismissed
+    if (iOS) {
+      setTimeout(() => {
+        const dismissed = localStorage.getItem('pwa-install-dismissed');
+        const dismissedTime = localStorage.getItem('pwa-install-dismissed-time');
+        const now = Date.now();
+        
+        // Show again after 7 days
+        if (!dismissed || (dismissedTime && now - parseInt(dismissedTime) > 7 * 24 * 60 * 60 * 1000)) {
+          setShowPrompt(true);
+        }
+      }, 3000);
+      return;
+    }
+
+    // Listen for the beforeinstallprompt event (Android/Chrome)
     const handleBeforeInstallPrompt = (e: Event) => {
       // Prevent the mini-infobar from appearing on mobile
       e.preventDefault();
       // Stash the event so it can be triggered later
       setDeferredPrompt(e);
-      // Show install prompt after 5 seconds
+      // Show install prompt after 3 seconds
       setTimeout(() => {
         const dismissed = localStorage.getItem('pwa-install-dismissed');
-        if (!dismissed) {
+        const dismissedTime = localStorage.getItem('pwa-install-dismissed-time');
+        const now = Date.now();
+        
+        // Show again after 7 days
+        if (!dismissed || (dismissedTime && now - parseInt(dismissedTime) > 7 * 24 * 60 * 60 * 1000)) {
           setShowPrompt(true);
         }
-      }, 5000);
+      }, 3000);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -37,6 +67,7 @@ export default function InstallPrompt() {
       setIsInstalled(true);
       setShowPrompt(false);
       localStorage.removeItem('pwa-install-dismissed');
+      localStorage.removeItem('pwa-install-dismissed-time');
     });
 
     return () => {
@@ -67,6 +98,7 @@ export default function InstallPrompt() {
   const handleDismiss = () => {
     setShowPrompt(false);
     localStorage.setItem('pwa-install-dismissed', 'true');
+    localStorage.setItem('pwa-install-dismissed-time', Date.now().toString());
   };
 
   if (isInstalled || !showPrompt) return null;
@@ -83,29 +115,54 @@ export default function InstallPrompt() {
 
       <div className="flex items-start gap-4">
         <div className="bg-white/20 rounded-lg p-3 flex-shrink-0">
-          <Download className="w-6 h-6" />
+          {isIOS ? <Share className="w-6 h-6" /> : <Download className="w-6 h-6" />}
         </div>
         
         <div className="flex-1">
           <h3 className="font-bold text-lg mb-1">Install Clinical Calculator</h3>
-          <p className="text-sm text-blue-100 mb-4">
-            Get instant access and use offline! Install the app for a better experience.
-          </p>
+          
+          {isIOS ? (
+            <>
+              <p className="text-sm text-blue-100 mb-3">
+                Install this app on your iPhone for offline access and better experience!
+              </p>
+              <div className="bg-white/10 rounded-md p-3 text-xs text-blue-50 mb-3 space-y-2">
+                <p className="font-semibold">How to install on iOS:</p>
+                <ol className="list-decimal ml-4 space-y-1">
+                  <li>Tap the Share button <Share className="w-3 h-3 inline" /> at the bottom</li>
+                  <li>Scroll down and tap "Add to Home Screen"</li>
+                  <li>Tap "Add" in the top right corner</li>
+                </ol>
+              </div>
+              <button
+                onClick={handleDismiss}
+                className="w-full bg-white text-blue-600 px-4 py-2 rounded-md font-semibold hover:bg-blue-50 transition-colors"
+              >
+                Got it!
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="text-sm text-blue-100 mb-4">
+                Get instant access and use offline! Install the app for a better experience.
+              </p>
 
-          <div className="flex gap-2">
-            <button
-              onClick={handleInstallClick}
-              className="flex-1 bg-white text-blue-600 px-4 py-2 rounded-md font-semibold hover:bg-blue-50 transition-colors"
-            >
-              Install App
-            </button>
-            <button
-              onClick={handleDismiss}
-              className="px-4 py-2 rounded-md font-semibold text-white/90 hover:text-white hover:bg-white/10 transition-colors"
-            >
-              Not Now
-            </button>
-          </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleInstallClick}
+                  className="flex-1 bg-white text-blue-600 px-4 py-2 rounded-md font-semibold hover:bg-blue-50 transition-colors"
+                >
+                  Install App
+                </button>
+                <button
+                  onClick={handleDismiss}
+                  className="px-4 py-2 rounded-md font-semibold text-white/90 hover:text-white hover:bg-white/10 transition-colors"
+                >
+                  Not Now
+                </button>
+              </div>
+            </>
+          )}
 
           <div className="mt-3 flex items-center gap-4 text-xs text-blue-100">
             <span className="flex items-center gap-1">
