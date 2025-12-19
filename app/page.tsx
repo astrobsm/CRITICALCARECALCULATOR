@@ -102,18 +102,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Scrolling Banner */}
-      <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-600 text-white overflow-hidden no-print">
-        <div className="py-2">
-          <div className="animate-scroll whitespace-nowrap inline-block">
-            <span className="text-sm font-semibold tracking-wide">
-              POWERED BY BONNESANTE MEDICALS... caring for and healing with passion ✦ POWERED BY BONNESANTE MEDICALS... caring for and healing with passion ✦ POWERED BY BONNESANTE MEDICALS... caring for and healing with passion ✦ 
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Patient Information Banner */}
+      {/* Patient Information Banner */
       {patientInfo.name && (
         <div className="bg-gradient-to-r from-blue-100 to-blue-50 border-b-2 border-blue-300 no-print">
           <div className="container mx-auto px-4 py-3">
@@ -334,6 +323,12 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-6 mt-16 no-print">
         <div className="container mx-auto px-4 text-center">
+          <p className="text-lg font-semibold text-blue-400 mb-3">
+            POWERED BY BONNESANTE MEDICALS
+          </p>
+          <p className="text-sm italic text-gray-300 mb-4">
+            Caring for and healing with passion
+          </p>
           <p className="text-sm text-gray-400">
             Clinical Critical Calculator - For healthcare professionals only
           </p>
