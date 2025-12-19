@@ -102,6 +102,7 @@ export default function Home() {
         </div>
       </header>
 
+
       {/* Patient Information Banner */}
       {patientInfo.name && (
         <div className="bg-gradient-to-r from-blue-100 to-blue-50 border-b-2 border-blue-300 no-print">
