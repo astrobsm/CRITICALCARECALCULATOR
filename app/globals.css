@@ -94,19 +94,90 @@ body {
   animation: fadeIn 0.2s ease-out;
 }
 
-/* Input and Select field styling with sky blue background */
+/* Input and Select field styling with sky blue background and deep black text */
 input[type="text"],
 input[type="number"],
 input[type="email"],
+input[type="tel"],
+input[type="password"],
+textarea,
 select {
   background-color: #e0f2fe !important; /* sky-100 */
+  color: #000000 !important; /* Deep black text */
+  -webkit-text-fill-color: #000000 !important; /* Fix for iOS/Safari */
+  opacity: 1 !important; /* Fix for iOS placeholder */
+  font-weight: 500 !important; /* Slightly bolder for better visibility */
 }
 
 input[type="text"]:focus,
 input[type="number"]:focus,
 input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="password"]:focus,
+textarea:focus,
 select:focus {
   background-color: #bae6fd !important; /* sky-200 */
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* Placeholder text styling */
+input::placeholder,
+textarea::placeholder {
+  color: #374151 !important; /* gray-700 for visible placeholder */
+  -webkit-text-fill-color: #374151 !important;
+  opacity: 1 !important;
+}
+
+/* Select dropdown option styling */
+select option {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Label styling for better visibility */
+label {
+  color: #1f2937 !important; /* gray-800 - deep dark gray */
+  font-weight: 600;
+}
+
+/* Form text elements should be deep black */
+.text-gray-700,
+.text-gray-600,
+.text-gray-500 {
+  color: #1f2937 !important; /* Override to darker gray */
+}
+
+/* Ensure all form container text is visible */
+form, 
+.form-container,
+[class*="calculator"] {
+  color: #000000;
+}
+
+/* Mobile specific text visibility improvements */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="tel"],
+  select,
+  textarea {
+    font-size: 16px !important; /* Prevents iOS zoom */
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+  }
+  
+  label {
+    font-size: 14px !important;
+    color: #000000 !important;
+  }
+  
+  /* Ensure option text in dropdowns is visible on mobile */
+  select option {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+  }
 }
 
 /* PWA specific styles */
