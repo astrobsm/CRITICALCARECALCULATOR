@@ -1992,6 +1992,41 @@ export function generateWeightReductionPDF(result: any, patientInfo: any, curren
   const doc = new jsPDF();
   const timestamp = new Date().toLocaleString();
 
+  // Helper function to add section with page break if needed
+  const addSection = (title: string, items: string[], startY: number): number => {
+    let yPos = startY;
+    
+    if (yPos > 240) {
+      doc.addPage();
+      yPos = 20;
+    }
+
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text(title.toUpperCase(), 14, yPos);
+
+    const body = items.map(item => {
+      const cleanItem = item.replace(/[^\x00-\x7F]/g, '').trim();
+      return [cleanItem];
+    }).filter(item => item[0] !== '');
+
+    if (body.length > 0) {
+      autoTable(doc, {
+        startY: yPos + 5,
+        body: body,
+        theme: 'plain',
+        styles: { fontSize: 9, cellPadding: 2 },
+        columnStyles: { 0: { cellWidth: 180 } },
+        didDrawPage: () => {
+          // This ensures proper page handling
+        }
+      });
+
+      return (doc as any).lastAutoTable.finalY + 8;
+    }
+    return yPos + 10;
+  };
+
   // Add logo
   addLogo(doc);
 
@@ -2006,24 +2041,33 @@ export function generateWeightReductionPDF(result: any, patientInfo: any, curren
 
   let yPos = 45;
 
+  // Patient Information
   if (patientInfo && patientInfo.name) {
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
     doc.text('PATIENT INFORMATION', 14, yPos);
     
+    const patientBody = [
+      ['Name', patientInfo.name || 'N/A'],
+      ['Hospital', patientInfo.hospital || 'N/A'],
+      ['Hospital Number', patientInfo.hospitalNumber || 'N/A'],
+      ['Age', patientInfo.age ? `${patientInfo.age} years` : 'N/A'],
+      ['Gender', patientInfo.gender === 'male' ? 'Male' : patientInfo.gender === 'female' ? 'Female' : 'N/A'],
+      ['Current Weight', `${currentWeight} kg (BMI: ${result.currentBMI})`],
+      ['Target Weight', `${targetWeight} kg (BMI: ${result.targetBMI})`],
+      ['Height', `${height} cm`],
+      ['Timeframe', `${timeframe} weeks`],
+      ['Activity Level', activityLevel || 'N/A'],
+    ];
+
+    if (result.hasComorbidities && result.comorbidityList?.length > 0) {
+      patientBody.push(['Comorbidities', result.comorbidityList.join(', ')]);
+    }
+
     autoTable(doc, {
       startY: yPos + 5,
       head: [['Field', 'Value']],
-      body: [
-        ['Name', patientInfo.name || 'N/A'],
-        ['Current Weight', `${currentWeight} kg`],
-        ['Target Weight', `${targetWeight} kg`],
-        ['Height', `${height} cm`],
-        ['Timeframe', `${timeframe} weeks`],
-        ['Activity Level', activityLevel || 'N/A'],
-        ['Weight to Lose', `${result.weightToLose} kg`],
-        ['Weekly Target', `${result.weeklyWeightLoss} kg/week`]
-      ],
+      body: patientBody,
       theme: 'grid',
       headStyles: { fillColor: [37, 99, 235] },
     });
@@ -2031,19 +2075,46 @@ export function generateWeightReductionPDF(result: any, patientInfo: any, curren
     yPos = (doc as any).lastAutoTable.finalY + 10;
   }
 
-  doc.setFontSize(14);
+  // Assessment Summary
+  doc.setFontSize(12);
   doc.setFont('helvetica', 'bold');
-  doc.text('NUTRITIONAL TARGETS', 14, yPos);
+  doc.text('WEIGHT LOSS ASSESSMENT', 14, yPos);
 
   autoTable(doc, {
     startY: yPos + 5,
-    head: [['Parameter', 'Target']],
+    head: [['Parameter', 'Value', 'Notes']],
     body: [
-      ['Calories', `${result.targetCalories} kcal/day`],
-      ['Protein', `${result.proteinGrams}g/day`],
-      ['Carbohydrates', `${result.carbGrams}g/day`],
-      ['Fats', `${result.fatGrams}g/day`],
-      ['Water', `${result.waterML}ml/day`]
+      ['Weight to Lose', `${result.weightToLose} kg`, `Over ${result.weeks} weeks`],
+      ['Weekly Target', `${result.weeklyWeightLoss} kg/week`, result.safetyRating],
+      ['BMR', `${result.bmr} kcal/day`, 'Basal Metabolic Rate'],
+      ['TDEE', `${result.tdee} kcal/day`, 'Total Daily Energy Expenditure'],
+      ['Caloric Deficit', `${result.tdee - result.targetCalories} kcal/day`, 'Daily deficit for weight loss'],
+    ],
+    theme: 'grid',
+    headStyles: { fillColor: [34, 197, 94] },
+  });
+
+  yPos = (doc as any).lastAutoTable.finalY + 10;
+
+  // Nutritional Targets
+  if (yPos > 200) {
+    doc.addPage();
+    yPos = 20;
+  }
+
+  doc.setFontSize(14);
+  doc.setFont('helvetica', 'bold');
+  doc.text('DAILY NUTRITIONAL TARGETS', 14, yPos);
+
+  autoTable(doc, {
+    startY: yPos + 5,
+    head: [['Macronutrient', 'Daily Target', 'Percentage']],
+    body: [
+      ['Calories', `${result.targetCalories} kcal/day`, '100%'],
+      ['Protein', `${result.proteinGrams}g/day`, `${Math.round((result.proteinGrams * 4 / result.targetCalories) * 100)}%`],
+      ['Carbohydrates', `${result.carbGrams}g/day`, `${Math.round((result.carbGrams * 4 / result.targetCalories) * 100)}%`],
+      ['Fats', `${result.fatGrams}g/day`, `${Math.round((result.fatGrams * 9 / result.targetCalories) * 100)}%`],
+      ['Water', `${result.waterML}ml/day`, 'Minimum intake']
     ],
     theme: 'grid',
     headStyles: { fillColor: [37, 99, 235] },
@@ -2051,12 +2122,167 @@ export function generateWeightReductionPDF(result: any, patientInfo: any, curren
 
   yPos = (doc as any).lastAutoTable.finalY + 10;
 
+  // Guidelines
+  if (result.guidelines && result.guidelines.length > 0) {
+    doc.addPage();
+    yPos = 20;
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('WEIGHT LOSS GUIDELINES', 14, yPos);
+    yPos += 8;
+
+    const guidelineBody = result.guidelines.map((g: string) => [g.replace(/[^\x00-\x7F]/g, '')]);
+    
+    autoTable(doc, {
+      startY: yPos,
+      body: guidelineBody,
+      theme: 'plain',
+      styles: { fontSize: 9, cellPadding: 2 },
+      columnStyles: { 0: { cellWidth: 180 } }
+    });
+
+    yPos = (doc as any).lastAutoTable.finalY + 10;
+  }
+
+  // 7-Day Meal Plan
+  if (result.mealPlan && result.mealPlan.days && result.mealPlan.days.length > 0) {
+    doc.addPage();
+    yPos = 20;
+    
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'bold');
+    doc.text(result.mealPlan.title || '7-DAY WEIGHT REDUCTION MEAL PLAN', 105, yPos, { align: 'center' });
+    
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text(result.mealPlan.subtitle || `${result.targetCalories} kcal/day | High Protein, Low Glycemic Index`, 105, yPos + 7, { align: 'center' });
+    
+    yPos = 35;
+
+    // Each day of the meal plan
+    result.mealPlan.days.forEach((day: any, dayIndex: number) => {
+      if (yPos > 240 || dayIndex > 0) {
+        doc.addPage();
+        yPos = 20;
+      }
+
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(37, 99, 235);
+      doc.text(`${day.day} - Total: ${day.totalCalories} kcal`, 14, yPos);
+      doc.setTextColor(0, 0, 0);
+      yPos += 8;
+
+      // Each meal for the day
+      day.meals.forEach((meal: any) => {
+        if (yPos > 250) {
+          doc.addPage();
+          yPos = 20;
+        }
+
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'bold');
+        doc.text(meal.time, 14, yPos);
+        yPos += 5;
+
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'normal');
+        
+        meal.items.forEach((item: string) => {
+          if (yPos > 275) {
+            doc.addPage();
+            yPos = 20;
+          }
+          const cleanItem = item.replace(/[^\x00-\x7F]/g, '').replace(/^[•-]\s*/, '  - ');
+          const lines = doc.splitTextToSize(cleanItem, 175);
+          doc.text(lines, 18, yPos);
+          yPos += lines.length * 4 + 1;
+        });
+        
+        yPos += 3;
+      });
+    });
+  }
+
+  // Food Recommendations
+  if (result.foodRecommendations && result.foodRecommendations.length > 0) {
+    doc.addPage();
+    yPos = 20;
+    yPos = addSection('Recommended Foods', result.foodRecommendations, yPos);
+  }
+
+  // Foods to Limit
+  if (result.foodsToLimit && result.foodsToLimit.length > 0) {
+    if (yPos > 180) {
+      doc.addPage();
+      yPos = 20;
+    }
+    yPos = addSection('Foods to Avoid or Limit', result.foodsToLimit, yPos);
+  }
+
+  // Exercise Recommendations
+  if (result.exerciseRecommendations && result.exerciseRecommendations.length > 0) {
+    doc.addPage();
+    yPos = 20;
+    yPos = addSection('Exercise Protocol', result.exerciseRecommendations, yPos);
+  }
+
+  // Supplements
+  if (result.supplementRecommendations && result.supplementRecommendations.length > 0) {
+    if (yPos > 180) {
+      doc.addPage();
+      yPos = 20;
+    }
+    yPos = addSection('Recommended Supplements', result.supplementRecommendations, yPos);
+  }
+
+  // Monitoring Parameters
+  if (result.monitoringParameters && result.monitoringParameters.length > 0) {
+    doc.addPage();
+    yPos = 20;
+    yPos = addSection('Monitoring & Progress Tracking', result.monitoringParameters, yPos);
+  }
+
+  // Important Notes
+  doc.addPage();
+  yPos = 20;
+  
+  doc.setFontSize(14);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(220, 38, 38);
+  doc.text('IMPORTANT SAFETY NOTES', 14, yPos);
+  doc.setTextColor(0, 0, 0);
+  yPos += 8;
+
+  const safetyNotes = [
+    '1. Never consume fewer than 1200 kcal/day (women) or 1500 kcal/day (men) without medical supervision.',
+    '2. Weight loss exceeding 1 kg per week may indicate muscle loss - consult healthcare provider.',
+    '3. Stay well hydrated - dehydration can be mistaken for hunger.',
+    '4. If experiencing dizziness, extreme fatigue, or hair loss, increase calories and consult doctor.',
+    '5. Regular exercise is essential to preserve muscle mass during weight loss.',
+    '6. Weigh yourself weekly at the same time under same conditions for accurate tracking.',
+    '7. Focus on sustainable lifestyle changes rather than quick fixes.',
+    '8. Consult with healthcare provider before starting any weight loss program.',
+    '9. This plan is a guide - adjust based on individual response and medical advice.',
+    '10. Prioritize sleep (7-8 hours) as poor sleep impairs weight loss efforts.'
+  ];
+
+  autoTable(doc, {
+    startY: yPos,
+    body: safetyNotes.map(note => [note]),
+    theme: 'striped',
+    styles: { fontSize: 9, cellPadding: 3 },
+    columnStyles: { 0: { cellWidth: 180 } }
+  });
+
+  // Add page numbers to all pages
   const pageCount = (doc as any).internal.getNumberOfPages();
   for (let i = 1; i <= pageCount; i++) {
     doc.setPage(i);
     doc.setFontSize(8);
     doc.setFont('helvetica', 'italic');
-    doc.text('Weight Reduction Plan - For healthcare professionals only.', 105, 285, { align: 'center' });
+    doc.setTextColor(100, 100, 100);
+    doc.text('Weight Reduction Plan - Clinical Critical Calculator - For healthcare professionals only.', 105, 285, { align: 'center' });
     doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: 'center' });
   }
 
