@@ -1,9 +1,0 @@
-<svg width="192" height="192" xmlns="http://www.w3.org/2000/svg">
-  <rect width="192" height="192" fill="#0284c7" rx="24"/>
-  <g fill="white">
-    <path d="M96 40 L96 80 M76 60 L116 60" stroke="white" stroke-width="8" stroke-linecap="round"/>
-    <circle cx="96" cy="120" r="30" fill="none" stroke="white" stroke-width="8"/>
-    <path d="M81 120 L91 130 L111 110" stroke="white" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  </g>
-  <text x="96" y="170" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">CCC</text>
-</svg>

@@ -1,15 +1,16 @@
 {
   "name": "Clinical Critical Calculator",
   "short_name": "CCC",
-  "description": "WHO-aligned critical care calculator with 13+ medical tools for healthcare professionals",
+  "description": "WHO-Aligned Clinical Critical Care Calculator - 14+ Medical Tools for Healthcare Professionals",
   "start_url": "/",
-  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0284c7",
   "orientation": "any",
-  "dir": "ltr",
+  "scope": "/",
   "lang": "en",
+  "dir": "ltr",
+  "categories": ["medical", "health", "utilities"],
   "prefer_related_applications": false,
   "icons": [
     {
@@ -67,48 +68,28 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["medical", "health", "utilities", "productivity"],
   "screenshots": [],
   "shortcuts": [
     {
       "name": "Sodium Calculator",
       "short_name": "Sodium",
-      "description": "Sodium disorder treatment",
+      "description": "Calculate sodium correction",
       "url": "/?tab=sodium",
-      "icons": [{ "src": "/logo.png", "sizes": "48x48" }]
+      "icons": [{ "src": "/icon-96.png", "sizes": "96x96" }]
     },
     {
-      "name": "DVT Risk Assessment",
-      "short_name": "DVT",
-      "description": "Caprini DVT risk score",
-      "url": "/?tab=dvt",
-      "icons": [{ "src": "/logo.png", "sizes": "48x48" }]
+      "name": "Potassium Calculator",
+      "short_name": "Potassium",
+      "description": "Calculate potassium correction",
+      "url": "/?tab=potassium",
+      "icons": [{ "src": "/icon-96.png", "sizes": "96x96" }]
     },
     {
-      "name": "Burns Calculator",
-      "short_name": "Burns",
-      "description": "Parkland formula fluid resuscitation",
-      "url": "/?tab=burns",
-      "icons": [{ "src": "/logo.png", "sizes": "48x48" }]
-    },
-    {
-      "name": "Weight Management",
-      "short_name": "Weight",
-      "description": "Weight loss/gain meal plans",
-      "url": "/?tab=weightloss",
-      "icons": [{ "src": "/logo.png", "sizes": "48x48" }]
+      "name": "Acid-Base Calculator",
+      "short_name": "Acid-Base",
+      "description": "Analyze acid-base disorders",
+      "url": "/?tab=acidbase",
+      "icons": [{ "src": "/icon-96.png", "sizes": "96x96" }]
     }
-  ],
-  "related_applications": [],
-  "iarc_rating_id": "",
-  "share_target": {
-    "action": "/",
-    "method": "GET",
-    "enctype": "application/x-www-form-urlencoded",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url"
-    }
-  }
+  ]
 }

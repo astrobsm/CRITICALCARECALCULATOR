@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import SodiumCalculator from '@/components/calculators/SodiumCalculator';
 import PotassiumCalculator from '@/components/calculators/PotassiumCalculator';
@@ -17,13 +17,18 @@ import WeightReductionCalculator from '@/components/calculators/WeightReductionC
 import WeightGainCalculator from '@/components/calculators/WeightGainCalculator';
 import SickleCellManagementCalculator from '@/components/calculators/SickleCellManagementCalculator';
 import InstallPrompt from '@/components/InstallPrompt';
-import { Activity, Droplet, Zap, FlaskConical, Pill, Flame, UtensilsCrossed, User, Heart, Bed, Apple, Soup, TrendingDown, TrendingUp } from 'lucide-react';
+import { Activity, Droplet, Zap, FlaskConical, Pill, Flame, UtensilsCrossed, User, Heart, Bed, Apple, Soup, TrendingDown, TrendingUp, WifiOff, Wifi } from 'lucide-react';
 import { PatientInfo } from '@/lib/types';
 
 type CalculatorTab = 'sodium' | 'potassium' | 'acidbase' | 'gfr' | 'bnf' | 'burns' | 'nutrition' | 'dvt' | 'pressuresore' | 'nutritionalassessment' | 'woundmealplan' | 'weightloss' | 'weightgain' | 'sicklecell';
 
+// LocalStorage key for patient info
+const PATIENT_INFO_KEY = 'ccc_patient_info';
+const ACTIVE_TAB_KEY = 'ccc_active_tab';
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState<CalculatorTab>('sodium');
+  const [isOnline, setIsOnline] = useState(true);
   const [patientInfo, setPatientInfo] = useState<PatientInfo>({
     name: '',
     age: '',
@@ -34,6 +39,69 @@ export default function Home() {
     comorbidities: []
   });
   const [showPatientForm, setShowPatientForm] = useState(false);
+
+  // Load patient info from localStorage on mount
+  useEffect(() => {
+    // Check initial online status
+    setIsOnline(navigator.onLine);
+
+    // Load saved patient info
+    try {
+      const savedPatientInfo = localStorage.getItem(PATIENT_INFO_KEY);
+      if (savedPatientInfo) {
+        const parsed = JSON.parse(savedPatientInfo);
+        setPatientInfo(parsed);
+      }
+    } catch (e) {
+      console.log('Could not load saved patient info');
+    }
+
+    // Load saved active tab
+    try {
+      const savedTab = localStorage.getItem(ACTIVE_TAB_KEY);
+      if (savedTab && isValidTab(savedTab)) {
+        setActiveTab(savedTab as CalculatorTab);
+      }
+    } catch (e) {
+      console.log('Could not load saved tab');
+    }
+
+    // Online/offline event listeners
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  // Helper to validate tab
+  const isValidTab = (tab: string): boolean => {
+    const validTabs = ['sodium', 'potassium', 'acidbase', 'gfr', 'bnf', 'burns', 'nutrition', 'dvt', 'pressuresore', 'nutritionalassessment', 'woundmealplan', 'weightloss', 'weightgain', 'sicklecell'];
+    return validTabs.includes(tab);
+  };
+
+  // Save patient info to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(PATIENT_INFO_KEY, JSON.stringify(patientInfo));
+    } catch (e) {
+      console.log('Could not save patient info');
+    }
+  }, [patientInfo]);
+
+  // Save active tab to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem(ACTIVE_TAB_KEY, activeTab);
+    } catch (e) {
+      console.log('Could not save active tab');
+    }
+  }, [activeTab]);
 
   const availableComorbidities = [
     'Diabetes Mellitus',
@@ -82,21 +150,42 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+      {/* Offline Banner */}
+      {!isOnline && (
+        <div className="bg-yellow-500 text-yellow-900 px-4 py-2 text-center text-sm font-medium flex items-center justify-center gap-2">
+          <WifiOff className="w-4 h-4" />
+          <span>You're offline - All calculators still work! Data is saved locally.</span>
+        </div>
+      )}
+
       {/* Header */}
       <header className="bg-primary-600 text-white shadow-lg">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center gap-3">
-            <Image 
-              src="/logo.png" 
-              alt="CCC Logo" 
-              width={48} 
-              height={48}
-              className="w-12 h-12 object-contain"
-              priority
-            />
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold">Clinical Critical Calculator</h1>
-              <p className="text-sm text-primary-100 mt-1">WHO-Aligned Critical Care Management</p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Image 
+                src="/logo.png" 
+                alt="CCC Logo" 
+                width={48} 
+                height={48}
+                className="w-12 h-12 object-contain"
+                priority
+              />
+              <div>
+                <h1 className="text-2xl md:text-3xl font-bold">Clinical Critical Calculator</h1>
+                <p className="text-sm text-primary-100 mt-1">WHO-Aligned Critical Care Management</p>
+              </div>
+            </div>
+            <div className="hidden md:flex items-center gap-2 text-sm">
+              {isOnline ? (
+                <span className="flex items-center gap-1 text-green-300">
+                  <Wifi className="w-4 h-4" /> Online
+                </span>
+              ) : (
+                <span className="flex items-center gap-1 text-yellow-300">
+                  <WifiOff className="w-4 h-4" /> Offline Mode
+                </span>
+              )}
             </div>
           </div>
         </div>
