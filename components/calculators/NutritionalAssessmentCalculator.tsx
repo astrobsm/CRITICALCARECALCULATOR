@@ -329,30 +329,32 @@ export default function NutritionalAssessmentCalculator({ patientInfo }: Patient
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold text-orange-600 mb-4">Nutritional Risk Assessment (MUST Score)</h2>
+    <div className="bg-white rounded-lg shadow-md p-3 sm:p-4 md:p-6 overflow-x-hidden">
+      <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-orange-600 mb-4">Nutritional Risk Assessment (MUST Score)</h2>
       
-      <div className="space-y-4">
-        <div className="grid md:grid-cols-2 gap-4">
+      <div className="space-y-3 sm:space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Weight (kg) *</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Weight (kg) *</label>
             <input
               type="number"
+              inputMode="decimal"
               step="0.1"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="Enter weight in kg"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">Height (cm) *</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Height (cm) *</label>
             <input
               type="number"
+              inputMode="decimal"
               step="0.1"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="Enter height in cm"
             />
           </div>

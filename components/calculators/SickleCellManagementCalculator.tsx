@@ -309,52 +309,54 @@ Hydration Status: ${hydrationLevel}
       </div>
 
       {/* Input Form */}
-      <div className="bg-white p-6 rounded-lg shadow-md space-y-4">
-        <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-          <Activity className="w-5 h-5 text-red-600" />
+      <div className="bg-white p-3 sm:p-4 md:p-6 rounded-lg shadow-md space-y-3 sm:space-y-4">
+        <h3 className="text-base sm:text-lg font-semibold text-gray-800 flex items-center gap-2">
+          <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-red-600" />
           Patient Assessment
         </h3>
 
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
               Current Hemoglobin (g/dL) *
             </label>
             <input
               type="number"
+              inputMode="decimal"
               value={currentHb}
               onChange={(e) => setCurrentHb(e.target.value)}
               step="0.1"
               min="4"
               max="12"
               placeholder="e.g., 8.5"
-              className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             />
             <p className="text-xs text-gray-500 mt-1">Normal SCD: 6-9 g/dL</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
               Body Weight (kg) *
             </label>
             <input
               type="number"
+              inputMode="decimal"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
               step="0.1"
               placeholder="e.g., 65"
-              className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
               Crisis Frequency (per year) *
             </label>
             <select
               value={crisisFrequency}
               onChange={(e) => setCrisisFrequency(e.target.value)}
-              className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             >
               <option value="">Select frequency</option>
               <option value="0">No crises this year</option>
@@ -439,15 +441,15 @@ Hydration Status: ${hydrationLevel}
           </div>
 
           {hasUlcers && (
-            <div className="grid md:grid-cols-2 gap-4 bg-orange-50 p-4 rounded-lg">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 bg-orange-50 p-3 sm:p-4 rounded-lg">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
                   Ulcer Location *
                 </label>
                 <select
                   value={ulcerLocation}
                   onChange={(e) => setUlcerLocation(e.target.value)}
-                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none text-gray-900"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
                 >
                   <option value="">Select location</option>
                   <option value="Medial malleolus">Medial malleolus (most common)</option>
@@ -460,22 +462,23 @@ Hydration Status: ${hydrationLevel}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
                   Ulcer Size (diameter in cm) *
                 </label>
                 <input
                   type="number"
+                  inputMode="decimal"
                   value={ulcerSize}
                   onChange={(e) => setUlcerSize(e.target.value)}
                   step="0.1"
                   min="0.5"
                   placeholder="e.g., 3.5"
-                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none text-gray-900"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
                   Duration (weeks) *
                 </label>
                 <input
@@ -555,32 +558,32 @@ Hydration Status: ${hydrationLevel}
           )}
 
           {/* Daily Requirements */}
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+            <div className="bg-blue-50 p-3 sm:p-4 rounded-lg border-l-4 border-blue-500">
               <div className="flex items-center gap-2 mb-2">
-                <Droplet className="w-5 h-5 text-blue-600" />
-                <h4 className="font-semibold text-gray-800">Hydration</h4>
+                <Droplet className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+                <h4 className="font-semibold text-sm sm:text-base text-gray-800">Hydration</h4>
               </div>
-              <p className="text-2xl font-bold text-blue-600">{result.fluidLiters}L</p>
-              <p className="text-sm text-gray-600">Daily minimum</p>
+              <p className="text-xl sm:text-2xl font-bold text-blue-600">{result.fluidLiters}L</p>
+              <p className="text-xs sm:text-sm text-gray-600">Daily minimum</p>
             </div>
 
-            <div className="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+            <div className="bg-green-50 p-3 sm:p-4 rounded-lg border-l-4 border-green-500">
               <div className="flex items-center gap-2 mb-2">
-                <Apple className="w-5 h-5 text-green-600" />
-                <h4 className="font-semibold text-gray-800">Calories</h4>
+                <Apple className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
+                <h4 className="font-semibold text-sm sm:text-base text-gray-800">Calories</h4>
               </div>
-              <p className="text-2xl font-bold text-green-600">{result.totalCalories}</p>
-              <p className="text-sm text-gray-600">kcal/day</p>
+              <p className="text-xl sm:text-2xl font-bold text-green-600">{result.totalCalories}</p>
+              <p className="text-xs sm:text-sm text-gray-600">kcal/day</p>
             </div>
 
-            <div className="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
+            <div className="bg-purple-50 p-3 sm:p-4 rounded-lg border-l-4 border-purple-500 sm:col-span-2 lg:col-span-1">
               <div className="flex items-center gap-2 mb-2">
-                <Activity className="w-5 h-5 text-purple-600" />
-                <h4 className="font-semibold text-gray-800">Protein</h4>
+                <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
+                <h4 className="font-semibold text-sm sm:text-base text-gray-800">Protein</h4>
               </div>
-              <p className="text-2xl font-bold text-purple-600">{result.proteinGrams}g</p>
-              <p className="text-sm text-gray-600">Per day</p>
+              <p className="text-xl sm:text-2xl font-bold text-purple-600">{result.proteinGrams}g</p>
+              <p className="text-xs sm:text-sm text-gray-600">Per day</p>
             </div>
           </div>
 

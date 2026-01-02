@@ -137,17 +137,17 @@ export default function PotassiumCalculator({ patientInfo }: PatientInfoProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-xl p-6 md:p-8">
-      <div className="flex items-center gap-3 mb-6">
-        <Heart className="w-7 h-7 text-danger-600" />
-        <h2 className="text-2xl font-bold text-gray-800">Potassium Disorder Calculator</h2>
+    <div className="bg-white rounded-lg shadow-xl p-3 sm:p-4 md:p-6 overflow-x-hidden">
+      <div className="flex items-center gap-3 mb-4 sm:mb-6">
+        <Heart className="w-6 h-6 sm:w-7 sm:h-7 text-danger-600" />
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800">Potassium Disorder Calculator</h2>
       </div>
 
       {/* Alert Box */}
-      <div className="bg-red-50 border-l-4 border-danger-600 p-4 mb-6">
-        <div className="flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-danger-600 mt-0.5 flex-shrink-0" />
-          <div className="text-sm text-gray-700">
+      <div className="bg-red-50 border-l-4 border-danger-600 p-3 sm:p-4 mb-4 sm:mb-6">
+        <div className="flex items-start gap-2 sm:gap-3">
+          <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-danger-600 mt-0.5 flex-shrink-0" />
+          <div className="text-xs sm:text-sm text-gray-700">
             <p className="font-semibold mb-1">CRITICAL Safety Warning</p>
             <ul className="list-disc ml-4 space-y-1">
               <li>ECG changes = CARDIAC EMERGENCY</li>
@@ -159,37 +159,37 @@ export default function PotassiumCalculator({ patientInfo }: PatientInfoProps) {
       </div>
 
       {/* Input Form */}
-      <div className="grid md:grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
             Current Potassium (mmol/L)
           </label>
           <input
             type="number"
             value={currentK}
             onChange={(e) => setCurrentK(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             placeholder="e.g., 2.8"
             step="0.1"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
             Body Weight (kg)
           </label>
           <input
             type="number"
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             placeholder="e.g., 70"
             step="0.1"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
             ECG Findings
           </label>
           <select
@@ -198,7 +198,7 @@ export default function PotassiumCalculator({ patientInfo }: PatientInfoProps) {
               setEcgFinding(e.target.value);
               setHasECGChanges(e.target.value !== 'none');
             }}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
           >
             <option value="none">No ECG changes</option>
             <option value="peaked-t">Peaked T waves (Early)</option>
@@ -214,9 +214,9 @@ export default function PotassiumCalculator({ patientInfo }: PatientInfoProps) {
             id="magnesium"
             checked={hasMg}
             onChange={(e) => setHasMg(e.target.checked)}
-            className="w-4 h-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+            className="w-5 h-5 sm:w-4 sm:h-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded touch-manipulation"
           />
-          <label htmlFor="magnesium" className="ml-2 text-sm font-medium text-gray-700">
+          <label htmlFor="magnesium" className="ml-2 text-xs sm:text-sm font-medium text-gray-700">
             Magnesium level normal (≥0.7 mmol/L)
           </label>
         </div>
@@ -224,7 +224,7 @@ export default function PotassiumCalculator({ patientInfo }: PatientInfoProps) {
 
       <button
         onClick={calculatePotassium}
-        className="w-full bg-danger-600 hover:bg-danger-700 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+        className="w-full bg-danger-600 hover:bg-danger-700 active:bg-danger-800 text-white font-semibold py-3 px-4 sm:px-6 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm sm:text-base min-h-[44px] touch-manipulation"
       >
         <Calculator className="w-5 h-5" />
         Calculate Treatment Plan
@@ -232,10 +232,10 @@ export default function PotassiumCalculator({ patientInfo }: PatientInfoProps) {
 
       {/* Results */}
       {result && (
-        <div className="mt-8 space-y-6">
-          <div className="border-t-2 border-gray-200 pt-6">
-            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <FileText className="w-6 h-6 text-danger-600" />
+        <div className="mt-6 sm:mt-8 space-y-4 sm:space-y-6">
+          <div className="border-t-2 border-gray-200 pt-4 sm:pt-6">
+            <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-danger-600" />
               Treatment Plan
             </h3>
 
@@ -255,20 +255,20 @@ export default function PotassiumCalculator({ patientInfo }: PatientInfoProps) {
 
             {/* Deficit for Hypokalemia */}
             {result.isHypo && result.deficit && (
-              <div className="bg-orange-50 rounded-lg p-4 mb-4">
-                <p className="text-sm text-gray-600 mb-1">Estimated Potassium Deficit</p>
-                <p className="text-2xl font-bold text-orange-600">~{result.deficit} mmol</p>
+              <div className="bg-orange-50 rounded-lg p-3 sm:p-4 mb-4">
+                <p className="text-xs sm:text-sm text-gray-600 mb-1">Estimated Potassium Deficit</p>
+                <p className="text-xl sm:text-2xl font-bold text-orange-600">~{result.deficit} mmol</p>
                 <p className="text-xs text-gray-600 mt-1">Based on rule: 0.3 mmol/L drop ≈ 100 mmol deficit</p>
               </div>
             )}
 
             {/* Treatment Protocol */}
-            <div className={`border-l-4 p-4 mb-4 ${result.urgency === 'emergency' ? 'bg-red-50 border-danger-600' : 'bg-blue-50 border-primary-600'}`}>
+            <div className={`border-l-4 p-3 sm:p-4 mb-4 ${result.urgency === 'emergency' ? 'bg-red-50 border-danger-600' : 'bg-blue-50 border-primary-600'}`}>
               <p className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
                 <Heart className="w-5 h-5" />
                 Treatment Protocol:
               </p>
-              <ol className="list-decimal ml-6 space-y-2 text-sm text-gray-700">
+              <ol className="list-decimal ml-6 space-y-2 text-xs sm:text-sm text-gray-700">
                 {result.treatment.map((item: string, index: number) => (
                   <li key={index} className={item.includes('🚨') || item.includes('⚠️') ? 'font-bold text-danger-600' : ''}>
                     {item}
@@ -278,9 +278,9 @@ export default function PotassiumCalculator({ patientInfo }: PatientInfoProps) {
             </div>
 
             {/* Monitoring */}
-            <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4">
+            <div className="bg-yellow-50 border-l-4 border-yellow-500 p-3 sm:p-4">
               <p className="font-semibold text-gray-800 mb-3">Monitoring Requirements:</p>
-              <ul className="list-disc ml-6 space-y-1 text-sm text-gray-700">
+              <ul className="list-disc ml-6 space-y-1 text-xs sm:text-sm text-gray-700">
                 {result.monitoring.map((item: string, index: number) => (
                   <li key={index}>{item}</li>
                 ))}

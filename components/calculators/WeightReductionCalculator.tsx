@@ -739,50 +739,53 @@ export default function WeightReductionCalculator({ patientInfo }: PatientInfoPr
         Targeted Weight Reduction Meal Plan
       </h2>
       
-      <div className="bg-blue-50 p-4 rounded mb-6">
+      <div className="bg-blue-50 p-3 sm:p-4 rounded mb-4 sm:mb-6">
         <div className="flex items-start gap-2">
-          <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-          <div className="text-sm">
+          <Info className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+          <div className="text-xs sm:text-sm">
             <p className="font-semibold text-blue-900">Evidence-Based Weight Loss Program</p>
             <p className="text-blue-800">Safe, sustainable weight reduction through caloric deficit, high protein intake, and lifestyle modification. Nigerian-adapted meal plans with portion control.</p>
           </div>
         </div>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Body Measurements */}
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Current Weight (kg) *</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Current Weight (kg) *</label>
             <input
               type="number"
+              inputMode="decimal"
               value={currentWeight}
               onChange={(e) => setCurrentWeight(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="Current weight"
               step="0.1"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Height (cm) *</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Height (cm) *</label>
             <input
               type="number"
+              inputMode="decimal"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="Height in cm"
               step="0.1"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Target Weight (kg) *</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Target Weight (kg) *</label>
             <input
               type="number"
+              inputMode="decimal"
               value={targetWeight}
               onChange={(e) => setTargetWeight(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="Goal weight"
               step="0.1"
             />
@@ -790,25 +793,26 @@ export default function WeightReductionCalculator({ patientInfo }: PatientInfoPr
         </div>
 
         {/* Timeframe and Activity */}
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Timeframe (weeks) *</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Timeframe (weeks) *</label>
             <input
               type="number"
+              inputMode="numeric"
               value={timeframe}
               onChange={(e) => setTimeframe(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="Number of weeks"
             />
             <p className="text-xs text-gray-500 mt-1">Minimum recommended: 8 weeks</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Activity Level *</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Activity Level *</label>
             <select
               value={activityLevel}
               onChange={(e) => setActivityLevel(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             >
               <option value="">Select activity level</option>
               <option value="sedentary">Sedentary (Little to no exercise)</option>

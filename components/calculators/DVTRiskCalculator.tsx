@@ -624,42 +624,42 @@ export default function DVTRiskCalculator({ patientInfo }: PatientInfoProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold text-red-600 mb-4">DVT Risk Assessment - Comprehensive Caprini Score</h2>
+    <div className="bg-white rounded-lg shadow-md p-3 sm:p-4 md:p-6 overflow-x-hidden">
+      <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-red-600 mb-4">DVT Risk Assessment - Comprehensive Caprini Score</h2>
       
-      <div className="bg-blue-50 p-4 rounded mb-6">
+      <div className="bg-blue-50 p-3 sm:p-4 rounded mb-4 sm:mb-6">
         <div className="flex items-start gap-2">
-          <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-          <div className="text-sm">
+          <Info className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+          <div className="text-xs sm:text-sm">
             <p className="font-semibold text-blue-900">Complete VTE Risk Stratification Tool</p>
             <p className="text-blue-800">Select all applicable risk factors. The Caprini score predicts venous thromboembolism (VTE) risk with validated scoring (0-40+ points).</p>
           </div>
         </div>
       </div>
       
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Age, Weight, Height (BMI auto-calculated) */}
-        <div className="grid md:grid-cols-3 gap-4 p-4 bg-gray-50 rounded">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded">
           <div>
-            <label className="block text-sm font-medium mb-2">Patient Age (years) *</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Patient Age (years) *</label>
             <input
               type="number"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              className="w-full p-2 border rounded text-gray-900"
+              className="w-full p-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="Enter age"
             />
             <p className="text-xs text-gray-500 mt-1">41-60: +2, 61-74: +3, ≥75: +5 points</p>
           </div>
           
           <div>
-            <label className="block text-sm font-medium mb-2">Weight (kg)</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Weight (kg)</label>
             <input
               type="number"
               step="0.1"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              className="w-full p-2 border rounded text-gray-900"
+              className="w-full p-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="Enter weight"
             />
             {weight && height && (
@@ -668,13 +668,13 @@ export default function DVTRiskCalculator({ patientInfo }: PatientInfoProps) {
           </div>
           
           <div>
-            <label className="block text-sm font-medium mb-2">Height (cm)</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Height (cm)</label>
             <input
               type="number"
               step="0.1"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
-              className="w-full p-2 border rounded text-gray-900"
+              className="w-full p-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="Enter height"
             />
             <p className="text-xs text-gray-500 mt-1">BMI ≥25: +1 point</p>
@@ -682,172 +682,172 @@ export default function DVTRiskCalculator({ patientInfo }: PatientInfoProps) {
         </div>
 
         {/* 1 Point Risk Factors */}
-        <div className="border-2 border-blue-200 rounded-lg p-4">
-          <h3 className="font-bold text-blue-700 mb-3 flex items-center gap-2">
-            <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+        <div className="border-2 border-blue-200 rounded-lg p-3 sm:p-4">
+          <h3 className="font-bold text-blue-700 mb-3 flex items-center gap-2 text-sm sm:text-base">
+            <span className="bg-blue-600 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-xs sm:text-sm">1</span>
             Risk Factors Worth 1 Point Each
           </h3>
-          <div className="grid md:grid-cols-2 gap-3">
-            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer">
-              <input type="checkbox" checked={minorSurgery} onChange={(e) => setMinorSurgery(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Minor surgery planned</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={minorSurgery} onChange={(e) => setMinorSurgery(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Minor surgery planned</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer">
-              <input type="checkbox" checked={varicoseVeins} onChange={(e) => setVaricoseVeins(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">History of varicose veins</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={varicoseVeins} onChange={(e) => setVaricoseVeins(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">History of varicose veins</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer">
-              <input type="checkbox" checked={swollenLegs} onChange={(e) => setSwollenLegs(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Swollen legs (current)</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={swollenLegs} onChange={(e) => setSwollenLegs(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Swollen legs (current)</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer">
-              <input type="checkbox" checked={pregnancy} onChange={(e) => setPregnancy(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Pregnancy or &lt;1 month postpartum</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={pregnancy} onChange={(e) => setPregnancy(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Pregnancy or &lt;1 month postpartum</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer">
-              <input type="checkbox" checked={bedRest} onChange={(e) => setBedRest(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Confined to bed &gt;72 hours</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={bedRest} onChange={(e) => setBedRest(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Confined to bed &gt;72 hours</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer">
-              <input type="checkbox" checked={plasterCast} onChange={(e) => setPlasterCast(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Plaster cast or brace</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={plasterCast} onChange={(e) => setPlasterCast(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Plaster cast or brace</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer">
-              <input type="checkbox" checked={sepsis} onChange={(e) => setSepsis(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Sepsis (&lt;1 month)</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={sepsis} onChange={(e) => setSepsis(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Sepsis (&lt;1 month)</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer">
-              <input type="checkbox" checked={lungDisease} onChange={(e) => setLungDisease(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Serious lung disease (COPD)</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={lungDisease} onChange={(e) => setLungDisease(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Serious lung disease (COPD)</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer">
-              <input type="checkbox" checked={abnormalPulmonary} onChange={(e) => setAbnormalPulmonary(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Abnormal pulmonary function</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={abnormalPulmonary} onChange={(e) => setAbnormalPulmonary(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Abnormal pulmonary function</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer">
-              <input type="checkbox" checked={mi} onChange={(e) => setMi(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Acute myocardial infarction</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={mi} onChange={(e) => setMi(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Acute myocardial infarction</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer">
-              <input type="checkbox" checked={chf} onChange={(e) => setChf(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Congestive heart failure (&lt;1 month)</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={chf} onChange={(e) => setChf(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Congestive heart failure (&lt;1 month)</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer">
-              <input type="checkbox" checked={inflammatory} onChange={(e) => setInflammatory(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Inflammatory bowel disease</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-blue-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={inflammatory} onChange={(e) => setInflammatory(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Inflammatory bowel disease</span>
             </label>
           </div>
         </div>
 
         {/* 2 Point Risk Factors */}
-        <div className="border-2 border-yellow-200 rounded-lg p-4">
-          <h3 className="font-bold text-yellow-700 mb-3 flex items-center gap-2">
-            <span className="bg-yellow-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+        <div className="border-2 border-yellow-200 rounded-lg p-3 sm:p-4">
+          <h3 className="font-bold text-yellow-700 mb-3 flex items-center gap-2 text-sm sm:text-base">
+            <span className="bg-yellow-600 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-xs sm:text-sm">2</span>
             Risk Factors Worth 2 Points Each
           </h3>
-          <div className="grid md:grid-cols-2 gap-3">
-            <label className="flex items-start space-x-2 p-2 hover:bg-yellow-50 rounded cursor-pointer">
-              <input type="checkbox" checked={arthroscopic} onChange={(e) => setArthroscopic(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Arthroscopic surgery</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+            <label className="flex items-start space-x-2 p-2 hover:bg-yellow-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={arthroscopic} onChange={(e) => setArthroscopic(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Arthroscopic surgery</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-yellow-50 rounded cursor-pointer">
-              <input type="checkbox" checked={majorSurgery} onChange={(e) => setMajorSurgery(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Major surgery &gt;45 minutes</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-yellow-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={majorSurgery} onChange={(e) => setMajorSurgery(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Major surgery &gt;45 minutes</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-yellow-50 rounded cursor-pointer">
-              <input type="checkbox" checked={laparoscopic} onChange={(e) => setLaparoscopic(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Laparoscopic surgery &gt;45 minutes</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-yellow-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={laparoscopic} onChange={(e) => setLaparoscopic(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Laparoscopic surgery &gt;45 minutes</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-yellow-50 rounded cursor-pointer">
-              <input type="checkbox" checked={centralLine} onChange={(e) => setCentralLine(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Central venous access</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-yellow-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={centralLine} onChange={(e) => setCentralLine(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Central venous access</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-yellow-50 rounded cursor-pointer">
-              <input type="checkbox" checked={bedridden} onChange={(e) => setBedridden(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Immobilizing plaster cast &lt;1 month</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-yellow-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={bedridden} onChange={(e) => setBedridden(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Immobilizing plaster cast &lt;1 month</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-yellow-50 rounded cursor-pointer">
-              <input type="checkbox" checked={paralysis} onChange={(e) => setParalysis(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Paralysis, paresis, or recent plaster cast</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-yellow-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={paralysis} onChange={(e) => setParalysis(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Paralysis, paresis, or recent plaster cast</span>
             </label>
           </div>
         </div>
 
         {/* 3 Point Risk Factors */}
-        <div className="border-2 border-orange-200 rounded-lg p-4">
-          <h3 className="font-bold text-orange-700 mb-3 flex items-center gap-2">
-            <span className="bg-orange-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
+        <div className="border-2 border-orange-200 rounded-lg p-3 sm:p-4">
+          <h3 className="font-bold text-orange-700 mb-3 flex items-center gap-2 text-sm sm:text-base">
+            <span className="bg-orange-600 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-xs sm:text-sm">3</span>
             Risk Factors Worth 3 Points Each
           </h3>
-          <div className="grid md:grid-cols-2 gap-3">
-            <label className="flex items-start space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer">
-              <input type="checkbox" checked={previousDVT} onChange={(e) => setPreviousDVT(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">History of DVT/PE</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+            <label className="flex items-start space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={previousDVT} onChange={(e) => setPreviousDVT(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">History of DVT/PE</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer">
-              <input type="checkbox" checked={familyHistory} onChange={(e) => setFamilyHistory(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Family history of thrombosis</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={familyHistory} onChange={(e) => setFamilyHistory(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Family history of thrombosis</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer">
-              <input type="checkbox" checked={thrombophilia} onChange={(e) => setThrombophilia(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Positive Factor V Leiden, prothrombin mutation, etc.</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={thrombophilia} onChange={(e) => setThrombophilia(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Positive Factor V Leiden, prothrombin mutation, etc.</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer">
-              <input type="checkbox" checked={elevatedHomocysteine} onChange={(e) => setElevatedHomocysteine(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Elevated serum homocysteine</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={elevatedHomocysteine} onChange={(e) => setElevatedHomocysteine(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Elevated serum homocysteine</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer">
-              <input type="checkbox" checked={heparinThrombocytopenia} onChange={(e) => setHeparinThrombocytopenia(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Heparin-induced thrombocytopenia (HIT)</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={heparinThrombocytopenia} onChange={(e) => setHeparinThrombocytopenia(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Heparin-induced thrombocytopenia (HIT)</span>
             </label>
           </div>
         </div>
 
         {/* 5 Point Risk Factors */}
-        <div className="border-2 border-red-300 rounded-lg p-4">
-          <h3 className="font-bold text-red-700 mb-3 flex items-center gap-2">
-            <span className="bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">5</span>
+        <div className="border-2 border-red-300 rounded-lg p-3 sm:p-4">
+          <h3 className="font-bold text-red-700 mb-3 flex items-center gap-2 text-sm sm:text-base">
+            <span className="bg-red-600 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-xs sm:text-sm">5</span>
             Risk Factors Worth 5 Points Each
           </h3>
-          <div className="grid md:grid-cols-2 gap-3">
-            <label className="flex items-start space-x-2 p-2 hover:bg-red-50 rounded cursor-pointer">
-              <input type="checkbox" checked={stroke} onChange={(e) => setStroke(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Stroke (&lt;1 month)</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+            <label className="flex items-start space-x-2 p-2 hover:bg-red-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={stroke} onChange={(e) => setStroke(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Stroke (&lt;1 month)</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-red-50 rounded cursor-pointer">
-              <input type="checkbox" checked={elective} onChange={(e) => setElective(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Elective major lower extremity arthroplasty</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-red-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={elective} onChange={(e) => setElective(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Elective major lower extremity arthroplasty</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-red-50 rounded cursor-pointer">
-              <input type="checkbox" checked={hipPelvisFracture} onChange={(e) => setHipPelvisFracture(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Hip, pelvis, or leg fracture (&lt;1 month)</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-red-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={hipPelvisFracture} onChange={(e) => setHipPelvisFracture(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Hip, pelvis, or leg fracture (&lt;1 month)</span>
             </label>
             
-            <label className="flex items-start space-x-2 p-2 hover:bg-red-50 rounded cursor-pointer">
-              <input type="checkbox" checked={acuteSpinal} onChange={(e) => setAcuteSpinal(e.target.checked)} className="w-4 h-4 mt-1" />
-              <span className="text-sm">Acute spinal cord injury (paralysis) &lt;1 month</span>
+            <label className="flex items-start space-x-2 p-2 hover:bg-red-50 rounded cursor-pointer touch-manipulation min-h-[44px]">
+              <input type="checkbox" checked={acuteSpinal} onChange={(e) => setAcuteSpinal(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5" />
+              <span className="text-xs sm:text-sm">Acute spinal cord injury (paralysis) &lt;1 month</span>
             </label>
           </div>
         </div>

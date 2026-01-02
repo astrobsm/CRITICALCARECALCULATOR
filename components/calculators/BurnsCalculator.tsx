@@ -182,26 +182,26 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <div className="flex items-center gap-2 mb-6">
-        <Flame className="w-6 h-6 text-orange-600" />
-        <h2 className="text-2xl font-bold text-gray-800">Burns Assessment & Fluid Calculator</h2>
+    <div className="bg-white rounded-lg shadow-md p-3 sm:p-4 md:p-6 overflow-x-hidden">
+      <div className="flex items-center gap-2 mb-4 sm:mb-6">
+        <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600" />
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800">Burns Assessment & Fluid Calculator</h2>
       </div>
 
-      <div className="bg-orange-50 p-4 rounded-md mb-6 flex items-start gap-2">
-        <Info className="w-5 h-5 text-orange-600 mt-0.5 flex-shrink-0" />
-        <div className="text-sm text-gray-700">
+      <div className="bg-orange-50 p-3 sm:p-4 rounded-md mb-4 sm:mb-6 flex items-start gap-2">
+        <Info className="w-4 h-4 sm:w-5 sm:h-5 text-orange-600 mt-0.5 flex-shrink-0" />
+        <div className="text-xs sm:text-sm text-gray-700">
           <p className="font-semibold mb-1">Parkland Formula for Fluid Resuscitation:</p>
           <p>First 24 hours: 4ml × weight(kg) × %BSA burned</p>
           <p className="mt-1"><strong>Give half in first 8 hours, remaining half over next 16 hours</strong></p>
         </div>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6">
         {/* Patient Info */}
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
               Weight (kg) *
             </label>
             <input
@@ -209,32 +209,32 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               step="0.1"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="e.g., 70"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
               Age (years)
             </label>
             <input
               type="number"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="e.g., 35"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
               Patient Type *
             </label>
             <select
               value={gender}
               onChange={(e) => setGender(e.target.value as 'adult' | 'child')}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             >
               <option value="adult">Adult</option>
               <option value="child">Child</option>
@@ -243,11 +243,11 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
         </div>
 
         {/* Rule of Nines - Upper Body */}
-        <div className="space-y-4">
-          <h3 className="font-bold text-gray-800">Burned Areas - Upper Body</h3>
+        <div className="space-y-3 sm:space-y-4">
+          <h3 className="text-sm sm:text-base font-bold text-gray-800">Burned Areas - Upper Body</h3>
           
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
               Head & Neck ({gender === 'child' ? '18%' : '9%'})
             </label>
             <input
@@ -256,13 +256,13 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max={gender === 'child' ? 18 : 9}
               value={head}
               onChange={(e) => setHead(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="0"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
               Torso - Front (18%)
             </label>
             <input
@@ -271,13 +271,13 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max="18"
               value={torsoFront}
               onChange={(e) => setTorsoFront(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="0"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
               Torso - Back (18%)
             </label>
             <input
@@ -286,18 +286,18 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max="18"
               value={torsoBack}
               onChange={(e) => setTorsoBack(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="0"
             />
           </div>
         </div>
 
         {/* Rule of Nines - Lower Body */}
-        <div className="space-y-4">
-          <h3 className="font-bold text-gray-800">Burned Areas - Limbs</h3>
+        <div className="space-y-3 sm:space-y-4">
+          <h3 className="text-sm sm:text-base font-bold text-gray-800">Burned Areas - Limbs</h3>
           
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
               Right Arm (9%)
             </label>
             <input
@@ -306,13 +306,13 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max="9"
               value={armRight}
               onChange={(e) => setArmRight(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="0"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
               Left Arm (9%)
             </label>
             <input
@@ -321,13 +321,13 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max="9"
               value={armLeft}
               onChange={(e) => setArmLeft(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="0"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
               Right Leg ({gender === 'child' ? '13.5%' : '18%'})
             </label>
             <input
@@ -336,13 +336,13 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max={gender === 'child' ? 13.5 : 18}
               value={legRight}
               onChange={(e) => setLegRight(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="0"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
               Left Leg ({gender === 'child' ? '13.5%' : '18%'})
             </label>
             <input
@@ -351,13 +351,13 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max={gender === 'child' ? 13.5 : 18}
               value={legLeft}
               onChange={(e) => setLegLeft(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="0"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
               Perineum (1%)
             </label>
             <input
@@ -366,7 +366,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
               max="1"
               value={perineum}
               onChange={(e) => setPerineum(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="0"
             />
           </div>
@@ -375,29 +375,29 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
 
       <button
         onClick={calculateBurns}
-        className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-6 rounded-md transition-colors flex items-center justify-center gap-2"
+        className="w-full bg-orange-600 hover:bg-orange-700 active:bg-orange-800 text-white font-semibold py-3 px-4 sm:px-6 rounded-md transition-colors flex items-center justify-center gap-2 text-sm sm:text-base min-h-[44px] touch-manipulation"
       >
         <Calculator className="w-5 h-5" />
         Calculate Fluid Requirements
       </button>
 
       {result && (
-        <div className="mt-8 space-y-6">
+        <div className="mt-6 sm:mt-8 space-y-4 sm:space-y-6">
           {/* Burn Assessment */}
-          <div className="bg-gradient-to-r from-orange-50 to-red-50 p-6 rounded-lg border-l-4 border-orange-600">
-            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <Flame className="w-6 h-6 text-orange-600" />
+          <div className="bg-gradient-to-r from-orange-50 to-red-50 p-3 sm:p-4 md:p-6 rounded-lg border-l-4 border-orange-600">
+            <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+              <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600" />
               Burn Assessment
             </h3>
             
-            <div className="grid md:grid-cols-3 gap-4 mb-4">
-              <div className="bg-white p-4 rounded-md">
-                <p className="text-sm text-gray-600">Total BSA Burned</p>
-                <p className="text-3xl font-bold text-orange-600">{result.totalBSA}%</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-4">
+              <div className="bg-white p-3 sm:p-4 rounded-md">
+                <p className="text-xs sm:text-sm text-gray-600">Total BSA Burned</p>
+                <p className="text-2xl sm:text-3xl font-bold text-orange-600">{result.totalBSA}%</p>
               </div>
-              <div className="bg-white p-4 rounded-md">
-                <p className="text-sm text-gray-600">Severity</p>
-                <p className={`text-2xl font-bold ${result.severityClass}`}>{result.severity}</p>
+              <div className="bg-white p-3 sm:p-4 rounded-md">
+                <p className="text-xs sm:text-sm text-gray-600">Severity</p>
+                <p className={`text-xl sm:text-2xl font-bold ${result.severityClass}`}>{result.severity}</p>
               </div>
               <div className="bg-white p-4 rounded-md">
                 <p className="text-sm text-gray-600">Patient Weight</p>
@@ -407,7 +407,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
 
             <div className="bg-white p-4 rounded-md">
               <p className="font-semibold text-gray-700 mb-2">Affected Areas:</p>
-              <div className="grid md:grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                 {result.burnAreas.map((area: BurnArea, index: number) => (
                   <div key={index} className="text-sm text-gray-700">
                     • {area.area}: <strong>{area.percentage}%</strong>
@@ -466,7 +466,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
                 <p className="text-xs text-gray-400 mt-1">Parkland Formula: 4mL × {result.weight}kg × {result.totalBSA}% BSA</p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="bg-yellow-50 p-4 rounded-md border-2 border-yellow-400">
                   <p className="font-bold text-gray-800 mb-2">FIRST 8 HOURS (from time of burn):</p>
                   <p className="text-2xl font-bold text-yellow-700">{result.first8h} mL</p>
@@ -493,7 +493,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
             <div className="mb-6 border-t-2 border-gray-300 pt-4">
               <h4 className="font-bold text-gray-800 mb-3 text-lg">DAY 2 (24-48 hours post-burn)</h4>
               
-              <div className="grid md:grid-cols-2 gap-4 mb-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-3">
                 <div className="bg-white p-4 rounded-md border border-blue-300">
                   <p className="text-sm text-gray-600 mb-1">Total Daily Fluid</p>
                   <p className="text-2xl font-bold text-blue-600">{result.day2FluidTotal} mL/day</p>
@@ -521,7 +521,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
             <div className="mb-4 border-t-2 border-gray-300 pt-4">
               <h4 className="font-bold text-gray-800 mb-3 text-lg">DAYS 3-7 (Maintenance Phase)</h4>
               
-              <div className="grid md:grid-cols-2 gap-4 mb-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-3">
                 <div className="bg-white p-4 rounded-md border border-green-300">
                   <p className="text-sm text-gray-600 mb-1">Total Daily Fluid</p>
                   <p className="text-2xl font-bold text-green-600">{result.day3to7Fluid} mL/day</p>
@@ -566,17 +566,17 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
           </div>
 
           {/* Nutritional Requirements */}
-          <div className="bg-green-50 p-6 rounded-lg border-l-4 border-green-600">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">Nutritional Requirements</h3>
+          <div className="bg-green-50 p-4 sm:p-6 rounded-lg border-l-4 border-green-600">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">Nutritional Requirements</h3>
             
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-white p-4 rounded-md">
-                <p className="text-sm text-gray-600">Daily Caloric Need</p>
-                <p className="text-2xl font-bold text-green-600">{result.totalCalories} kcal/day</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="bg-white p-3 sm:p-4 rounded-md">
+                <p className="text-xs sm:text-sm text-gray-600">Daily Caloric Need</p>
+                <p className="text-xl sm:text-2xl font-bold text-green-600">{result.totalCalories} kcal/day</p>
               </div>
-              <div className="bg-white p-4 rounded-md">
-                <p className="text-sm text-gray-600">Protein Requirement</p>
-                <p className="text-2xl font-bold text-green-600">{result.proteinRequirement} g/day</p>
+              <div className="bg-white p-3 sm:p-4 rounded-md">
+                <p className="text-xs sm:text-sm text-gray-600">Protein Requirement</p>
+                <p className="text-xl sm:text-2xl font-bold text-green-600">{result.proteinRequirement} g/day</p>
               </div>
             </div>
 

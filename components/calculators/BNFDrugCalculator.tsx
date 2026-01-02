@@ -815,23 +815,23 @@ export default function BNFDrugCalculator({ patientInfo }: PatientInfoProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <div className="flex items-center gap-2 mb-6">
-        <Pill className="w-6 h-6 text-primary-600" />
-        <h2 className="text-2xl font-bold text-gray-800">BNF Drug Dosing Calculator</h2>
+    <div className="bg-white rounded-lg shadow-md p-3 sm:p-4 md:p-6 overflow-x-hidden">
+      <div className="flex items-center gap-2 mb-4 sm:mb-6">
+        <Pill className="w-5 h-5 sm:w-6 sm:h-6 text-primary-600" />
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800">BNF Drug Dosing Calculator</h2>
       </div>
 
-      <div className="bg-blue-50 p-4 rounded-md mb-6 flex items-start gap-2">
-        <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-        <p className="text-sm text-gray-700">
+      <div className="bg-blue-50 p-3 sm:p-4 rounded-md mb-4 sm:mb-6 flex items-start gap-2">
+        <Info className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+        <p className="text-xs sm:text-sm text-gray-700">
           <strong>Important:</strong> This calculator provides general guidance for renal dose adjustment based on BNF guidelines.
           Always check current BNF/local formulary, consider individual patient factors, and monitor drug levels where appropriate.
         </p>
       </div>
 
       {/* GFR Input */}
-      <div className="mb-6">
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
+      <div className="mb-4 sm:mb-6">
+        <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
           Patient's eGFR (mL/min/1.73m²) *
         </label>
         <input
@@ -839,7 +839,7 @@ export default function BNFDrugCalculator({ patientInfo }: PatientInfoProps) {
           step="0.1"
           value={gfr}
           onChange={(e) => setGfr(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+          className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
           placeholder="Enter GFR value (e.g., 45)"
         />
         <p className="text-xs text-gray-500 mt-1">
@@ -849,28 +849,28 @@ export default function BNFDrugCalculator({ patientInfo }: PatientInfoProps) {
 
       {/* Drug Search */}
       <div className="mb-4">
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
+        <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
           Search Medications
         </label>
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+          className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
           placeholder="Search by drug name or indication..."
         />
       </div>
 
       {/* Drug Selection */}
-      <div className="mb-6">
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
+      <div className="mb-4 sm:mb-6">
+        <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
           Select Medications ({selectedDrugs.length} selected)
         </label>
-        <div className="grid md:grid-cols-2 gap-2 max-h-64 overflow-y-auto border border-gray-200 rounded-md p-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-64 overflow-y-auto border border-gray-200 rounded-md p-2 sm:p-3">
           {filteredDrugs.map((drug) => (
             <label
               key={drug.drug}
-              className={`flex items-start gap-2 p-2 rounded cursor-pointer hover:bg-gray-50 ${
+              className={`flex items-start gap-2 p-2 rounded cursor-pointer hover:bg-gray-50 touch-manipulation ${
                 selectedDrugs.includes(drug.drug) ? 'bg-primary-50 border border-primary-300' : ''
               }`}
             >
@@ -878,10 +878,10 @@ export default function BNFDrugCalculator({ patientInfo }: PatientInfoProps) {
                 type="checkbox"
                 checked={selectedDrugs.includes(drug.drug)}
                 onChange={() => toggleDrug(drug.drug)}
-                className="mt-1"
+                className="mt-1 w-5 h-5 sm:w-4 sm:h-4 touch-manipulation"
               />
               <div>
-                <div className="font-semibold text-sm">{drug.drug}</div>
+                <div className="font-semibold text-xs sm:text-sm">{drug.drug}</div>
                 <div className="text-xs text-gray-600">{drug.indication}</div>
               </div>
             </label>
@@ -891,7 +891,7 @@ export default function BNFDrugCalculator({ patientInfo }: PatientInfoProps) {
 
       <button
         onClick={calculateDosing}
-        className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-md transition-colors flex items-center justify-center gap-2"
+        className="w-full bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white font-semibold py-3 px-4 sm:px-6 rounded-md transition-colors flex items-center justify-center gap-2 text-sm sm:text-base min-h-[44px] touch-manipulation"
       >
         <Calculator className="w-5 h-5" />
         Calculate Dosing Recommendations
@@ -902,7 +902,7 @@ export default function BNFDrugCalculator({ patientInfo }: PatientInfoProps) {
           {/* Renal Function Status */}
           <div className="bg-gradient-to-r from-primary-50 to-blue-50 p-6 rounded-lg border-l-4 border-primary-600">
             <h3 className="text-xl font-bold text-gray-800 mb-2">Renal Function Assessment</h3>
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               <div>
                 <p className="text-sm text-gray-600">eGFR</p>
                 <p className="text-2xl font-bold text-primary-600">{result.gfr} mL/min/1.73m²</p>
@@ -962,7 +962,7 @@ export default function BNFDrugCalculator({ patientInfo }: PatientInfoProps) {
                     )}
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4 mb-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-3">
                     <div>
                       <p className="text-xs text-gray-600">Normal Dose</p>
                       <p className="font-semibold text-gray-700">{rec.normal}</p>

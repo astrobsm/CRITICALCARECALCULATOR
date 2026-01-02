@@ -364,10 +364,10 @@ export default function NutritionCalculator({ patientInfo }: PatientInfoProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <div className="flex items-center gap-2 mb-6">
-        <UtensilsCrossed className="w-6 h-6 text-green-600" />
-        <h2 className="text-2xl font-bold text-gray-800">Burns Nutrition Calculator</h2>
+    <div className="bg-white rounded-lg shadow-md p-3 sm:p-4 md:p-6 overflow-x-hidden">
+      <div className="flex items-center gap-2 mb-4 sm:mb-6">
+        <UtensilsCrossed className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800">Burn Nutrition Calculator</h2>
       </div>
 
       <div className="bg-green-50 p-4 rounded-md mb-6 flex items-start gap-2">
@@ -379,10 +379,10 @@ export default function NutritionCalculator({ patientInfo }: PatientInfoProps) {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6 mb-6">
-        <div className="space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6">
+        <div className="space-y-3 sm:space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
               Total Burn BSA (%) *
             </label>
             <input
@@ -390,7 +390,7 @@ export default function NutritionCalculator({ patientInfo }: PatientInfoProps) {
               step="0.5"
               value={burnBSA}
               onChange={(e) => setBurnBSA(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="e.g., 25"
             />
             <p className="text-xs text-gray-500 mt-1">
@@ -399,7 +399,7 @@ export default function NutritionCalculator({ patientInfo }: PatientInfoProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
               Weight (kg) *
             </label>
             <input
@@ -407,34 +407,34 @@ export default function NutritionCalculator({ patientInfo }: PatientInfoProps) {
               step="0.1"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="e.g., 70"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
               Age (years)
             </label>
             <input
               type="number"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="e.g., 35"
             />
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
               Activity Level
             </label>
             <select
               value={activityLevel}
               onChange={(e) => setActivityLevel(e.target.value as any)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             >
               <option value="sedentary">Bedbound/Sedentary</option>
               <option value="light">Light Activity (sitting, limited movement)</option>
@@ -442,8 +442,8 @@ export default function NutritionCalculator({ patientInfo }: PatientInfoProps) {
             </select>
           </div>
 
-          <div className="bg-blue-50 p-4 rounded-md">
-            <p className="text-sm font-semibold text-gray-700 mb-2">Nigerian Food Database</p>
+          <div className="bg-blue-50 p-3 sm:p-4 rounded-md">
+            <p className="text-xs sm:text-sm font-semibold text-gray-700 mb-2">Nigerian Food Database</p>
             <p className="text-xs text-gray-600">
               This calculator uses {nigerianFoods.length} common Nigerian/African foods including:
               rice, yam, plantain, egusi, okro, fish, chicken, beans, vegetables, and local fruits.
@@ -483,37 +483,37 @@ export default function NutritionCalculator({ patientInfo }: PatientInfoProps) {
               </div>
             )}
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-              <div className="bg-white p-4 rounded-md">
-                <p className="text-sm text-gray-600">Total Calories</p>
-                <p className="text-2xl font-bold text-green-600">{result.totalCalories} kcal</p>
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4">
+              <div className="bg-white p-3 sm:p-4 rounded-md">
+                <p className="text-xs sm:text-sm text-gray-600">Total Calories</p>
+                <p className="text-lg sm:text-2xl font-bold text-green-600">{result.totalCalories} kcal</p>
               </div>
-              <div className="bg-white p-4 rounded-md">
-                <p className="text-sm text-gray-600">Protein</p>
-                <p className="text-2xl font-bold text-blue-600">{result.proteinRequirement} g</p>
+              <div className="bg-white p-3 sm:p-4 rounded-md">
+                <p className="text-xs sm:text-sm text-gray-600">Protein</p>
+                <p className="text-lg sm:text-2xl font-bold text-blue-600">{result.proteinRequirement} g</p>
               </div>
-              <div className="bg-white p-4 rounded-md">
-                <p className="text-sm text-gray-600">Carbohydrates</p>
-                <p className="text-2xl font-bold text-orange-600">{result.carbsGrams} g</p>
+              <div className="bg-white p-3 sm:p-4 rounded-md">
+                <p className="text-xs sm:text-sm text-gray-600">Carbohydrates</p>
+                <p className="text-lg sm:text-2xl font-bold text-orange-600">{result.carbsGrams} g</p>
               </div>
-              <div className="bg-white p-4 rounded-md">
-                <p className="text-sm text-gray-600">Fats</p>
-                <p className="text-2xl font-bold text-yellow-600">{result.fatsGrams} g</p>
+              <div className="bg-white p-3 sm:p-4 rounded-md">
+                <p className="text-xs sm:text-sm text-gray-600">Fats</p>
+                <p className="text-lg sm:text-2xl font-bold text-yellow-600">{result.fatsGrams} g</p>
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-4">
-              <div className="bg-orange-50 p-3 rounded-md">
+            <div className="grid grid-cols-2 xs:grid-cols-3 gap-3 sm:gap-4">
+              <div className="bg-orange-50 p-2 sm:p-3 rounded-md">
                 <p className="text-xs text-gray-600">Vitamin C</p>
-                <p className="text-lg font-bold text-orange-700">{result.vitaminC} mg/day</p>
+                <p className="text-base sm:text-lg font-bold text-orange-700">{result.vitaminC} mg/day</p>
               </div>
-              <div className="bg-blue-50 p-3 rounded-md">
+              <div className="bg-blue-50 p-2 sm:p-3 rounded-md">
                 <p className="text-xs text-gray-600">Zinc</p>
-                <p className="text-lg font-bold text-blue-700">{result.zinc} mg/day</p>
+                <p className="text-base sm:text-lg font-bold text-blue-700">{result.zinc} mg/day</p>
               </div>
-              <div className="bg-yellow-50 p-3 rounded-md">
+              <div className="bg-yellow-50 p-2 sm:p-3 rounded-md">
                 <p className="text-xs text-gray-600">Vitamin A</p>
-                <p className="text-lg font-bold text-yellow-700">{result.vitaminA} IU/day</p>
+                <p className="text-base sm:text-lg font-bold text-yellow-700">{result.vitaminA} IU/day</p>
               </div>
             </div>
 
@@ -528,32 +528,32 @@ export default function NutritionCalculator({ patientInfo }: PatientInfoProps) {
           </div>
 
           {/* Weekly Meal Plan */}
-          <div className="bg-white border-2 border-green-600 rounded-lg p-6">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">7-Day Nigerian Meal Plan</h3>
+          <div className="bg-white border-2 border-green-600 rounded-lg p-3 sm:p-4 md:p-6">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">7-Day Nigerian Meal Plan</h3>
             
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {result.mealPlan.map((day: MealPlan, index: number) => (
                 <div key={index} className="border-b border-gray-200 pb-4 last:border-b-0">
-                  <h4 className="font-bold text-lg text-primary-600 mb-3">{day.day}</h4>
+                  <h4 className="font-bold text-base sm:text-lg text-primary-600 mb-2 sm:mb-3">{day.day}</h4>
                   
-                  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="bg-yellow-50 p-3 rounded-md">
+                  <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                    <div className="bg-yellow-50 p-2 sm:p-3 rounded-md">
                       <p className="text-xs font-semibold text-gray-700 mb-1">🌅 BREAKFAST</p>
-                      <ul className="text-sm text-gray-700 space-y-1">
+                      <ul className="text-xs sm:text-sm text-gray-700 space-y-1">
                         {day.breakfast.map((item, i) => <li key={i}>• {item}</li>)}
                       </ul>
                     </div>
 
-                    <div className="bg-orange-50 p-3 rounded-md">
+                    <div className="bg-orange-50 p-2 sm:p-3 rounded-md">
                       <p className="text-xs font-semibold text-gray-700 mb-1">🌞 LUNCH</p>
-                      <ul className="text-sm text-gray-700 space-y-1">
+                      <ul className="text-xs sm:text-sm text-gray-700 space-y-1">
                         {day.lunch.map((item, i) => <li key={i}>• {item}</li>)}
                       </ul>
                     </div>
 
-                    <div className="bg-blue-50 p-3 rounded-md">
+                    <div className="bg-blue-50 p-2 sm:p-3 rounded-md">
                       <p className="text-xs font-semibold text-gray-700 mb-1">🌙 DINNER</p>
-                      <ul className="text-sm text-gray-700 space-y-1">
+                      <ul className="text-xs sm:text-sm text-gray-700 space-y-1">
                         {day.dinner.map((item, i) => <li key={i}>• {item}</li>)}
                       </ul>
                     </div>

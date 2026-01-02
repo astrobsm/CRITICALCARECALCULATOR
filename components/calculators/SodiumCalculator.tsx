@@ -149,17 +149,17 @@ export default function SodiumCalculator({ patientInfo }: PatientInfoProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-xl p-6 md:p-8">
-      <div className="flex items-center gap-3 mb-6">
-        <Calculator className="w-7 h-7 text-primary-600" />
-        <h2 className="text-2xl font-bold text-gray-800">Sodium Disorder Calculator</h2>
+    <div className="bg-white rounded-lg shadow-xl p-3 sm:p-4 md:p-6 overflow-x-hidden">
+      <div className="flex items-center gap-3 mb-4 sm:mb-6">
+        <Calculator className="w-6 h-6 sm:w-7 sm:h-7 text-primary-600" />
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800">Sodium Disorder Calculator</h2>
       </div>
 
       {/* Alert Box */}
-      <div className="bg-blue-50 border-l-4 border-primary-600 p-4 mb-6">
-        <div className="flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
-          <div className="text-sm text-gray-700">
+      <div className="bg-blue-50 border-l-4 border-primary-600 p-3 sm:p-4 mb-4 sm:mb-6">
+        <div className="flex items-start gap-2 sm:gap-3">
+          <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 mt-0.5 flex-shrink-0" />
+          <div className="text-xs sm:text-sm text-gray-700">
             <p className="font-semibold mb-1">WHO Safety Guidelines for Sodium Correction</p>
             <ul className="list-disc ml-4 space-y-1">
               <li>Max correction: 6-8 mEq/L per 24 hours (NEVER exceed 10-12 mEq/L)</li>
@@ -173,57 +173,57 @@ export default function SodiumCalculator({ patientInfo }: PatientInfoProps) {
       </div>
 
       {/* Input Form */}
-      <div className="grid md:grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
             Current Sodium (mmol/L)
           </label>
           <input
             type="number"
             value={currentNa}
             onChange={(e) => setCurrentNa(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             placeholder="e.g., 118"
             step="0.1"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
             Target Sodium (mmol/L)
           </label>
           <input
             type="number"
             value={targetNa}
             onChange={(e) => setTargetNa(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             placeholder="e.g., 124"
             step="0.1"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
             Body Weight (kg)
           </label>
           <input
             type="number"
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             placeholder="e.g., 70"
             step="0.1"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
             Patient Category
           </label>
           <select
             value={gender}
             onChange={(e) => setGender(e.target.value as Gender)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
           >
             <option value="male">Adult Male (TBW: 60%)</option>
             <option value="female">Adult Female (TBW: 50%)</option>
@@ -233,13 +233,13 @@ export default function SodiumCalculator({ patientInfo }: PatientInfoProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
             Volume Status
           </label>
           <select
             value={volumeStatus}
             onChange={(e) => setVolumeStatus(e.target.value as VolumeStatus)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
           >
             <option value="hypovolemic">Hypovolemic</option>
             <option value="euvolemic">Euvolemic</option>
@@ -254,9 +254,9 @@ export default function SodiumCalculator({ patientInfo }: PatientInfoProps) {
               id="acute"
               checked={isAcute}
               onChange={(e) => setIsAcute(e.target.checked)}
-              className="w-4 h-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+              className="w-5 h-5 sm:w-4 sm:h-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded touch-manipulation"
             />
-            <label htmlFor="acute" className="ml-2 text-sm font-medium text-gray-700">
+            <label htmlFor="acute" className="ml-2 text-xs sm:text-sm font-medium text-gray-700">
               Acute onset (&lt;48 hours)
             </label>
           </div>
@@ -267,9 +267,9 @@ export default function SodiumCalculator({ patientInfo }: PatientInfoProps) {
               id="symptoms"
               checked={hasSymptoms}
               onChange={(e) => setHasSymptoms(e.target.checked)}
-              className="w-4 h-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+              className="w-5 h-5 sm:w-4 sm:h-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded touch-manipulation"
             />
-            <label htmlFor="symptoms" className="ml-2 text-sm font-medium text-gray-700">
+            <label htmlFor="symptoms" className="ml-2 text-xs sm:text-sm font-medium text-gray-700">
               Severe symptoms (seizures/coma)
             </label>
           </div>
@@ -278,7 +278,7 @@ export default function SodiumCalculator({ patientInfo }: PatientInfoProps) {
 
       <button
         onClick={calculateSodium}
-        className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+        className="w-full bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white font-semibold py-3 px-4 sm:px-6 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm sm:text-base min-h-[44px] touch-manipulation"
       >
         <Calculator className="w-5 h-5" />
         Calculate Treatment Plan
@@ -286,10 +286,10 @@ export default function SodiumCalculator({ patientInfo }: PatientInfoProps) {
 
       {/* Results */}
       {result && (
-        <div className="mt-8 space-y-6">
-          <div className="border-t-2 border-gray-200 pt-6">
-            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <FileText className="w-6 h-6 text-primary-600" />
+        <div className="mt-6 sm:mt-8 space-y-4 sm:space-y-6">
+          <div className="border-t-2 border-gray-200 pt-4 sm:pt-6">
+            <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-primary-600" />
               Treatment Plan
             </h3>
 
@@ -302,29 +302,29 @@ export default function SodiumCalculator({ patientInfo }: PatientInfoProps) {
             </div>
 
             {/* Calculations */}
-            <div className="grid md:grid-cols-2 gap-4 mb-6">
-              <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-sm text-gray-600 mb-1">Total Body Water</p>
-                <p className="text-2xl font-bold text-gray-800">{result.tbw} L</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                <p className="text-xs sm:text-sm text-gray-600 mb-1">Total Body Water</p>
+                <p className="text-xl sm:text-2xl font-bold text-gray-800">{result.tbw} L</p>
               </div>
 
               {result.isHypo && (
-                <div className="bg-primary-50 rounded-lg p-4">
-                  <p className="text-sm text-gray-600 mb-1">Sodium Deficit</p>
-                  <p className="text-2xl font-bold text-primary-600">{result.sodiumDeficit} mmol</p>
+                <div className="bg-primary-50 rounded-lg p-3 sm:p-4">
+                  <p className="text-xs sm:text-sm text-gray-600 mb-1">Sodium Deficit</p>
+                  <p className="text-xl sm:text-2xl font-bold text-primary-600">{result.sodiumDeficit} mmol</p>
                 </div>
               )}
 
               {result.waterDeficit && (
-                <div className="bg-primary-50 rounded-lg p-4">
-                  <p className="text-sm text-gray-600 mb-1">Free Water Deficit</p>
-                  <p className="text-2xl font-bold text-primary-600">{result.waterDeficit} L</p>
+                <div className="bg-primary-50 rounded-lg p-3 sm:p-4">
+                  <p className="text-xs sm:text-sm text-gray-600 mb-1">Free Water Deficit</p>
+                  <p className="text-xl sm:text-2xl font-bold text-primary-600">{result.waterDeficit} L</p>
                 </div>
               )}
 
-              <div className="bg-green-50 rounded-lg p-4">
-                <p className="text-sm text-gray-600 mb-1">Max Correction Rate</p>
-                <p className="text-2xl font-bold text-green-600">
+              <div className="bg-green-50 rounded-lg p-3 sm:p-4">
+                <p className="text-xs sm:text-sm text-gray-600 mb-1">Max Correction Rate</p>
+                <p className="text-lg sm:text-2xl font-bold text-green-600">
                   {result.maxCorrection} mmol/L per {result.correctionTime}h
                 </p>
               </div>
@@ -341,22 +341,22 @@ export default function SodiumCalculator({ patientInfo }: PatientInfoProps) {
 
             {/* WHO-Based Calculations for 0.9% NS */}
             {result.isHypo && (
-              <div className="grid md:grid-cols-3 gap-4 mb-4">
-                <div className="bg-green-50 rounded-lg p-4">
-                  <p className="text-sm text-gray-600 mb-1">Na+ Change per L (0.9% NS)</p>
-                  <p className="text-xl font-bold text-green-600">{result.changePerLiterNS} mEq/L</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4">
+                <div className="bg-green-50 rounded-lg p-3 sm:p-4">
+                  <p className="text-xs sm:text-sm text-gray-600 mb-1">Na+ Change per L (0.9% NS)</p>
+                  <p className="text-lg sm:text-xl font-bold text-green-600">{result.changePerLiterNS} mEq/L</p>
                   <p className="text-xs text-gray-500 mt-1">Adie-Conan Formula</p>
                 </div>
 
-                <div className="bg-blue-50 rounded-lg p-4">
-                  <p className="text-sm text-gray-600 mb-1">Volume 0.9% NS Needed</p>
-                  <p className="text-xl font-bold text-blue-600">{result.volumeNSNeeded} L</p>
+                <div className="bg-blue-50 rounded-lg p-3 sm:p-4">
+                  <p className="text-xs sm:text-sm text-gray-600 mb-1">Volume 0.9% NS Needed</p>
+                  <p className="text-lg sm:text-xl font-bold text-blue-600">{result.volumeNSNeeded} L</p>
                   <p className="text-xs text-gray-500 mt-1">For safe 24h correction</p>
                 </div>
 
-                <div className="bg-purple-50 rounded-lg p-4">
-                  <p className="text-sm text-gray-600 mb-1">Initial Infusion Rate</p>
-                  <p className="text-xl font-bold text-purple-600">{result.infusionRateMlPerHr} mL/hr</p>
+                <div className="bg-purple-50 rounded-lg p-3 sm:p-4">
+                  <p className="text-xs sm:text-sm text-gray-600 mb-1">Initial Infusion Rate</p>
+                  <p className="text-lg sm:text-xl font-bold text-purple-600">{result.infusionRateMlPerHr} mL/hr</p>
                   <p className="text-xs text-gray-500 mt-1">Target: 0.5 mEq/L/hr</p>
                 </div>
               </div>

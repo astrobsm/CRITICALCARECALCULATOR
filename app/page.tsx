@@ -162,41 +162,43 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 overflow-x-hidden">
       {/* Offline Banner */}
       {!isOnline && (
-        <div className="bg-yellow-500 text-yellow-900 px-4 py-2 text-center text-sm font-medium flex items-center justify-center gap-2">
-          <WifiOff className="w-4 h-4" />
-          <span>You're offline - All calculators still work! Data is saved locally.</span>
+        <div className="bg-yellow-500 text-yellow-900 px-3 py-2 text-center text-xs sm:text-sm font-medium flex items-center justify-center gap-2 safe-area-top">
+          <WifiOff className="w-4 h-4 flex-shrink-0" />
+          <span className="truncate">Offline - All calculators work! Data saved locally.</span>
         </div>
       )}
 
       {/* Header */}
-      <header className="bg-primary-600 text-white shadow-lg">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+      <header className="bg-primary-600 text-white shadow-lg safe-area-top">
+        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 md:py-6">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <Image 
                 src="/logo.png" 
                 alt="CCC Logo" 
                 width={48} 
                 height={48}
-                className="w-12 h-12 object-contain"
+                className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain flex-shrink-0"
                 priority
               />
-              <div>
-                <h1 className="text-2xl md:text-3xl font-bold">Clinical Critical Calculator</h1>
-                <p className="text-sm text-primary-100 mt-1">WHO-Aligned Critical Care Management</p>
+              <div className="min-w-0">
+                <h1 className="text-base sm:text-lg md:text-2xl lg:text-3xl font-bold truncate">Clinical Critical Calculator</h1>
+                <p className="text-xs sm:text-sm text-primary-100 mt-0.5 hidden sm:block">WHO-Aligned Critical Care Management</p>
               </div>
             </div>
-            <div className="hidden md:flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm flex-shrink-0">
               {isOnline ? (
                 <span className="flex items-center gap-1 text-green-300">
-                  <Wifi className="w-4 h-4" /> Online
+                  <Wifi className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">Online</span>
                 </span>
               ) : (
                 <span className="flex items-center gap-1 text-yellow-300">
-                  <WifiOff className="w-4 h-4" /> Offline Mode
+                  <WifiOff className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">Offline</span>
                 </span>
               )}
             </div>
@@ -208,25 +210,26 @@ export default function Home() {
       {/* Patient Information Banner */}
       {patientInfo.name && (
         <div className="bg-gradient-to-r from-blue-100 to-blue-50 border-b-2 border-blue-300 no-print">
-          <div className="container mx-auto px-4 py-3">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="flex flex-wrap items-center gap-6 text-sm">
-                <div><strong>Patient:</strong> {patientInfo.name}</div>
-                {patientInfo.hospital && <div><strong>Hospital:</strong> {patientInfo.hospital}</div>}
-                <div><strong>Age:</strong> {patientInfo.age} years</div>
-                <div><strong>Gender:</strong> {patientInfo.gender === 'male' ? 'Male' : 'Female'}</div>
-                <div><strong>Hospital #:</strong> {patientInfo.hospitalNumber}</div>
-                {patientInfo.diagnosis && <div><strong>Dx:</strong> {patientInfo.diagnosis}</div>}
+          <div className="container mx-auto px-3 sm:px-4 py-2 sm:py-3">
+            <div className="flex items-start justify-between gap-2">
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-x-3 gap-y-1 sm:gap-4 md:gap-6 text-xs sm:text-sm min-w-0">
+                <div className="truncate"><strong>Patient:</strong> {patientInfo.name}</div>
+                {patientInfo.hospital && <div className="truncate hidden sm:block"><strong>Hospital:</strong> {patientInfo.hospital}</div>}
+                <div><strong>Age:</strong> {patientInfo.age}y</div>
+                <div><strong>Gender:</strong> {patientInfo.gender === 'male' ? 'M' : 'F'}</div>
+                <div className="truncate"><strong>MRN:</strong> {patientInfo.hospitalNumber}</div>
+                {patientInfo.diagnosis && <div className="truncate col-span-2 sm:col-span-1"><strong>Dx:</strong> {patientInfo.diagnosis}</div>}
               </div>
               <button
+                type="button"
                 onClick={() => setShowPatientForm(true)}
-                className="text-xs text-blue-600 hover:text-blue-800 underline"
+                className="text-xs text-blue-600 hover:text-blue-800 underline flex-shrink-0 touch-manipulation min-h-[32px] flex items-center"
               >
                 Edit
               </button>
             </div>
             {patientInfo.comorbidities.length > 0 && (
-              <div className="mt-2 text-xs">
+              <div className="mt-1 sm:mt-2 text-xs line-clamp-2">
                 <strong>Comorbidities:</strong> {patientInfo.comorbidities.join(', ')}
               </div>
             )}
@@ -236,15 +239,16 @@ export default function Home() {
 
       {/* Tab Navigation */}
       <nav className="bg-white shadow-md sticky top-0 z-10 no-print">
-        <div className="container mx-auto px-4">
-          <div className="flex overflow-x-auto">
+        <div className="container mx-auto px-0 sm:px-4">
+          <div className="flex overflow-x-auto scrollbar-hide -webkit-overflow-scrolling-touch">
             <button
               type="button"
               onClick={() => setShowPatientForm(true)}
-              className="flex items-center gap-2 px-4 py-4 font-semibold text-blue-600 hover:bg-blue-50 transition-all whitespace-nowrap border-r border-gray-200 touch-manipulation"
+              className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-3 sm:py-4 font-medium sm:font-semibold text-blue-600 hover:bg-blue-50 transition-all whitespace-nowrap border-r border-gray-200 touch-manipulation text-xs sm:text-sm min-h-[48px]"
             >
-              <User className="w-5 h-5" />
-              Patient Info
+              <User className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden xs:inline">Patient</span>
+              <span className="xs:hidden">Info</span>
             </button>
             {tabs.map((tab) => {
               const Icon = tab.icon;
@@ -253,14 +257,14 @@ export default function Home() {
                   type="button"
                   key={tab.id}
                   onClick={() => handleTabChange(tab.id)}
-                  className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all whitespace-nowrap touch-manipulation ${
+                  className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 md:px-6 py-3 sm:py-4 font-medium sm:font-semibold transition-all whitespace-nowrap touch-manipulation text-xs sm:text-sm min-h-[48px] ${
                     activeTab === tab.id
                       ? 'text-primary-600 border-b-2 border-primary-600 bg-primary-50'
                       : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50 active:bg-gray-100'
                   }`}
                 >
-                  <Icon className="w-5 h-5" />
-                  {tab.label}
+                  <Icon className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                  <span className="truncate max-w-[60px] sm:max-w-none">{tab.label}</span>
                 </button>
               );
             })}
@@ -270,36 +274,36 @@ export default function Home() {
 
       {/* Patient Information Form Modal */}
       {showPatientForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-blue-600 text-white p-6 rounded-t-lg">
-              <h2 className="text-2xl font-bold">Patient Information</h2>
-              <p className="text-sm text-blue-100 mt-1">Enter patient details for all calculators</p>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4">
+          <div className="bg-white rounded-t-xl sm:rounded-lg shadow-xl w-full sm:max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden flex flex-col">
+            <div className="sticky top-0 bg-blue-600 text-white p-4 sm:p-6 rounded-t-xl sm:rounded-t-lg flex-shrink-0">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold">Patient Information</h2>
+              <p className="text-xs sm:text-sm text-blue-100 mt-0.5 sm:mt-1">Enter patient details for all calculators</p>
             </div>
             
-            <div className="p-6 space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
+            <div className="p-4 sm:p-6 space-y-3 sm:space-y-4 overflow-y-auto max-h-[60vh]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
                     Patient Name *
                   </label>
                   <input
                     type="text"
                     value={patientInfo.name}
                     onChange={(e) => setPatientInfo({...patientInfo, name: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 touch-manipulation"
                     placeholder="Full Name"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
                     Hospital *
                   </label>
                   <select
                     value={patientInfo.hospital}
                     onChange={(e) => setPatientInfo({...patientInfo, hospital: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 touch-manipulation"
                   >
                     <option value="">Select Hospital</option>
                     <option value="St Marys Hospital">St Marys Hospital</option>
@@ -313,39 +317,40 @@ export default function Home() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
                     Hospital Number *
                   </label>
                   <input
                     type="text"
                     value={patientInfo.hospitalNumber}
                     onChange={(e) => setPatientInfo({...patientInfo, hospitalNumber: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 touch-manipulation"
                     placeholder="e.g., MRN123456"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
                     Age (years) *
                   </label>
                   <input
                     type="number"
+                    inputMode="numeric"
                     value={patientInfo.age}
                     onChange={(e) => setPatientInfo({...patientInfo, age: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 touch-manipulation"
                     placeholder="Age"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
                     Gender *
                   </label>
                   <select
                     value={patientInfo.gender}
                     onChange={(e) => setPatientInfo({...patientInfo, gender: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 touch-manipulation"
                   >
                     <option value="male">Male</option>
                     <option value="female">Female</option>
@@ -354,49 +359,50 @@ export default function Home() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
                   Diagnosis
                 </label>
                 <input
                   type="text"
                   value={patientInfo.diagnosis}
                   onChange={(e) => setPatientInfo({...patientInfo, diagnosis: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 touch-manipulation"
                   placeholder="Primary diagnosis"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
                   Comorbidities
-                  <span className="text-xs text-gray-500 ml-2">(Select all that apply - affects drug dosing, fluid management, and nutrition)</span>
+                  <span className="text-xs text-gray-500 ml-1 sm:ml-2 block sm:inline">(Select all that apply)</span>
                 </label>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-60 overflow-y-auto border border-gray-200 rounded-md p-3">
+                <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-1.5 sm:gap-2 max-h-48 sm:max-h-60 overflow-y-auto border border-gray-200 rounded-md p-2 sm:p-3">
                   {availableComorbidities.map((comorbidity) => (
-                    <label key={comorbidity} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                    <label key={comorbidity} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 active:bg-gray-100 p-1.5 sm:p-1 rounded touch-manipulation min-h-[36px]">
                       <input
                         type="checkbox"
                         checked={patientInfo.comorbidities.includes(comorbidity)}
                         onChange={() => toggleComorbidity(comorbidity)}
-                        className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+                        className="w-5 h-5 sm:w-4 sm:h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
                       />
-                      <span className="text-sm text-gray-700">{comorbidity}</span>
+                      <span className="text-xs sm:text-sm text-gray-700">{comorbidity}</span>
                     </label>
                   ))}
                 </div>
               </div>
             </div>
 
-            <div className="sticky bottom-0 bg-gray-50 px-6 py-4 rounded-b-lg flex gap-3 border-t">
+            <div className="sticky bottom-0 bg-gray-50 px-4 sm:px-6 py-3 sm:py-4 rounded-b-lg flex gap-2 sm:gap-3 border-t safe-area-bottom">
               <button
+                type="button"
                 onClick={() => setShowPatientForm(false)}
-                className="flex-1 px-6 py-2 bg-primary-600 text-white font-semibold rounded-md hover:bg-primary-700 transition-colors"
+                className="flex-1 px-4 sm:px-6 py-3 sm:py-2 bg-primary-600 text-white text-sm sm:text-base font-semibold rounded-md hover:bg-primary-700 active:bg-primary-800 transition-colors touch-manipulation min-h-[44px]"
               >
                 Save & Continue
               </button>
               <button
                 onClick={() => setShowPatientForm(false)}
-                className="px-6 py-2 border border-gray-300 text-gray-700 font-semibold rounded-md hover:bg-gray-50 transition-colors"
+                className="px-4 sm:px-6 py-3 sm:py-2 border border-gray-300 text-gray-700 text-sm sm:text-base font-semibold rounded-md hover:bg-gray-50 active:bg-gray-100 transition-colors touch-manipulation min-h-[44px]"
               >
                 Cancel
               </button>
@@ -406,7 +412,7 @@ export default function Home() {
       )}
 
       {/* Calculator Content */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-6 md:py-8">
         <div className="max-w-4xl mx-auto">
           {activeTab === 'sodium' && <SodiumCalculator patientInfo={patientInfo} />}
           {activeTab === 'potassium' && <PotassiumCalculator patientInfo={patientInfo} />}
@@ -426,18 +432,18 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-6 mt-16 no-print">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-lg font-semibold text-blue-400 mb-3">
+      <footer className="bg-gray-800 text-white py-4 sm:py-6 mt-8 sm:mt-16 no-print safe-area-bottom">
+        <div className="container mx-auto px-3 sm:px-4 text-center">
+          <p className="text-sm sm:text-lg font-semibold text-blue-400 mb-2 sm:mb-3">
             POWERED BY BONNESANTE MEDICALS
           </p>
-          <p className="text-sm italic text-gray-300 mb-4">
+          <p className="text-xs sm:text-sm italic text-gray-300 mb-3 sm:mb-4">
             Caring for and healing with passion
           </p>
-          <p className="text-sm text-gray-400">
+          <p className="text-xs sm:text-sm text-gray-400">
             Clinical Critical Calculator - For healthcare professionals only
           </p>
-          <p className="text-xs text-gray-500 mt-2">
+          <p className="text-xs text-gray-500 mt-1 sm:mt-2 px-2">
             Based on WHO guidelines and standard ICU protocols. Always verify calculations and use clinical judgment.
           </p>
         </div>

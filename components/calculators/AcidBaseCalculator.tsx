@@ -184,17 +184,17 @@ export default function AcidBaseCalculator({ patientInfo }: PatientInfoProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-xl p-6 md:p-8">
-      <div className="flex items-center gap-3 mb-6">
-        <Activity className="w-7 h-7 text-primary-600" />
-        <h2 className="text-2xl font-bold text-gray-800">Acid-Base Disorder Calculator</h2>
+    <div className="bg-white rounded-lg shadow-xl p-3 sm:p-4 md:p-6 overflow-x-hidden">
+      <div className="flex items-center gap-3 mb-4 sm:mb-6">
+        <Activity className="w-6 h-6 sm:w-7 sm:h-7 text-primary-600" />
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800">Acid-Base Disorder Calculator</h2>
       </div>
 
       {/* Alert Box */}
-      <div className="bg-purple-50 border-l-4 border-purple-600 p-4 mb-6">
-        <div className="flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" />
-          <div className="text-sm text-gray-700">
+      <div className="bg-purple-50 border-l-4 border-purple-600 p-3 sm:p-4 mb-4 sm:mb-6">
+        <div className="flex items-start gap-2 sm:gap-3">
+          <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 mt-0.5 flex-shrink-0" />
+          <div className="text-xs sm:text-sm text-gray-700">
             <p className="font-semibold mb-1">ABG Interpretation Guide</p>
             <ul className="list-disc ml-4 space-y-1">
               <li>Normal pH: 7.35-7.45 | HCO3: 22-26 | PCO2: 35-45</li>
@@ -206,86 +206,86 @@ export default function AcidBaseCalculator({ patientInfo }: PatientInfoProps) {
       </div>
 
       {/* Input Form */}
-      <div className="grid md:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6">
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
             pH
           </label>
           <input
             type="number"
             value={ph}
             onChange={(e) => setPh(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             placeholder="e.g., 7.25"
             step="0.01"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
             HCO₃⁻ (mmol/L)
           </label>
           <input
             type="number"
             value={hco3}
             onChange={(e) => setHco3(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             placeholder="e.g., 15"
             step="0.1"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
             PCO₂ (mmHg)
           </label>
           <input
             type="number"
             value={pco2}
             onChange={(e) => setPco2(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             placeholder="e.g., 32"
             step="0.1"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
             Sodium (mmol/L) <span className="text-gray-500 text-xs">optional</span>
           </label>
           <input
             type="number"
             value={na}
             onChange={(e) => setNa(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             placeholder="e.g., 140"
             step="0.1"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
             Chloride (mmol/L) <span className="text-gray-500 text-xs">optional</span>
           </label>
           <input
             type="number"
             value={cl}
             onChange={(e) => setCl(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             placeholder="e.g., 105"
             step="0.1"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
             Body Weight (kg) <span className="text-gray-500 text-xs">for HCO₃ calc</span>
           </label>
           <input
             type="number"
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             placeholder="e.g., 70"
             step="0.1"
           />
@@ -294,7 +294,7 @@ export default function AcidBaseCalculator({ patientInfo }: PatientInfoProps) {
 
       <button
         onClick={calculateAcidBase}
-        className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+        className="w-full bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white font-semibold py-3 px-4 sm:px-6 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm sm:text-base min-h-[44px] touch-manipulation"
       >
         <Calculator className="w-5 h-5" />
         Analyze Acid-Base Status
@@ -318,7 +318,7 @@ export default function AcidBaseCalculator({ patientInfo }: PatientInfoProps) {
             </div>
 
             {/* ABG Values */}
-            <div className="grid md:grid-cols-3 gap-4 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6">
               <div className="bg-gray-50 rounded-lg p-4">
                 <p className="text-sm text-gray-600 mb-1">pH</p>
                 <p className="text-2xl font-bold text-gray-800">{result.ph.toFixed(2)}</p>

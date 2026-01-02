@@ -687,63 +687,67 @@ export default function WeightGainCalculator({ patientInfo }: PatientInfoProps) 
         Targeted Weight Gain Meal Plan
       </h2>
       
-      <div className="bg-green-50 p-4 rounded mb-6">
+      <div className="bg-green-50 p-3 sm:p-4 rounded mb-4 sm:mb-6">
         <div className="flex items-start gap-2">
-          <Info className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-          <div className="text-sm">
+          <Info className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 mt-0.5 flex-shrink-0" />
+          <div className="text-xs sm:text-sm">
             <p className="font-semibold text-green-900">Healthy Weight Gain Program</p>
             <p className="text-green-800">Safe muscle building through caloric surplus, high protein, and resistance training.</p>
           </div>
         </div>
       </div>
 
-      <div className="space-y-6">
-        <div className="grid md:grid-cols-3 gap-4">
+      <div className="space-y-4 sm:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Current Weight (kg) *</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Current Weight (kg) *</label>
             <input
               type="number"
+              inputMode="decimal"
               value={currentWeight}
               onChange={(e) => setCurrentWeight(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               step="0.1"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">Height (cm) *</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Height (cm) *</label>
             <input
               type="number"
+              inputMode="decimal"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               step="0.1"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">Target Weight (kg) *</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Target Weight (kg) *</label>
             <input
               type="number"
+              inputMode="decimal"
               value={targetWeight}
               onChange={(e) => setTargetWeight(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               step="0.1"
             />
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Timeframe (weeks) *</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Timeframe (weeks) *</label>
             <input
               type="number"
+              inputMode="numeric"
               value={timeframe}
               onChange={(e) => setTimeframe(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">Activity Level *</label>
-            <select value={activityLevel} onChange={(e) => setActivityLevel(e.target.value)} className="w-full p-2 border rounded">
+            <label className="block text-xs sm:text-sm font-medium mb-2">Activity Level *</label>
+            <select value={activityLevel} onChange={(e) => setActivityLevel(e.target.value)} className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation">
               <option value="">Select</option>
               <option value="sedentary">Sedentary</option>
               <option value="light">Light</option>
@@ -771,37 +775,37 @@ export default function WeightGainCalculator({ patientInfo }: PatientInfoProps) 
         </button>
 
         {result && (
-          <div className="mt-6 space-y-4">
-            <div className="grid md:grid-cols-4 gap-4">
-              <div className="bg-blue-50 p-4 rounded border-2 border-blue-300">
-                <p className="text-sm">Current BMI</p>
-                <p className="text-3xl font-bold text-blue-600">{result.currentBMI}</p>
+          <div className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+              <div className="bg-blue-50 p-3 sm:p-4 rounded border-2 border-blue-300">
+                <p className="text-xs sm:text-sm">Current BMI</p>
+                <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-600">{result.currentBMI}</p>
               </div>
-              <div className="bg-green-50 p-4 rounded border-2 border-green-300">
-                <p className="text-sm">Target BMI</p>
-                <p className="text-3xl font-bold text-green-600">{result.targetBMI}</p>
+              <div className="bg-green-50 p-3 sm:p-4 rounded border-2 border-green-300">
+                <p className="text-xs sm:text-sm">Target BMI</p>
+                <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-600">{result.targetBMI}</p>
               </div>
-              <div className="bg-orange-50 p-4 rounded border-2 border-orange-300">
-                <p className="text-sm">To Gain</p>
-                <p className="text-3xl font-bold text-orange-600">{result.weightToGain}kg</p>
+              <div className="bg-orange-50 p-3 sm:p-4 rounded border-2 border-orange-300">
+                <p className="text-xs sm:text-sm">To Gain</p>
+                <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-orange-600">{result.weightToGain}kg</p>
               </div>
-              <div className="bg-purple-50 p-4 rounded border-2 border-purple-300">
-                <p className="text-sm">Per Week</p>
-                <p className="text-3xl font-bold text-purple-600">{result.weeklyWeightGain}kg</p>
+              <div className="bg-purple-50 p-3 sm:p-4 rounded border-2 border-purple-300">
+                <p className="text-xs sm:text-sm">Per Week</p>
+                <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-600">{result.weeklyWeightGain}kg</p>
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg border-2 border-green-300">
-              <h3 className="font-bold text-2xl mb-4">Daily Nutritional Targets</h3>
-              <div className="grid md:grid-cols-4 gap-4">
-                <div className="bg-white p-4 rounded">
-                  <p className="text-sm">Calories</p>
-                  <p className="text-3xl font-bold text-green-600">{result.targetCalories}</p>
+            <div className="bg-gradient-to-r from-green-50 to-blue-50 p-4 sm:p-6 rounded-lg border-2 border-green-300">
+              <h3 className="font-bold text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4">Daily Nutritional Targets</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                <div className="bg-white p-3 sm:p-4 rounded">
+                  <p className="text-xs sm:text-sm">Calories</p>
+                  <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-600">{result.targetCalories}</p>
                   <p className="text-xs">kcal/day</p>
                 </div>
-                <div className="bg-white p-4 rounded">
-                  <p className="text-sm">Protein</p>
-                  <p className="text-3xl font-bold text-red-600">{result.proteinGrams}g</p>
+                <div className="bg-white p-3 sm:p-4 rounded">
+                  <p className="text-xs sm:text-sm">Protein</p>
+                  <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-red-600">{result.proteinGrams}g</p>
                   <p className="text-xs">High for muscle</p>
                 </div>
                 <div className="bg-white p-4 rounded">

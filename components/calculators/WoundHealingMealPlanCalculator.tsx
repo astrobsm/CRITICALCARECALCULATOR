@@ -727,35 +727,37 @@ export default function WoundHealingMealPlanCalculator({ patientInfo }: PatientI
       <div className="bg-blue-50 p-4 rounded mb-6">
         <div className="flex items-start gap-2">
           <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-          <div className="text-sm">
+          <div className="text-xs sm:text-sm">
             <p className="font-semibold text-blue-900">Enhanced Nutrition for Wound Healing</p>
             <p className="text-blue-800">Personalized meal plans to support tissue repair, immune function, and recovery. Includes Nigerian-adapted high-protein, nutrient-dense menus with comorbidity modifications.</p>
           </div>
         </div>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Patient Parameters */}
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Body Weight (kg) *</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Body Weight (kg) *</label>
             <input
               type="number"
+              inputMode="decimal"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="Enter weight in kg"
               step="0.1"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Serum Albumin (g/dL)</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Serum Albumin (g/dL)</label>
             <input
               type="number"
+              inputMode="decimal"
               value={albumin}
               onChange={(e) => setAlbumin(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
               placeholder="Enter albumin level (optional)"
               step="0.1"
             />
@@ -764,13 +766,13 @@ export default function WoundHealingMealPlanCalculator({ patientInfo }: PatientI
         </div>
 
         {/* Wound Information */}
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Type of Wound *</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Type of Wound *</label>
             <select
               value={woundType}
               onChange={(e) => setWoundType(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             >
               <option value="">Select wound type</option>
               <option value="surgical">Post-Surgical Wound</option>
@@ -784,11 +786,11 @@ export default function WoundHealingMealPlanCalculator({ patientInfo }: PatientI
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Wound Severity *</label>
+            <label className="block text-xs sm:text-sm font-medium mb-2">Wound Severity *</label>
             <select
               value={woundSeverity}
               onChange={(e) => setWoundSeverity(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded text-sm sm:text-base text-gray-900 min-h-[44px] touch-manipulation"
             >
               <option value="">Select severity</option>
               <option value="mild">Mild (Small, superficial)</option>
@@ -816,37 +818,37 @@ export default function WoundHealingMealPlanCalculator({ patientInfo }: PatientI
         </div>
 
         {/* Comorbidities */}
-        <div className="border-2 border-orange-200 rounded-lg p-4">
-          <h3 className="font-bold text-orange-700 mb-3">Comorbidities (Check all that apply)</h3>
-          <div className="grid md:grid-cols-2 gap-3">
-            <label className="flex items-center space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer">
-              <input type="checkbox" checked={diabetes} onChange={(e) => setDiabetes(e.target.checked)} className="w-4 h-4" />
-              <span className="text-sm">Diabetes Mellitus</span>
+        <div className="border-2 border-orange-200 rounded-lg p-3 sm:p-4">
+          <h3 className="font-bold text-sm sm:text-base text-orange-700 mb-2 sm:mb-3">Comorbidities (Check all that apply)</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+            <label className="flex items-center space-x-2 p-2 hover:bg-orange-50 active:bg-orange-100 rounded cursor-pointer touch-manipulation min-h-[40px]">
+              <input type="checkbox" checked={diabetes} onChange={(e) => setDiabetes(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm">Diabetes Mellitus</span>
             </label>
 
-            <label className="flex items-center space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer">
-              <input type="checkbox" checked={ckd} onChange={(e) => setCkd(e.target.checked)} className="w-4 h-4" />
-              <span className="text-sm">Chronic Kidney Disease</span>
+            <label className="flex items-center space-x-2 p-2 hover:bg-orange-50 active:bg-orange-100 rounded cursor-pointer touch-manipulation min-h-[40px]">
+              <input type="checkbox" checked={ckd} onChange={(e) => setCkd(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm">Chronic Kidney Disease</span>
             </label>
 
-            <label className="flex items-center space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer">
-              <input type="checkbox" checked={hypertension} onChange={(e) => setHypertension(e.target.checked)} className="w-4 h-4" />
-              <span className="text-sm">Hypertension</span>
+            <label className="flex items-center space-x-2 p-2 hover:bg-orange-50 active:bg-orange-100 rounded cursor-pointer touch-manipulation min-h-[40px]">
+              <input type="checkbox" checked={hypertension} onChange={(e) => setHypertension(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm">Hypertension</span>
             </label>
 
-            <label className="flex items-center space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer">
-              <input type="checkbox" checked={heartDisease} onChange={(e) => setHeartDisease(e.target.checked)} className="w-4 h-4" />
-              <span className="text-sm">Heart Disease</span>
+            <label className="flex items-center space-x-2 p-2 hover:bg-orange-50 active:bg-orange-100 rounded cursor-pointer touch-manipulation min-h-[40px]">
+              <input type="checkbox" checked={heartDisease} onChange={(e) => setHeartDisease(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm">Heart Disease</span>
             </label>
 
-            <label className="flex items-center space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer">
-              <input type="checkbox" checked={liverDisease} onChange={(e) => setLiverDisease(e.target.checked)} className="w-4 h-4" />
-              <span className="text-sm">Liver Disease</span>
+            <label className="flex items-center space-x-2 p-2 hover:bg-orange-50 active:bg-orange-100 rounded cursor-pointer touch-manipulation min-h-[40px]">
+              <input type="checkbox" checked={liverDisease} onChange={(e) => setLiverDisease(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm">Liver Disease</span>
             </label>
 
-            <label className="flex items-center space-x-2 p-2 hover:bg-orange-50 rounded cursor-pointer">
-              <input type="checkbox" checked={obesity} onChange={(e) => setObesity(e.target.checked)} className="w-4 h-4" />
-              <span className="text-sm">Obesity (BMI &gt; 30)</span>
+            <label className="flex items-center space-x-2 p-2 hover:bg-orange-50 active:bg-orange-100 rounded cursor-pointer touch-manipulation min-h-[40px]">
+              <input type="checkbox" checked={obesity} onChange={(e) => setObesity(e.target.checked)} className="w-5 h-5 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm">Obesity (BMI &gt; 30)</span>
             </label>
           </div>
         </div>
@@ -854,28 +856,28 @@ export default function WoundHealingMealPlanCalculator({ patientInfo }: PatientI
         <button
           onClick={calculateMealPlan}
           disabled={!weight || !woundType || !woundSeverity}
-          className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 font-bold text-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 active:bg-green-800 font-bold text-sm sm:text-base lg:text-lg disabled:bg-gray-400 disabled:cursor-not-allowed min-h-[48px] touch-manipulation"
         >
           Generate Comprehensive Meal Plan
         </button>
 
         {result && (
-          <div className="mt-6 space-y-4">
+          <div className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
             {/* Nutritional Goals Summary */}
-            <div className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg border-2 border-green-300">
-              <h3 className="font-bold text-2xl mb-4 text-green-700">Daily Nutritional Goals</h3>
-              <div className="grid md:grid-cols-3 gap-4">
-                <div className="bg-white p-4 rounded shadow">
-                  <p className="text-sm text-gray-600">Calories</p>
-                  <p className="text-3xl font-bold text-green-600">{result.totalCalories}</p>
-                  <p className="text-xs text-gray-500">kcal/day ({result.calorieRequirement} kcal/kg)</p>
+            <div className="bg-gradient-to-r from-green-50 to-blue-50 p-4 sm:p-6 rounded-lg border-2 border-green-300">
+              <h3 className="font-bold text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 text-green-700">Daily Nutritional Goals</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+                <div className="bg-white p-3 sm:p-4 rounded shadow">
+                  <p className="text-xs sm:text-sm text-gray-600">Calories</p>
+                  <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-600">{result.totalCalories}</p>
+                  <p className="text-xs text-gray-500">kcal/day</p>
                 </div>
-                <div className="bg-white p-4 rounded shadow">
-                  <p className="text-sm text-gray-600">Protein</p>
-                  <p className="text-3xl font-bold text-blue-600">{result.totalProtein}g</p>
-                  <p className="text-xs text-gray-500">/day ({result.proteinRequirement} g/kg)</p>
+                <div className="bg-white p-3 sm:p-4 rounded shadow">
+                  <p className="text-xs sm:text-sm text-gray-600">Protein</p>
+                  <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-600">{result.totalProtein}g</p>
+                  <p className="text-xs text-gray-500">/day</p>
                 </div>
-                <div className="bg-white p-4 rounded shadow">
+                <div className="bg-white p-3 sm:p-4 rounded shadow col-span-2 sm:col-span-1">
                   <p className="text-sm text-gray-600">Fluids</p>
                   <p className="text-3xl font-bold text-cyan-600">{result.totalFluid}</p>
                   <p className="text-xs text-gray-500">ml/day ({result.fluidRequirement} ml/kg)</p>
