@@ -52,6 +52,14 @@ body {
     text-wrap: balance;
   }
   
+  /* Touch-friendly buttons for mobile */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  
   /* Glass morphism effect */
   .glass {
     background: rgba(255, 255, 255, 0.7);

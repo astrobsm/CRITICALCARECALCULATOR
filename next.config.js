@@ -9,18 +9,31 @@ const withPWA = require('next-pwa')({
   },
   cacheOnFrontEndNav: true,
   reloadOnOnline: true,
+  // Ensure all app shell is precached
+  dynamicStartUrl: false,
   runtimeCaching: [
-    // Cache the start URL (home page)
+    // Cache the start URL (home page) - StaleWhileRevalidate for fast offline access
     {
       urlPattern: /^\/$/,
-      handler: 'NetworkFirst',
+      handler: 'StaleWhileRevalidate',
       options: {
         cacheName: 'start-url',
         expiration: {
           maxEntries: 1,
           maxAgeSeconds: 24 * 60 * 60 // 24 hours
-        },
-        networkTimeoutSeconds: 10
+        }
+      }
+    },
+    // Cache all HTML pages for offline navigation
+    {
+      urlPattern: /^https?:\/\/[^/]+\/?$/i,
+      handler: 'StaleWhileRevalidate',
+      options: {
+        cacheName: 'html-pages',
+        expiration: {
+          maxEntries: 10,
+          maxAgeSeconds: 24 * 60 * 60
+        }
       }
     },
     // Cache Google Fonts
@@ -95,30 +108,28 @@ const withPWA = require('next-pwa')({
         }
       }
     },
-    // Cache Next.js data
+    // Cache Next.js data - use StaleWhileRevalidate for offline access
     {
       urlPattern: /\/_next\/data\/.+\/.+\.json$/i,
-      handler: 'NetworkFirst',
+      handler: 'StaleWhileRevalidate',
       options: {
         cacheName: 'next-data',
         expiration: {
           maxEntries: 50,
           maxAgeSeconds: 24 * 60 * 60 // 24 hours
-        },
-        networkTimeoutSeconds: 10
+        }
       }
     },
-    // Cache all other requests
+    // Cache all other requests - StaleWhileRevalidate for better offline experience
     {
       urlPattern: /.*/i,
-      handler: 'NetworkFirst',
+      handler: 'StaleWhileRevalidate',
       options: {
         cacheName: 'others',
         expiration: {
           maxEntries: 200,
           maxAgeSeconds: 24 * 60 * 60 // 24 hours
-        },
-        networkTimeoutSeconds: 10
+        }
       }
     }
   ]

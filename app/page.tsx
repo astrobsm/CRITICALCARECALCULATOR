@@ -29,6 +29,7 @@ const ACTIVE_TAB_KEY = 'ccc_active_tab';
 export default function Home() {
   const [activeTab, setActiveTab] = useState<CalculatorTab>('sodium');
   const [isOnline, setIsOnline] = useState(true);
+  const [isHydrated, setIsHydrated] = useState(false);
   const [patientInfo, setPatientInfo] = useState<PatientInfo>({
     name: '',
     age: '',
@@ -40,8 +41,15 @@ export default function Home() {
   });
   const [showPatientForm, setShowPatientForm] = useState(false);
 
+  // Hydration check - ensures client-side code is loaded
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
   // Load patient info from localStorage on mount
   useEffect(() => {
+    if (!isHydrated) return;
+    
     // Check initial online status
     setIsOnline(navigator.onLine);
 
@@ -77,12 +85,17 @@ export default function Home() {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
-  }, []);
+  }, [isHydrated]);
 
   // Helper to validate tab
   const isValidTab = (tab: string): boolean => {
     const validTabs = ['sodium', 'potassium', 'acidbase', 'gfr', 'bnf', 'burns', 'nutrition', 'dvt', 'pressuresore', 'nutritionalassessment', 'woundmealplan', 'weightloss', 'weightgain', 'sicklecell'];
     return validTabs.includes(tab);
+  };
+
+  // Tab change handler with immediate feedback
+  const handleTabChange = (tabId: CalculatorTab) => {
+    setActiveTab(tabId);
   };
 
   // Save patient info to localStorage whenever it changes
@@ -226,8 +239,9 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="flex overflow-x-auto">
             <button
+              type="button"
               onClick={() => setShowPatientForm(true)}
-              className="flex items-center gap-2 px-4 py-4 font-semibold text-blue-600 hover:bg-blue-50 transition-all whitespace-nowrap border-r border-gray-200"
+              className="flex items-center gap-2 px-4 py-4 font-semibold text-blue-600 hover:bg-blue-50 transition-all whitespace-nowrap border-r border-gray-200 touch-manipulation"
             >
               <User className="w-5 h-5" />
               Patient Info
@@ -236,12 +250,13 @@ export default function Home() {
               const Icon = tab.icon;
               return (
                 <button
+                  type="button"
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all whitespace-nowrap ${
+                  onClick={() => handleTabChange(tab.id)}
+                  className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all whitespace-nowrap touch-manipulation ${
                     activeTab === tab.id
-                      ? 'text-primary-600 border-b-2 border-primary-600'
-                      : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50'
+                      ? 'text-primary-600 border-b-2 border-primary-600 bg-primary-50'
+                      : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50 active:bg-gray-100'
                   }`}
                 >
                   <Icon className="w-5 h-5" />
