@@ -1,8 +1,43 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, IBM_Plex_Sans, Merriweather, Roboto_Mono, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+// Primary UI & Clinical Text - Inter (best practice for medical apps)
+const inter = Inter({ 
+  subsets: ["latin"],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+// Alternative Primary - Source Sans 3 (excellent readability)
+const sourceSans = Source_Sans_3({ 
+  subsets: ["latin"],
+  variable: '--font-source-sans',
+  display: 'swap',
+});
+
+// Headings - IBM Plex Sans (professional, clinical)
+const ibmPlex = IBM_Plex_Sans({ 
+  weight: ['400', '500', '600', '700'],
+  subsets: ["latin"],
+  variable: '--font-ibm-plex',
+  display: 'swap',
+});
+
+// Long Reports / SOPs - Merriweather (excellent for extended reading)
+const merriweather = Merriweather({ 
+  weight: ['300', '400', '700'],
+  subsets: ["latin"],
+  variable: '--font-merriweather',
+  display: 'swap',
+});
+
+// Numbers & Lab Data - Roboto Mono (monospace for clinical values)
+const robotoMono = Roboto_Mono({ 
+  subsets: ["latin"],
+  variable: '--font-roboto-mono',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "Clinical Critical Calculator - WHO-Aligned Medical Tools",
@@ -57,10 +92,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${sourceSans.variable} ${ibmPlex.variable} ${merriweather.variable} ${robotoMono.variable}`}>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#0284c7" />
+        <meta name="theme-color" content="#0369a1" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -84,7 +119,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }
