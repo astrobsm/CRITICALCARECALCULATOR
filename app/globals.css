@@ -9,42 +9,42 @@
    ============================================ */
 
 :root {
-  /* Core Text Colors - WCAG AAA Compliant (7:1 contrast ratio) */
-  --text-primary: #171717;
-  --text-secondary: #262626;
-  --text-tertiary: #404040;
-  --text-muted: #525252;
-  --text-inverse: #ffffff;
+  /* Core Text Colors - White text on navy background */
+  --text-primary: #ffffff;
+  --text-secondary: #f0f9ff;
+  --text-tertiary: #e0f2fe;
+  --text-muted: #bae6fd;
+  --text-inverse: #1e3a5f;
   
-  /* Background Colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #fafafa;
-  --bg-tertiary: #f5f5f5;
-  --bg-accent: #f0f9ff;
+  /* Background Colors - Navy Blue Theme */
+  --bg-primary: #1e3a5f;
+  --bg-secondary: #162d4d;
+  --bg-tertiary: #0f2240;
+  --bg-accent: #234b7a;
   
   /* Brand Colors - WHO Medical Blue */
-  --primary: #0369a1;
-  --primary-light: #0284c7;
-  --primary-dark: #075985;
-  --primary-darker: #0c4a6e;
+  --primary: #38bdf8;
+  --primary-light: #7dd3fc;
+  --primary-dark: #0284c7;
+  --primary-darker: #0369a1;
   
   /* Semantic Colors - Clinical Indicators */
-  --success: #16a34a;
-  --success-bg: #f0fdf4;
-  --warning: #d97706;
-  --warning-bg: #fffbeb;
-  --danger: #dc2626;
-  --danger-bg: #fef2f2;
-  --info: #0369a1;
-  --info-bg: #f0f9ff;
+  --success: #4ade80;
+  --success-bg: #166534;
+  --warning: #fbbf24;
+  --warning-bg: #92400e;
+  --danger: #f87171;
+  --danger-bg: #991b1b;
+  --info: #38bdf8;
+  --info-bg: #0c4a6e;
   
-  /* Form Controls */
-  --input-bg: #f5f5f5;
-  --input-bg-focus: #ffffff;
-  --input-border: #d4d4d4;
-  --input-border-focus: #0369a1;
-  --input-text: #171717;
-  --input-placeholder: #737373;
+  /* Form Controls - Sky Blue fields with Black text */
+  --input-bg: #7dd3fc;
+  --input-bg-focus: #bae6fd;
+  --input-border: #38bdf8;
+  --input-border-focus: #0ea5e9;
+  --input-text: #000000;
+  --input-placeholder: #1e3a5f;
   
   /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -52,25 +52,25 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-/* Dark Mode - Maintains AAA Contrast */
+/* Dark Mode - Same Navy Blue Theme */
 @media (prefers-color-scheme: dark) {
   :root {
-    --text-primary: #fafafa;
-    --text-secondary: #f5f5f5;
-    --text-tertiary: #e5e5e5;
-    --text-muted: #d4d4d4;
-    --text-inverse: #171717;
+    --text-primary: #ffffff;
+    --text-secondary: #f0f9ff;
+    --text-tertiary: #e0f2fe;
+    --text-muted: #bae6fd;
+    --text-inverse: #1e3a5f;
     
-    --bg-primary: #171717;
-    --bg-secondary: #262626;
-    --bg-tertiary: #404040;
-    --bg-accent: #0c4a6e;
+    --bg-primary: #1e3a5f;
+    --bg-secondary: #162d4d;
+    --bg-tertiary: #0f2240;
+    --bg-accent: #234b7a;
     
-    --input-bg: #262626;
-    --input-bg-focus: #404040;
-    --input-border: #525252;
-    --input-text: #fafafa;
-    --input-placeholder: #a3a3a3;
+    --input-bg: #7dd3fc;
+    --input-bg-focus: #bae6fd;
+    --input-border: #38bdf8;
+    --input-text: #000000;
+    --input-placeholder: #1e3a5f;
   }
 }
 
@@ -89,8 +89,8 @@ html {
 }
 
 body {
-  color: var(--text-secondary);
-  background: var(--bg-secondary);
+  color: #ffffff;
+  background: #1e3a5f;
   font-family: var(--font-inter), var(--font-source-sans), system-ui, -apple-system, sans-serif;
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'kern', 'liga';
   -webkit-font-smoothing: antialiased;
@@ -632,3 +632,186 @@ label {
   overflow-x: hidden;
 }
 
+/* ============================================
+   NAVY BLUE THEME OVERRIDES
+   Global overrides for calculator components
+   ============================================ */
+
+/* Override white backgrounds to navy blue */
+.bg-white {
+  background-color: #1e3a5f !important;
+}
+
+.bg-gray-50, .bg-gray-100 {
+  background-color: #162d4d !important;
+}
+
+/* Override all gray text to white for visibility */
+.text-gray-800, .text-gray-700, .text-gray-900 {
+  color: #ffffff !important;
+}
+
+.text-gray-600, .text-gray-500 {
+  color: #bae6fd !important;
+}
+
+/* Override borders to sky blue */
+.border-gray-300, .border-gray-200, .border-gray-100 {
+  border-color: #38bdf8 !important;
+}
+
+/* Override info/alert boxes */
+.bg-blue-50 {
+  background-color: #0c4a6e !important;
+}
+
+.bg-blue-100 {
+  background-color: #075985 !important;
+}
+
+/* Calculator card styling */
+.rounded-lg.shadow-xl {
+  border: 1px solid #38bdf8;
+}
+
+/* Override green/success colors for visibility */
+.text-green-600, .text-green-700, .text-green-800 {
+  color: #4ade80 !important;
+}
+
+.bg-green-50, .bg-green-100 {
+  background-color: #166534 !important;
+}
+
+.border-green-200, .border-green-300, .border-green-400 {
+  border-color: #22c55e !important;
+}
+
+/* Override yellow/warning colors */
+.text-yellow-600, .text-yellow-700, .text-yellow-800 {
+  color: #fde047 !important;
+}
+
+.bg-yellow-50, .bg-yellow-100 {
+  background-color: #854d0e !important;
+}
+
+.border-yellow-200, .border-yellow-300, .border-yellow-400 {
+  border-color: #facc15 !important;
+}
+
+/* Override orange colors */
+.text-orange-600, .text-orange-700 {
+  color: #fb923c !important;
+}
+
+.bg-orange-50, .bg-orange-100 {
+  background-color: #9a3412 !important;
+}
+
+/* Override red/danger colors */
+.text-red-600, .text-red-700, .text-danger-600 {
+  color: #f87171 !important;
+}
+
+.bg-red-50, .bg-red-100, .bg-danger-50 {
+  background-color: #991b1b !important;
+}
+
+.border-red-200, .border-red-300, .border-red-400, .border-danger-200 {
+  border-color: #f87171 !important;
+}
+
+/* Override purple colors */
+.text-purple-600, .text-purple-700 {
+  color: #c084fc !important;
+}
+
+.bg-purple-50, .bg-purple-100 {
+  background-color: #581c87 !important;
+}
+
+/* Primary color adjustments for navy background */
+.text-primary-600, .text-primary-700 {
+  color: #38bdf8 !important;
+}
+
+.bg-primary-50 {
+  background-color: #0c4a6e !important;
+}
+
+/* Button overrides */
+.bg-primary-600 {
+  background-color: #0284c7 !important;
+}
+
+.bg-primary-600:hover {
+  background-color: #0369a1 !important;
+}
+
+/* Secondary backgrounds */
+.bg-clinical-50 {
+  background-color: #162d4d !important;
+}
+
+.bg-clinical-100 {
+  background-color: #234b7a !important;
+}
+
+/* Checkbox styling for navy background */
+input[type="checkbox"] {
+  background-color: #7dd3fc !important;
+  border-color: #38bdf8 !important;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #0284c7 !important;
+  border-color: #0284c7 !important;
+}
+
+/* Radio button styling */
+input[type="radio"] {
+  background-color: #7dd3fc !important;
+  border-color: #38bdf8 !important;
+}
+
+input[type="radio"]:checked {
+  background-color: #0284c7 !important;
+  border-color: #0284c7 !important;
+}
+
+/* Result cards */
+.bg-gradient-to-r {
+  background: linear-gradient(to right, #0f2240, #162d4d) !important;
+}
+
+/* Strong/bold text in clinical context */
+strong {
+  color: #38bdf8;
+}
+
+/* Link colors */
+a {
+  color: #7dd3fc;
+}
+
+a:hover {
+  color: #bae6fd;
+}
+
+/* List markers */
+ul li::marker {
+  color: #38bdf8;
+}
+
+/* Hover states for interactive elements */
+.hover\:bg-gray-50:hover,
+.hover\:bg-gray-100:hover {
+  background-color: #234b7a !important;
+}
+
+/* Active states */
+.active\:bg-gray-100:active,
+.active\:bg-gray-200:active {
+  background-color: #0f2240 !important;
+}
