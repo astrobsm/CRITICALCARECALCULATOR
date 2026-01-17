@@ -177,11 +177,11 @@ export default function Home() {
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <Image 
-                src="/logo.png" 
-                alt="CCC Logo" 
+                src="/icon-192.png" 
+                alt="Clinical Critical Calculator Logo" 
                 width={48} 
                 height={48}
-                className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain flex-shrink-0"
+                className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain flex-shrink-0 rounded-lg"
                 priority
               />
               <div className="min-w-0">

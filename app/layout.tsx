@@ -62,18 +62,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/icon-48.png', sizes: '48x48', type: 'image/png' },
-      { url: '/icon-72.png', sizes: '72x72', type: 'image/png' },
-      { url: '/icon-96.png', sizes: '96x96', type: 'image/png' },
-      { url: '/icon-128.png', sizes: '128x128', type: 'image/png' },
-      { url: '/icon-144.png', sizes: '144x144', type: 'image/png' },
+      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
       { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/icon-384.png', sizes: '384x384', type: 'image/png' },
       { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
     ],
     apple: [
-      { url: '/icon-152.png', sizes: '152x152', type: 'image/png' },
-      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
   },
 };
@@ -83,7 +77,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  themeColor: "#0284c7",
+  themeColor: "#1e3a5f",
 };
 
 export default function RootLayout({
@@ -95,14 +89,14 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${sourceSans.variable} ${ibmPlex.variable} ${merriweather.variable} ${robotoMono.variable}`}>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#0369a1" />
+        <meta name="theme-color" content="#1e3a5f" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Clinical Calc" />
-        <link rel="apple-touch-icon" href="/icon-152.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="/icon-152.png" />
-        <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
