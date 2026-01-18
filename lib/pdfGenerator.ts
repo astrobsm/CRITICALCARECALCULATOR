@@ -1889,3 +1889,170 @@ export function generateWoundHealingMealPlanPDF(
   doc.save(filename);
 }
 
+// ============================================
+// EMERGENCY RESUSCITATION & PRE-OP PDF
+// ============================================
+
+export function generateEmergencyResuscitationPDF(result: any, patientInfo?: any) {
+  const doc = new jsPDF();
+  const { colors, sizes, page } = PDF_CONFIG;
+  
+  // Add header
+  addHeader(doc, 'EMERGENCY RESUSCITATION & PRE-OP OPTIMIZATION', 'Diabetic Foot Sepsis - WHO/SSC Aligned Protocol');
+  
+  let yPos = 35;
+  
+  // Patient Information
+  if (patientInfo) {
+    yPos = addPatientInfo(doc, patientInfo, yPos);
+  }
+  
+  // Clinical Governance Notice
+  yPos = addAlertBox(doc, 'CLINICAL GOVERNANCE NOTICE', [
+    'This is decision-support only. Final decisions rest with the attending surgeon and anaesthetist.',
+    'All outputs are editable and overridable. Local protocols and resource availability must be considered.',
+    `Generated: ${new Date().toLocaleString()}`,
+  ], yPos, 'warning');
+  
+  // Priority Level
+  yPos = checkNewPage(doc, yPos);
+  const priorityColor = result.priorityLevel === 'CRITICAL' ? colors.danger :
+                        result.priorityLevel === 'URGENT' ? colors.warning : colors.primary;
+  doc.setFillColor(...priorityColor);
+  doc.rect(page.margin, yPos, page.contentWidth, 10, 'F');
+  doc.setTextColor(...colors.textWhite);
+  doc.setFontSize(sizes.heading);
+  doc.setFont(PDF_CONFIG.fonts.heading, 'bold');
+  doc.text(`PRIORITY LEVEL: ${result.priorityLevel}`, page.width / 2, yPos + 7, { align: 'center' });
+  doc.setTextColor(...colors.textPrimary);
+  yPos += 16;
+  
+  // Sepsis Scores
+  yPos = checkNewPage(doc, yPos);
+  yPos = addSectionHeader(doc, 'SEPSIS ASSESSMENT', yPos);
+  
+  const sepsisData = [
+    ['qSOFA Score', `${result.sepsisScore?.qSOFA || 0}/3`, result.sepsisScore?.qSOFA >= 2 ? 'HIGH RISK' : 'Monitor'],
+    ['SIRS Criteria', `${result.sepsisScore?.sirs || 0}/4`, result.sepsisScore?.sirs >= 2 ? 'SIRS PRESENT' : 'Not met'],
+    ['Sepsis Status', result.sepsisScore?.hasSepsis ? 'SEPSIS' : 'No Sepsis', result.sepsisScore?.hasSepsis ? 'Protocol Active' : ''],
+    ['Septic Shock', result.sepsisScore?.hasSepticShock ? 'YES' : 'No', result.sepsisScore?.hasSepticShock ? 'CRITICAL' : ''],
+  ];
+  
+  autoTable(doc, {
+    startY: yPos,
+    head: [['Parameter', 'Value', 'Status']],
+    body: sepsisData,
+    theme: 'grid',
+    styles: { fontSize: sizes.body, cellPadding: 3 },
+    headStyles: { fillColor: colors.tableHeader, textColor: colors.tableHeaderText },
+    columnStyles: {
+      2: { fontStyle: 'bold', textColor: result.sepsisScore?.hasSepsis ? colors.danger : colors.success }
+    },
+    margin: { left: page.margin, right: page.margin },
+  });
+  yPos = (doc as any).lastAutoTable.finalY + 6;
+  
+  // Targets
+  yPos = checkNewPage(doc, yPos);
+  yPos = addSectionHeader(doc, 'RESUSCITATION TARGETS', yPos);
+  
+  const targetsData = Object.entries(result.targets || {}).map(([key, value]) => [
+    key.replace(/([A-Z])/g, ' $1').toUpperCase(),
+    value as string
+  ]);
+  
+  autoTable(doc, {
+    startY: yPos,
+    head: [['Parameter', 'Target']],
+    body: targetsData,
+    theme: 'striped',
+    styles: { fontSize: sizes.body, cellPadding: 3 },
+    headStyles: { fillColor: colors.tableHeader, textColor: colors.tableHeaderText },
+    margin: { left: page.margin, right: page.margin },
+  });
+  yPos = (doc as any).lastAutoTable.finalY + 6;
+  
+  // Fluid Calculations
+  if (result.fluidCalculations) {
+    yPos = checkNewPage(doc, yPos);
+    yPos = addSectionHeader(doc, 'FLUID CALCULATIONS', yPos);
+    
+    const fluidData = [
+      ['Estimated Fluid Deficit', `${result.fluidCalculations.fluidDeficit} mL`],
+      ['Bolus Volume', `${result.fluidCalculations.bolusVolume} mL`],
+      ['Maintenance Rate', `${result.fluidCalculations.maintenanceRate} mL/hr`],
+      ['Deficit Correction Rate', `${result.fluidCalculations.correctionRate} mL/hr over 24h`],
+    ];
+    
+    autoTable(doc, {
+      startY: yPos,
+      head: [['Calculation', 'Value']],
+      body: fluidData,
+      theme: 'striped',
+      styles: { fontSize: sizes.body, cellPadding: 3 },
+      headStyles: { fillColor: colors.primary, textColor: colors.tableHeaderText },
+      margin: { left: page.margin, right: page.margin },
+    });
+    yPos = (doc as any).lastAutoTable.finalY + 6;
+  }
+  
+  // Surgery Readiness
+  yPos = checkNewPage(doc, yPos);
+  yPos = addSectionHeader(doc, 'SURGERY READINESS ASSESSMENT', yPos);
+  
+  if (result.surgeryReadiness?.canProceed) {
+    yPos = addAlertBox(doc, 'SURGERY CAN PROCEED', result.surgeryReadiness.requirements, yPos, 'success');
+  } else {
+    yPos = addAlertBox(doc, 'REQUIREMENTS BEFORE SURGERY', result.surgeryReadiness?.requirements || [], yPos, 'warning');
+  }
+  
+  if (result.surgeryReadiness?.warnings?.length > 0) {
+    yPos = addAlertBox(doc, 'WARNINGS', result.surgeryReadiness.warnings, yPos, 'danger');
+  }
+  
+  // Add recommendation sections
+  const sections = [
+    { title: 'IMMEDIATE TRIAGE & PRIORITIZATION', key: 'triage' },
+    { title: 'AIRWAY MANAGEMENT', key: 'airway' },
+    { title: 'BREATHING ASSESSMENT', key: 'breathing' },
+    { title: 'CIRCULATION & FLUID RESUSCITATION', key: 'circulation' },
+    { title: 'SEPSIS MANAGEMENT', key: 'sepsis' },
+    { title: 'GLYCAEMIC CONTROL', key: 'glycemic' },
+    { title: 'FLUID & ELECTROLYTE CORRECTION', key: 'fluids' },
+    { title: 'ANAEMIA ASSESSMENT', key: 'anaemia' },
+    { title: 'RENAL & METABOLIC SUPPORT', key: 'renal' },
+    { title: 'PRE-OPERATIVE PREPARATION', key: 'preOp' },
+    { title: 'ENDPOINTS FOR SURGERY', key: 'endpoints' },
+    { title: 'POST-OPERATIVE CARE', key: 'postOp' },
+  ];
+  
+  for (const section of sections) {
+    if (result.recommendations?.[section.key]?.length > 0) {
+      yPos = checkNewPage(doc, yPos);
+      yPos = addSectionHeader(doc, section.title, yPos);
+      yPos = addTextSection(doc, result.recommendations[section.key], yPos);
+    }
+  }
+  
+  // Clinical Notes
+  if (result.clinicalNotes) {
+    yPos = checkNewPage(doc, yPos);
+    yPos = addSectionHeader(doc, 'CLINICAL NOTES', yPos);
+    yPos = addTextSection(doc, [result.clinicalNotes], yPos);
+  }
+  
+  // Critical Statement
+  yPos = checkNewPage(doc, yPos);
+  yPos = addAlertBox(doc, 'CRITICAL STATEMENT', [
+    '"In life-threatening sepsis, surgery should NOT be delayed once minimum resuscitative targets are achieved.',
+    'Source control is definitive treatment."',
+    '- Surviving Sepsis Campaign Guidelines',
+  ], yPos, 'danger');
+  
+  // Footer
+  addFooter(doc);
+  
+  const filename = createFilename(patientInfo?.name, 'Emergency_Resuscitation_Protocol');
+  doc.save(filename);
+}
+

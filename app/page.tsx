@@ -16,11 +16,12 @@ import WoundHealingMealPlanCalculator from '@/components/calculators/WoundHealin
 import WeightReductionCalculator from '@/components/calculators/WeightReductionCalculator';
 import WeightGainCalculator from '@/components/calculators/WeightGainCalculator';
 import SickleCellManagementCalculator from '@/components/calculators/SickleCellManagementCalculator';
+import EmergencyResuscitationCalculator from '@/components/calculators/EmergencyResuscitationCalculator';
 import InstallPrompt from '@/components/InstallPrompt';
-import { Activity, Droplet, Zap, FlaskConical, Pill, Flame, UtensilsCrossed, User, Heart, Bed, Apple, Soup, TrendingDown, TrendingUp, WifiOff, Wifi } from 'lucide-react';
+import { Activity, Droplet, Zap, FlaskConical, Pill, Flame, UtensilsCrossed, User, Heart, Bed, Apple, Soup, TrendingDown, TrendingUp, WifiOff, Wifi, AlertTriangle } from 'lucide-react';
 import { PatientInfo } from '@/lib/types';
 
-type CalculatorTab = 'sodium' | 'potassium' | 'acidbase' | 'gfr' | 'bnf' | 'burns' | 'nutrition' | 'dvt' | 'pressuresore' | 'nutritionalassessment' | 'woundmealplan' | 'weightloss' | 'weightgain' | 'sicklecell';
+type CalculatorTab = 'sodium' | 'potassium' | 'acidbase' | 'gfr' | 'bnf' | 'burns' | 'nutrition' | 'dvt' | 'pressuresore' | 'nutritionalassessment' | 'woundmealplan' | 'weightloss' | 'weightgain' | 'sicklecell' | 'emergency';
 
 // LocalStorage key for patient info
 const PATIENT_INFO_KEY = 'ccc_patient_info';
@@ -89,7 +90,7 @@ export default function Home() {
 
   // Helper to validate tab
   const isValidTab = (tab: string): boolean => {
-    const validTabs = ['sodium', 'potassium', 'acidbase', 'gfr', 'bnf', 'burns', 'nutrition', 'dvt', 'pressuresore', 'nutritionalassessment', 'woundmealplan', 'weightloss', 'weightgain', 'sicklecell'];
+    const validTabs = ['sodium', 'potassium', 'acidbase', 'gfr', 'bnf', 'burns', 'nutrition', 'dvt', 'pressuresore', 'nutritionalassessment', 'woundmealplan', 'weightloss', 'weightgain', 'sicklecell', 'emergency'];
     return validTabs.includes(tab);
   };
 
@@ -159,6 +160,7 @@ export default function Home() {
     { id: 'weightloss' as CalculatorTab, label: 'Weight Loss', icon: TrendingDown },
     { id: 'weightgain' as CalculatorTab, label: 'Weight Gain', icon: TrendingUp },
     { id: 'sicklecell' as CalculatorTab, label: 'Sickle Cell', icon: Heart },
+    { id: 'emergency' as CalculatorTab, label: 'Emergency CDS', icon: AlertTriangle },
   ];
 
   return (
@@ -428,6 +430,7 @@ export default function Home() {
           {activeTab === 'weightloss' && <WeightReductionCalculator patientInfo={patientInfo} />}
           {activeTab === 'weightgain' && <WeightGainCalculator patientInfo={patientInfo} />}
           {activeTab === 'sicklecell' && <SickleCellManagementCalculator patientInfo={patientInfo} />}
+          {activeTab === 'emergency' && <EmergencyResuscitationCalculator patientInfo={patientInfo} />}
         </div>
       </div>
 
