@@ -900,7 +900,7 @@ export default function WeightGainCalculator({ patientInfo }: PatientInfoProps) 
                     items: [
                       `Calories: ${result.dailyCalories} kcal`,
                       `Surplus: ${result.calorieSurplus} kcal`,
-                      `Weekly Gain: ${result.weeklyTarget?.toFixed(2)} kg`,
+                      `Weekly Gain: ${result.weeklyWeightGain} kg`,
                     ]
                   }
                 ],
@@ -921,7 +921,7 @@ export default function WeightGainCalculator({ patientInfo }: PatientInfoProps) 
                   `Target Weight: ${targetWeight} kg`,
                   `Duration: ${timeframe} weeks`,
                   `Daily Calories: ${result.dailyCalories} kcal`,
-                  `Weekly Target: ${result.weeklyTarget?.toFixed(2)} kg gain`,
+                  `Weekly Target: ${result.weeklyWeightGain} kg gain`,
                 ],
                 mealPlan: result.mealPlan?.slice(0, 3) || [],
                 recommendations: [

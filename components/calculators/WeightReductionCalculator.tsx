@@ -1042,7 +1042,7 @@ export default function WeightReductionCalculator({ patientInfo }: PatientInfoPr
                     items: [
                       `Current: ${currentWeight} kg`,
                       `Target: ${targetWeight} kg`,
-                      `BMI: ${result.currentBMI?.toFixed(1)}`,
+                      `BMI: ${result.currentBMI}`,
                       `Duration: ${timeframe} weeks`,
                     ]
                   },
@@ -1051,7 +1051,7 @@ export default function WeightReductionCalculator({ patientInfo }: PatientInfoPr
                     items: [
                       `Calories: ${result.dailyCalories} kcal`,
                       `Deficit: ${result.calorieDeficit} kcal`,
-                      `Weekly Loss: ${result.weeklyTarget?.toFixed(2)} kg`,
+                      `Weekly Loss: ${result.weeklyWeightLoss} kg`,
                     ]
                   }
                 ],
@@ -1072,7 +1072,7 @@ export default function WeightReductionCalculator({ patientInfo }: PatientInfoPr
                   `Target Weight: ${targetWeight} kg`,
                   `Duration: ${timeframe} weeks`,
                   `Daily Calories: ${result.dailyCalories} kcal`,
-                  `Weekly Target: ${result.weeklyTarget?.toFixed(2)} kg loss`,
+                  `Weekly Target: ${result.weeklyWeightLoss} kg loss`,
                 ],
                 mealPlan: result.mealPlan?.slice(0, 3) || [],
                 recommendations: [
