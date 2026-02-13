@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { Calculator, UtensilsCrossed, Apple, Download, Info, AlertCircle } from 'lucide-react';
 import { generateNutritionPDF } from '@/lib/pdfGenerator';
 import { PatientInfoProps } from '@/lib/types';
+import ExportButtons from '@/components/ExportButtons';
+import { ThermalContent, ShareContent } from '@/lib/exportUtils';
 
 interface FoodItem {
   name: string;
@@ -585,14 +587,63 @@ export default function NutritionCalculator({ patientInfo }: PatientInfoProps) {
             </ul>
           </div>
 
-          {/* Download PDF */}
-          <button
-            onClick={handleDownloadPDF}
-            className="w-full bg-gray-700 hover:bg-gray-800 text-white font-semibold py-3 px-6 rounded-md transition-colors flex items-center justify-center gap-2"
-          >
-            <Download className="w-5 h-5" />
-            Download Nutrition Plan PDF
-          </button>
+          {/* Export Options */}
+          <ExportButtons
+            onExportPDFA4={handleDownloadPDF}
+            thermalContent={{
+              patientInfo: patientInfo,
+              sections: [
+                {
+                  title: 'Daily Requirements',
+                  items: [
+                    `Calories: ${result.totalCalories} kcal/day`,
+                    `Protein: ${result.proteinRequirement}g/day`,
+                    `Carbs: ${result.carbsGrams}g/day`,
+                    `Fats: ${result.fatsGrams}g/day`,
+                    `Fluids: ${result.fluidRequirement} mL/day`,
+                  ]
+                },
+                {
+                  title: 'Micronutrients',
+                  items: [
+                    `Vitamin C: ${result.vitaminC} mg/day`,
+                    `Zinc: ${result.zinc} mg/day`,
+                    `Vitamin A: ${result.vitaminA} IU/day`,
+                  ]
+                }
+              ],
+              mealPlan: result.mealPlan,
+              summary: [
+                { label: 'Burn BSA', value: `${result.burnBSA}%` },
+                { label: 'Weight', value: `${result.weight} kg` },
+                { label: 'Meals/Day', value: '6 small meals' },
+              ]
+            } as ThermalContent}
+            thermalTitle="BURN NUTRITION PLAN"
+            thermalFilename={`Nutrition_Plan_${patientInfo?.name || 'Patient'}_Thermal.pdf`}
+            shareContent={{
+              title: '🔥 Burn Nutrition Plan',
+              patientInfo: patientInfo,
+              summary: [
+                `Calories: ${result.totalCalories} kcal/day`,
+                `Protein: ${result.proteinRequirement}g/day`,
+                `Carbs: ${result.carbsGrams}g/day`,
+                `Fats: ${result.fatsGrams}g/day`,
+                `Fluids: ${result.fluidRequirement} mL/day`,
+                `Burn BSA: ${result.burnBSA}%`,
+              ],
+              mealPlan: result.mealPlan,
+              recommendations: [
+                'High protein for wound healing (2-2.5g/kg)',
+                '6 small meals better tolerated',
+                'Vitamin C for collagen synthesis',
+                'Monitor weight daily',
+                'Adequate hydration crucial',
+              ],
+              warnings: result.dietaryWarnings || [],
+            } as ShareContent}
+            pdfLabel="Download Plan"
+          />
         </div>
       )}
     </div>

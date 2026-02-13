@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Download, AlertCircle, Info, TrendingUp } from 'lucide-react';
 import { generateWeightGainPDF } from '@/lib/pdfGenerator';
+import ExportButtons from '@/components/ExportButtons';
+import { ThermalContent, ShareContent } from '@/lib/exportUtils';
 
 interface PatientInfoProps {
   patientInfo?: any;
@@ -880,10 +882,59 @@ export default function WeightGainCalculator({ patientInfo }: PatientInfoProps) 
               </div>
             )}
 
-            <button onClick={handleDownloadPDF} className="w-full bg-green-600 text-white py-3 rounded hover:bg-green-700 flex items-center justify-center font-bold">
-              <Download className="w-5 h-5 mr-2" />
-              Download Complete Weight Gain Plan PDF
-            </button>
+            <ExportButtons
+              onExportPDFA4={handleDownloadPDF}
+              thermalContent={{
+                patientInfo: patientInfo,
+                sections: [
+                  {
+                    title: 'Weight Goals',
+                    items: [
+                      `Current: ${currentWeight} kg`,
+                      `Target: ${targetWeight} kg`,
+                      `Duration: ${timeframe} weeks`,
+                    ]
+                  },
+                  {
+                    title: 'Daily Targets',
+                    items: [
+                      `Calories: ${result.dailyCalories} kcal`,
+                      `Surplus: ${result.calorieSurplus} kcal`,
+                      `Weekly Gain: ${result.weeklyTarget?.toFixed(2)} kg`,
+                    ]
+                  }
+                ],
+                mealPlan: result.mealPlan || [],
+                summary: [
+                  { label: 'Calories', value: `${result.dailyCalories} kcal` },
+                  { label: 'Surplus', value: `${result.calorieSurplus} kcal` },
+                  { label: 'Target', value: `${targetWeight} kg` },
+                ]
+              } as ThermalContent}
+              thermalTitle="WEIGHT GAIN PLAN"
+              thermalFilename={`WeightGain_Plan_${patientInfo?.name || 'Patient'}_Thermal.pdf`}
+              shareContent={{
+                title: '💪 Weight Gain Meal Plan',
+                patientInfo: patientInfo,
+                summary: [
+                  `Current Weight: ${currentWeight} kg`,
+                  `Target Weight: ${targetWeight} kg`,
+                  `Duration: ${timeframe} weeks`,
+                  `Daily Calories: ${result.dailyCalories} kcal`,
+                  `Weekly Target: ${result.weeklyTarget?.toFixed(2)} kg gain`,
+                ],
+                mealPlan: result.mealPlan?.slice(0, 3) || [],
+                recommendations: [
+                  'Caloric surplus for healthy weight gain',
+                  'High protein for muscle building',
+                  'Strength training recommended',
+                  'Eat calorie-dense foods',
+                  'Weekly weight monitoring',
+                ],
+                warnings: result.healthWarnings || [],
+              } as ShareContent}
+              pdfLabel="Download Plan"
+            />
           </div>
         )}
       </div>

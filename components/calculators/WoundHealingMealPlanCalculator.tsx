@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Download, AlertCircle, Info, Utensils } from 'lucide-react';
 import { generateWoundHealingMealPlanPDF } from '@/lib/pdfGenerator';
+import ExportButtons from '@/components/ExportButtons';
+import { ThermalContent, ShareContent } from '@/lib/exportUtils';
 
 interface PatientInfoProps {
   patientInfo?: any;
@@ -985,13 +987,78 @@ export default function WoundHealingMealPlanCalculator({ patientInfo }: PatientI
               </div>
             </div>
 
-            <button
-              onClick={handleDownloadPDF}
-              className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 flex items-center justify-center font-bold"
-            >
-              <Download className="w-5 h-5 mr-2" />
-              Download Complete Meal Plan PDF
-            </button>
+            <ExportButtons
+              onExportPDFA4={handleDownloadPDF}
+              thermalContent={{
+                patientInfo: patientInfo,
+                sections: [
+                  {
+                    title: 'Wound Assessment',
+                    items: [
+                      `Type: ${woundType}`,
+                      `Severity: ${woundSeverity}`,
+                      `Weight: ${weight} kg`,
+                    ]
+                  },
+                  {
+                    title: 'Daily Targets',
+                    items: [
+                      `Calories: ${result.totalCalories} kcal`,
+                      `Protein: ${result.totalProtein}g`,
+                      `Fluids: ${result.totalFluid} mL`,
+                    ]
+                  },
+                  {
+                    title: 'Key Nutrients',
+                    items: [
+                      'Vitamin C: 500-1000mg',
+                      'Zinc: 15-25mg',
+                      'Vitamin A: 900-3000 IU',
+                    ]
+                  }
+                ],
+                mealPlan: result.sampleMealPlan?.days?.map((day: any) => ({
+                  day: day.day,
+                  breakfast: day.meals?.[0]?.items?.slice(0, 3) || [],
+                  lunch: day.meals?.[2]?.items?.slice(0, 3) || [],
+                  dinner: day.meals?.[4]?.items?.slice(0, 3) || [],
+                  snacks: day.meals?.[1]?.items?.slice(0, 2) || [],
+                })) || [],
+                summary: [
+                  { label: 'Calories', value: `${result.totalCalories} kcal` },
+                  { label: 'Protein', value: `${result.totalProtein}g` },
+                  { label: 'Fluids', value: `${result.totalFluid} mL` },
+                ]
+              } as ThermalContent}
+              thermalTitle="WOUND HEALING MEAL PLAN"
+              thermalFilename={`Wound_MealPlan_${patientInfo?.name || 'Patient'}_Thermal.pdf`}
+              shareContent={{
+                title: '🩹 Wound Healing Meal Plan',
+                patientInfo: patientInfo,
+                summary: [
+                  `Wound Type: ${woundType}`,
+                  `Severity: ${woundSeverity}`,
+                  `Daily Calories: ${result.totalCalories} kcal`,
+                  `Daily Protein: ${result.totalProtein}g`,
+                  `Daily Fluids: ${result.totalFluid} mL`,
+                ],
+                mealPlan: result.sampleMealPlan?.days?.slice(0, 3)?.map((day: any) => ({
+                  day: day.day,
+                  breakfast: day.meals?.[0]?.items?.slice(0, 2) || [],
+                  lunch: day.meals?.[2]?.items?.slice(0, 2) || [],
+                  dinner: day.meals?.[4]?.items?.slice(0, 2) || [],
+                })) || [],
+                recommendations: [
+                  'High protein for tissue repair',
+                  'Vitamin C for collagen formation',
+                  'Zinc for wound closure',
+                  'Adequate hydration for healing',
+                  'Monitor wound progress weekly',
+                ],
+                warnings: result.comorbidityList || [],
+              } as ShareContent}
+              pdfLabel="Download Plan"
+            />
           </div>
         )}
       </div>

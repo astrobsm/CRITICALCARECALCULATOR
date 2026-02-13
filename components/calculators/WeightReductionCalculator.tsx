@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Download, AlertCircle, Info, TrendingDown } from 'lucide-react';
 import { generateWeightReductionPDF } from '@/lib/pdfGenerator';
+import ExportButtons from '@/components/ExportButtons';
+import { ThermalContent, ShareContent } from '@/lib/exportUtils';
 
 interface PatientInfoProps {
   patientInfo?: any;
@@ -1030,13 +1032,60 @@ export default function WeightReductionCalculator({ patientInfo }: PatientInfoPr
               </div>
             </div>
 
-            <button
-              onClick={handleDownloadPDF}
-              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 flex items-center justify-center font-bold"
-            >
-              <Download className="w-5 h-5 mr-2" />
-              Download Complete Weight Loss Plan PDF
-            </button>
+            <ExportButtons
+              onExportPDFA4={handleDownloadPDF}
+              thermalContent={{
+                patientInfo: patientInfo,
+                sections: [
+                  {
+                    title: 'Weight Goals',
+                    items: [
+                      `Current: ${currentWeight} kg`,
+                      `Target: ${targetWeight} kg`,
+                      `BMI: ${result.currentBMI?.toFixed(1)}`,
+                      `Duration: ${timeframe} weeks`,
+                    ]
+                  },
+                  {
+                    title: 'Daily Targets',
+                    items: [
+                      `Calories: ${result.dailyCalories} kcal`,
+                      `Deficit: ${result.calorieDeficit} kcal`,
+                      `Weekly Loss: ${result.weeklyTarget?.toFixed(2)} kg`,
+                    ]
+                  }
+                ],
+                mealPlan: result.mealPlan || [],
+                summary: [
+                  { label: 'Calories', value: `${result.dailyCalories} kcal` },
+                  { label: 'Deficit', value: `${result.calorieDeficit} kcal` },
+                  { label: 'Target', value: `${targetWeight} kg` },
+                ]
+              } as ThermalContent}
+              thermalTitle="WEIGHT LOSS PLAN"
+              thermalFilename={`WeightLoss_Plan_${patientInfo?.name || 'Patient'}_Thermal.pdf`}
+              shareContent={{
+                title: '⚖️ Weight Loss Meal Plan',
+                patientInfo: patientInfo,
+                summary: [
+                  `Current Weight: ${currentWeight} kg`,
+                  `Target Weight: ${targetWeight} kg`,
+                  `Duration: ${timeframe} weeks`,
+                  `Daily Calories: ${result.dailyCalories} kcal`,
+                  `Weekly Target: ${result.weeklyTarget?.toFixed(2)} kg loss`,
+                ],
+                mealPlan: result.mealPlan?.slice(0, 3) || [],
+                recommendations: [
+                  'Caloric deficit for weight loss',
+                  'High protein to preserve muscle',
+                  'Regular exercise recommended',
+                  'Stay hydrated',
+                  'Weekly weight monitoring',
+                ],
+                warnings: result.healthWarnings || [],
+              } as ShareContent}
+              pdfLabel="Download Plan"
+            />
           </div>
         )}
       </div>

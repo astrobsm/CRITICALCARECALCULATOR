@@ -2,13 +2,13 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 /* ============================================
-   WHO-STANDARD PDF GENERATOR
-   World-Class Medical Document System
-   WCAG 2.1 AAA Compliant Color Scheme
+   CLINICAL PDF GENERATOR
+   Black & White Professional Medical Documents
+   Font: Times (Georgia-style serif)
    ============================================ */
 
 // ============================================
-// PDF CONFIGURATION - WHO Standards
+// PDF CONFIGURATION - Black & White
 // ============================================
 
 const PDF_CONFIG = {
@@ -19,55 +19,55 @@ const PDF_CONFIG = {
     contentWidth: 182, // 210 - 14*2
   },
   
-  // WHO-Compliant Colors (High Contrast - Black text on white/light backgrounds)
+  // Black & White Color Scheme
   colors: {
-    // Text Colors - Maximum Legibility
-    textPrimary: [23, 23, 23] as [number, number, number],      // #171717 - Main headings
-    textSecondary: [38, 38, 38] as [number, number, number],    // #262626 - Body text  
-    textMuted: [64, 64, 64] as [number, number, number],        // #404040 - Secondary info
-    textWhite: [255, 255, 255] as [number, number, number],     // White for dark backgrounds
+    // All text is pure black
+    textPrimary: [0, 0, 0] as [number, number, number],
+    textSecondary: [0, 0, 0] as [number, number, number],
+    textMuted: [0, 0, 0] as [number, number, number],
+    textWhite: [0, 0, 0] as [number, number, number],
     
-    // Brand Colors - Medical Blue (WHO Standard)
-    primaryDark: [7, 89, 133] as [number, number, number],      // #075985 - Headers
-    primary: [3, 105, 161] as [number, number, number],         // #0369a1 - Accents
-    primaryLight: [224, 242, 254] as [number, number, number],  // #e0f2fe - Light backgrounds
+    // No colored backgrounds - all white/light gray
+    primaryDark: [0, 0, 0] as [number, number, number],
+    primary: [0, 0, 0] as [number, number, number],
+    primaryLight: [255, 255, 255] as [number, number, number],
     
-    // Semantic Colors
-    success: [21, 128, 61] as [number, number, number],         // #15803d - Success
-    successLight: [220, 252, 231] as [number, number, number],  // #dcfce7 - Success bg
-    warning: [180, 83, 9] as [number, number, number],          // #b45309 - Warning  
-    warningLight: [254, 243, 199] as [number, number, number],  // #fef3c7 - Warning bg
-    danger: [185, 28, 28] as [number, number, number],          // #b91c1c - Danger
-    dangerLight: [254, 226, 226] as [number, number, number],   // #fee2e2 - Danger bg
+    // Semantic Colors - all black
+    success: [0, 0, 0] as [number, number, number],
+    successLight: [255, 255, 255] as [number, number, number],
+    warning: [0, 0, 0] as [number, number, number],
+    warningLight: [255, 255, 255] as [number, number, number],
+    danger: [0, 0, 0] as [number, number, number],
+    dangerLight: [255, 255, 255] as [number, number, number],
     
-    // Table Colors
-    tableHeader: [7, 89, 133] as [number, number, number],      // Primary dark
+    // Table Colors - Black & White
+    tableHeader: [0, 0, 0] as [number, number, number],
     tableHeaderText: [255, 255, 255] as [number, number, number],
-    tableAlt: [250, 250, 250] as [number, number, number],      // Zebra striping
-    tableBorder: [212, 212, 212] as [number, number, number],   // Light gray border
+    tableAlt: [245, 245, 245] as [number, number, number],
+    tableBorder: [0, 0, 0] as [number, number, number],
     
     // Neutral
-    border: [212, 212, 212] as [number, number, number],
+    border: [0, 0, 0] as [number, number, number],
     background: [255, 255, 255] as [number, number, number],
     lightGray: [245, 245, 245] as [number, number, number],
   },
   
-  // Typography - Medical Best Practices
+  // Typography - Times (Georgia-style serif font)
   fonts: {
-    heading: 'helvetica' as const,
-    body: 'helvetica' as const,
+    heading: 'times' as const,
+    body: 'times' as const,
     mono: 'courier' as const,
   },
   
-  // Font Sizes - Optimal Readability
+  // Font Sizes - Headers/Footers are 12pt bold
   sizes: {
-    title: 16,
+    title: 12,
     subtitle: 12,
-    heading: 11,
-    subheading: 10,
-    body: 9,
-    small: 8,
-    tiny: 7,
+    heading: 12,
+    subheading: 11,
+    body: 10,
+    small: 9,
+    tiny: 8,
   },
 };
 
@@ -88,92 +88,98 @@ function createFilename(patientName: string, prefix: string): string {
 }
 
 /**
- * Add WHO-Standard Header to PDF
+ * Add Black & White Header to PDF
  */
 function addHeader(doc: jsPDF, title: string, subtitle?: string) {
   const { colors, sizes, page } = PDF_CONFIG;
   const centerX = page.width / 2;
   
-  // Header background bar
-  doc.setFillColor(...colors.primaryDark);
-  doc.rect(0, 0, page.width, 28, 'F');
+  // Header border line (no background fill)
+  doc.setDrawColor(0, 0, 0);
+  doc.setLineWidth(1);
+  doc.line(page.margin, 5, page.width - page.margin, 5);
   
-  // Title
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(sizes.title);
-  doc.setTextColor(...colors.textWhite);
+  // Title - Black, Times font, 12pt bold
+  doc.setFont('times', 'bold');
+  doc.setFontSize(12);
+  doc.setTextColor(0, 0, 0);
   doc.text(title, centerX, 12, { align: 'center' });
   
   // Subtitle
   if (subtitle) {
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(sizes.small);
-    doc.setTextColor(...colors.textWhite);
+    doc.setFont('times', 'bold');
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
     doc.text(subtitle, centerX, 19, { align: 'center' });
   }
   
   // Timestamp
   const timestamp = new Date().toLocaleString();
-  doc.setFontSize(sizes.tiny);
-  doc.setTextColor(...colors.textWhite);
+  doc.setFont('times', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(0, 0, 0);
   doc.text(`Generated: ${timestamp}`, centerX, 25, { align: 'center' });
   
+  // Bottom border line
+  doc.setLineWidth(0.5);
+  doc.line(page.margin, 28, page.width - page.margin, 28);
+  
   // Reset text color
-  doc.setTextColor(...colors.textPrimary);
+  doc.setTextColor(0, 0, 0);
 }
 
 /**
- * Add WHO-Standard Footer to PDF
+ * Add Black & White Footer to PDF
  */
 function addFooter(doc: jsPDF, pageNum?: number) {
   const { colors, sizes, page } = PDF_CONFIG;
   const centerX = page.width / 2;
   
   // Footer line
-  doc.setDrawColor(...colors.border);
+  doc.setDrawColor(0, 0, 0);
   doc.setLineWidth(0.5);
   doc.line(page.margin, 280, page.width - page.margin, 280);
   
-  // Disclaimer
-  doc.setFont('helvetica', 'italic');
-  doc.setFontSize(sizes.tiny);
-  doc.setTextColor(...colors.textMuted);
+  // Disclaimer - Times font, 12pt bold
+  doc.setFont('times', 'bold');
+  doc.setFontSize(12);
+  doc.setTextColor(0, 0, 0);
   doc.text('Clinical Decision Support Tool - Always verify calculations with clinical judgment', centerX, 285, { align: 'center' });
-  doc.text('FOR HEALTHCARE PROFESSIONALS ONLY - WHO-Aligned Protocol', centerX, 290, { align: 'center' });
+  doc.text('FOR HEALTHCARE PROFESSIONALS ONLY', centerX, 291, { align: 'center' });
   
   // Page number
   if (pageNum) {
-    doc.text(`Page ${pageNum}`, page.width - page.margin, 290, { align: 'right' });
+    doc.setFont('times', 'bold');
+    doc.setFontSize(12);
+    doc.text(`Page ${pageNum}`, page.width - page.margin, 291, { align: 'right' });
   }
   
   // Reset text color
-  doc.setTextColor(...colors.textPrimary);
+  doc.setTextColor(0, 0, 0);
 }
 
 /**
- * Add Section Header
+ * Add Section Header - Black & White
  */
 function addSectionHeader(doc: jsPDF, title: string, yPos: number): number {
   const { colors, sizes, page } = PDF_CONFIG;
   
-  // Section background
-  doc.setFillColor(...colors.primaryLight);
-  doc.rect(page.margin, yPos - 4, page.contentWidth, 8, 'F');
+  // Section underline (no background)
+  doc.setDrawColor(0, 0, 0);
+  doc.setLineWidth(0.5);
+  doc.line(page.margin, yPos + 2, page.width - page.margin, yPos + 2);
   
-  // Section title
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(sizes.heading);
-  doc.setTextColor(...colors.primaryDark);
-  doc.text(title, page.margin + 2, yPos + 1);
-  
-  // Reset
-  doc.setTextColor(...colors.textPrimary);
+  // Section title - Times font, 12pt bold, black
+  doc.setFont('times', 'bold');
+  doc.setFontSize(12);
+  doc.setTextColor(0, 0, 0);
+  doc.text(title, page.margin, yPos);
   
   return yPos + 10;
 }
 
 /**
- * Add Patient Information Table
+ * Add Patient Information Table - Black & White
  */
 function addPatientInfo(doc: jsPDF, patientInfo: any, startY: number): number {
   if (!patientInfo || !patientInfo.name) {
@@ -204,19 +210,21 @@ function addPatientInfo(doc: jsPDF, patientInfo: any, startY: number): number {
     body: body,
     theme: 'grid',
     headStyles: {
-      fillColor: colors.primaryDark,
-      textColor: colors.textWhite,
+      fillColor: [0, 0, 0],
+      textColor: [255, 255, 255],
       fontStyle: 'bold',
-      fontSize: 9,
+      fontSize: 10,
       cellPadding: 3,
+      font: 'times',
     },
     bodyStyles: {
-      textColor: colors.textSecondary,
-      fontSize: 9,
+      textColor: [0, 0, 0],
+      fontSize: 10,
       cellPadding: 3,
+      font: 'times',
     },
     alternateRowStyles: {
-      fillColor: colors.lightGray,
+      fillColor: [245, 245, 245],
     },
     columnStyles: {
       0: { fontStyle: 'bold', cellWidth: 45 },
@@ -229,7 +237,7 @@ function addPatientInfo(doc: jsPDF, patientInfo: any, startY: number): number {
 }
 
 /**
- * Standard Data Table with WHO styling
+ * Standard Data Table - Black & White
  */
 function addDataTable(
   doc: jsPDF, 
@@ -242,7 +250,8 @@ function addDataTable(
   }
 ): number {
   const { colors, page } = PDF_CONFIG;
-  const headerColor = options?.headerColor || colors.tableHeader;
+  // Always use black for header
+  const headerColor: [number, number, number] = [0, 0, 0];
   
   const columnStyles: { [key: number]: { cellWidth?: number | 'auto' } } = {};
   if (options?.columnWidths) {
@@ -258,19 +267,21 @@ function addDataTable(
     theme: 'grid',
     headStyles: {
       fillColor: headerColor,
-      textColor: colors.textWhite,
+      textColor: [255, 255, 255],
       fontStyle: 'bold',
-      fontSize: 9,
+      fontSize: 10,
       cellPadding: 3,
       halign: 'left',
+      font: 'times',
     },
     bodyStyles: {
-      textColor: colors.textSecondary,
-      fontSize: 9,
+      textColor: [0, 0, 0],
+      fontSize: 10,
       cellPadding: 3,
+      font: 'times',
     },
     alternateRowStyles: {
-      fillColor: colors.lightGray,
+      fillColor: [245, 245, 245],
     },
     columnStyles: columnStyles,
     margin: { left: page.margin, right: page.margin },
@@ -280,7 +291,7 @@ function addDataTable(
 }
 
 /**
- * Add Warning/Alert Box
+ * Add Warning/Alert Box - Black & White
  */
 function addAlertBox(
   doc: jsPDF, 
@@ -291,40 +302,27 @@ function addAlertBox(
 ): number {
   const { colors, sizes, page } = PDF_CONFIG;
   
-  const bgColor = {
-    warning: colors.warningLight,
-    danger: colors.dangerLight,
-    info: colors.primaryLight,
-    success: colors.successLight,
-  }[type];
-  
-  const textColor = {
-    warning: colors.warning,
-    danger: colors.danger,
-    info: colors.primaryDark,
-    success: colors.success,
-  }[type];
-  
   const boxHeight = 8 + (content.length * 5);
   
-  // Background
-  doc.setFillColor(...bgColor);
-  doc.rect(page.margin, yPos, page.contentWidth, boxHeight, 'F');
+  // Border box (no fill)
+  doc.setDrawColor(0, 0, 0);
+  doc.setLineWidth(1);
+  doc.rect(page.margin, yPos, page.contentWidth, boxHeight, 'S');
   
-  // Border left accent
-  doc.setFillColor(...textColor);
+  // Left accent bar - black
+  doc.setFillColor(0, 0, 0);
   doc.rect(page.margin, yPos, 3, boxHeight, 'F');
   
-  // Title
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(sizes.subheading);
-  doc.setTextColor(...textColor);
+  // Title - Times font, bold, black
+  doc.setFont('times', 'bold');
+  doc.setFontSize(12);
+  doc.setTextColor(0, 0, 0);
   doc.text(title, page.margin + 6, yPos + 5);
   
-  // Content
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(sizes.small);
-  doc.setTextColor(...colors.textSecondary);
+  // Content - Times font, normal, black
+  doc.setFont('times', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(0, 0, 0);
   
   let lineY = yPos + 11;
   content.forEach((line) => {
@@ -332,14 +330,11 @@ function addAlertBox(
     lineY += 5;
   });
   
-  // Reset
-  doc.setTextColor(...colors.textPrimary);
-  
   return yPos + boxHeight + 6;
 }
 
 /**
- * Add Plain Text Section
+ * Add Plain Text Section - Black & White
  */
 function addTextSection(
   doc: jsPDF, 
@@ -350,9 +345,9 @@ function addTextSection(
   const { colors, sizes, page } = PDF_CONFIG;
   const indent = options?.indent || 0;
   
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(sizes.body);
-  doc.setTextColor(...colors.textSecondary);
+  doc.setFont('times', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(0, 0, 0);
   
   items.forEach((item, index) => {
     if (yPos > 270) {
