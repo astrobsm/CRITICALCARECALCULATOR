@@ -9,8 +9,9 @@ const withPWA = require('next-pwa')({
   },
   cacheOnFrontEndNav: true,
   reloadOnOnline: true,
-  // Ensure all app shell is precached
   dynamicStartUrl: false,
+  // Exclude build manifests from precaching (Vercel doesn't serve them)
+  buildExcludes: [/app-build-manifest\.json$/, /build-manifest\.json$/],
   runtimeCaching: [
     // Cache the start URL (home page) - StaleWhileRevalidate for fast offline access
     {
