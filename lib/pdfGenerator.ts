@@ -302,7 +302,7 @@ function addAlertBox(
 ): number {
   const { colors, sizes, page } = PDF_CONFIG;
   
-  const boxHeight = 8 + (content.length * 5);
+  const boxHeight = 8 + ((content?.length || 0) * 5);
   
   // Border box (no fill)
   doc.setDrawColor(0, 0, 0);
@@ -325,10 +325,12 @@ function addAlertBox(
   doc.setTextColor(0, 0, 0);
   
   let lineY = yPos + 11;
-  content.forEach((line) => {
-    doc.text(`• ${line}`, page.margin + 6, lineY);
-    lineY += 5;
-  });
+  if (content && content.length > 0) {
+    content.forEach((line) => {
+      doc.text(`• ${line}`, page.margin + 6, lineY);
+      lineY += 5;
+    });
+  }
   
   return yPos + boxHeight + 6;
 }
@@ -349,21 +351,23 @@ function addTextSection(
   doc.setFontSize(10);
   doc.setTextColor(0, 0, 0);
   
-  items.forEach((item, index) => {
-    if (yPos > 270) {
-      doc.addPage();
-      yPos = 35;
-    }
-    
-    const prefix = options?.numbered ? `${index + 1}. ` : '• ';
-    const text = `${prefix}${item}`;
-    const lines = doc.splitTextToSize(text, page.contentWidth - indent);
-    
-    lines.forEach((line: string) => {
-      doc.text(line, page.margin + indent, yPos);
-      yPos += 5;
+  if (items && items.length > 0) {
+    items.forEach((item, index) => {
+      if (yPos > 270) {
+        doc.addPage();
+        yPos = 35;
+      }
+      
+      const prefix = options?.numbered ? `${index + 1}. ` : '• ';
+      const text = `${prefix}${item}`;
+      const lines = doc.splitTextToSize(text, page.contentWidth - indent);
+      
+      lines.forEach((line: string) => {
+        doc.text(line, page.margin + indent, yPos);
+        yPos += 5;
+      });
     });
-  });
+  }
   
   return yPos + 4;
 }
@@ -726,11 +730,13 @@ export function generateGFRPDF(result: any, patientInfo?: any) {
   doc.setFont('times', 'normal');
   doc.setFontSize(9);
   doc.setTextColor(...colors.textSecondary);
-  const recommendation = doc.splitTextToSize(result.recommendation, page.contentWidth);
-  recommendation.forEach((line: string) => {
-    doc.text(line, page.margin, yPos);
-    yPos += 5;
-  });
+  const recommendation = doc.splitTextToSize(result.recommendation || '', page.contentWidth);
+  if (recommendation && recommendation.length > 0) {
+    recommendation.forEach((line: string) => {
+      doc.text(line, page.margin, yPos);
+      yPos += 5;
+    });
+  }
   yPos += 4;
   
   // CKD Stages Reference
@@ -990,23 +996,28 @@ export function generateNutritionPDF(result: any, patientInfo?: any) {
     doc.setFont('times', 'bold');
     doc.setFontSize(10);
     doc.setTextColor(...colors.primaryDark);
-    doc.text(day.day, page.margin, yPos);
+    doc.text(day.day || `Day ${index + 1}`, page.margin, yPos);
     yPos += 6;
     
     doc.setFont('times', 'normal');
     doc.setFontSize(8);
     doc.setTextColor(...colors.textSecondary);
     
+    const bfText = Array.isArray(day.breakfast) ? day.breakfast.join(', ') : (day.breakfast || '');
+    const lnText = Array.isArray(day.lunch) ? day.lunch.join(', ') : (day.lunch || '');
+    const dnText = Array.isArray(day.dinner) ? day.dinner.join(', ') : (day.dinner || '');
+    const snText = Array.isArray(day.snacks) ? day.snacks.join(', ') : (day.snacks || '');
+    
     doc.setFont('times', 'bold');
     doc.text('Breakfast:', page.margin, yPos);
     doc.setFont('times', 'normal');
-    doc.text(day.breakfast.join(', '), page.margin + 25, yPos);
+    doc.text(bfText, page.margin + 25, yPos);
     yPos += 5;
     
     doc.setFont('times', 'bold');
     doc.text('Lunch:', page.margin, yPos);
     doc.setFont('times', 'normal');
-    const lunchText = doc.splitTextToSize(day.lunch.join(', '), page.contentWidth - 25);
+    const lunchText = doc.splitTextToSize(lnText, page.contentWidth - 25);
     lunchText.forEach((line: string) => {
       doc.text(line, page.margin + 25, yPos);
       yPos += 4;
@@ -1015,13 +1026,13 @@ export function generateNutritionPDF(result: any, patientInfo?: any) {
     doc.setFont('times', 'bold');
     doc.text('Dinner:', page.margin, yPos);
     doc.setFont('times', 'normal');
-    doc.text(day.dinner.join(', '), page.margin + 25, yPos);
+    doc.text(dnText, page.margin + 25, yPos);
     yPos += 5;
     
     doc.setFont('times', 'bold');
     doc.text('Snacks:', page.margin, yPos);
     doc.setFont('times', 'normal');
-    doc.text(day.snacks.join(', '), page.margin + 25, yPos);
+    doc.text(snText, page.margin + 25, yPos);
     yPos += 10;
     });
   }
@@ -1269,10 +1280,10 @@ export function generateWoundMealPlanPDF(result: any, patientInfo?: any) {
       yPos = addDataTable(doc,
         [['Meal', 'Menu']],
         [
-          ['Breakfast', day.breakfast.join(', ')],
-          ['Lunch', day.lunch.join(', ')],
-          ['Dinner', day.dinner.join(', ')],
-          ['Snacks', day.snacks.join(', ')],
+          ['Breakfast', Array.isArray(day.breakfast) ? day.breakfast.join(', ') : (day.breakfast || '')],
+          ['Lunch', Array.isArray(day.lunch) ? day.lunch.join(', ') : (day.lunch || '')],
+          ['Dinner', Array.isArray(day.dinner) ? day.dinner.join(', ') : (day.dinner || '')],
+          ['Snacks', Array.isArray(day.snacks) ? day.snacks.join(', ') : (day.snacks || '')],
         ],
         yPos
       );
@@ -1374,16 +1385,19 @@ export function generateWeightReductionPDF(
       
       doc.setFont('times', 'bold');
       doc.setFontSize(9);
-      doc.text(day.day, page.margin, yPos);
+      doc.text(day.day || 'Day', page.margin, yPos);
       yPos += 5;
       
       doc.setFont('times', 'normal');
       doc.setFontSize(8);
-      doc.text(`Breakfast: ${day.breakfast.join(', ')}`, page.margin + 5, yPos);
+      const bfText = Array.isArray(day.breakfast) ? day.breakfast.join(', ') : (day.breakfast || '');
+      const lunchText = Array.isArray(day.lunch) ? day.lunch.join(', ') : (day.lunch || '');
+      const dinnerText = Array.isArray(day.dinner) ? day.dinner.join(', ') : (day.dinner || '');
+      doc.text(`Breakfast: ${bfText}`, page.margin + 5, yPos);
       yPos += 4;
-      doc.text(`Lunch: ${day.lunch.join(', ')}`, page.margin + 5, yPos);
+      doc.text(`Lunch: ${lunchText}`, page.margin + 5, yPos);
       yPos += 4;
-      doc.text(`Dinner: ${day.dinner.join(', ')}`, page.margin + 5, yPos);
+      doc.text(`Dinner: ${dinnerText}`, page.margin + 5, yPos);
       yPos += 6;
     });
   }
