@@ -76,6 +76,25 @@ const PDF_CONFIG = {
 // ============================================
 
 /**
+ * Strip emoji characters from text for PDF compatibility
+ * jsPDF with Times font cannot render emojis properly
+ */
+function stripEmojis(text: string): string {
+  if (!text) return '';
+  // Remove emoji and other non-ASCII characters, clean up spacing
+  let result = '';
+  for (let i = 0; i < text.length; i++) {
+    const code = text.charCodeAt(i);
+    // Keep only printable ASCII characters (32-126)
+    if (code >= 32 && code <= 126) {
+      result += text[i];
+    }
+  }
+  // Clean up multiple spaces and trim
+  return result.replace(/\s+/g, ' ').trim();
+}
+
+/**
  * Create safe filename from patient name
  */
 function createFilename(patientName: string, prefix: string): string {
@@ -302,7 +321,9 @@ function addAlertBox(
 ): number {
   const { colors, sizes, page } = PDF_CONFIG;
   
-  const boxHeight = 8 + ((content?.length || 0) * 5);
+  // Line spacing 0.75 for 12pt = 9 points
+  const lineHeight = 9;
+  const boxHeight = 12 + ((content?.length || 0) * lineHeight);
   
   // Border box (no fill)
   doc.setDrawColor(0, 0, 0);
@@ -313,22 +334,24 @@ function addAlertBox(
   doc.setFillColor(0, 0, 0);
   doc.rect(page.margin, yPos, 3, boxHeight, 'F');
   
-  // Title - Times font, bold, black
+  // Title - Times font, bold, black, 12pt
   doc.setFont('times', 'bold');
   doc.setFontSize(12);
   doc.setTextColor(0, 0, 0);
-  doc.text(title, page.margin + 6, yPos + 5);
+  doc.text(title, page.margin + 6, yPos + 6);
   
-  // Content - Times font, normal, black
+  // Content - Times font, normal, black, 12pt
   doc.setFont('times', 'normal');
-  doc.setFontSize(10);
+  doc.setFontSize(12);
   doc.setTextColor(0, 0, 0);
   
-  let lineY = yPos + 11;
+  let lineY = yPos + 15;
   if (content && content.length > 0) {
     content.forEach((line) => {
-      doc.text(`• ${line}`, page.margin + 6, lineY);
-      lineY += 5;
+      // Strip emojis for PDF compatibility
+      const cleanLine = stripEmojis(line);
+      doc.text(`- ${cleanLine}`, page.margin + 6, lineY);
+      lineY += lineHeight;
     });
   }
   
@@ -347,9 +370,13 @@ function addTextSection(
   const { colors, sizes, page } = PDF_CONFIG;
   const indent = options?.indent || 0;
   
+  // Font size 12, Times font as requested
   doc.setFont('times', 'normal');
-  doc.setFontSize(10);
+  doc.setFontSize(12);
   doc.setTextColor(0, 0, 0);
+  
+  // Line spacing 0.75 = 9 points for 12pt font
+  const lineHeight = 9;
   
   if (items && items.length > 0) {
     items.forEach((item, index) => {
@@ -358,18 +385,20 @@ function addTextSection(
         yPos = 35;
       }
       
-      const prefix = options?.numbered ? `${index + 1}. ` : '• ';
-      const text = `${prefix}${item}`;
+      // Strip emojis from text for PDF compatibility
+      const cleanItem = stripEmojis(item);
+      const prefix = options?.numbered ? `${index + 1}. ` : '- ';
+      const text = `${prefix}${cleanItem}`;
       const lines = doc.splitTextToSize(text, page.contentWidth - indent);
       
       lines.forEach((line: string) => {
         doc.text(line, page.margin + indent, yPos);
-        yPos += 5;
+        yPos += lineHeight;
       });
     });
   }
   
-  return yPos + 4;
+  return yPos + 3;
 }
 
 /**
