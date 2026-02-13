@@ -787,17 +787,18 @@ export function generateBNFPDF(result: any, patientInfo?: any) {
   // Dosing Recommendations
   yPos = addSectionHeader(doc, 'DOSING RECOMMENDATIONS', yPos);
   
-  result.recommendations.forEach((rec: any, index: number) => {
-    yPos = checkNewPage(doc, yPos, 50);
-    
-    doc.setFont('times', 'bold');
-    doc.setFontSize(10);
-    doc.setTextColor(...colors.primaryDark);
-    doc.text(`${index + 1}. ${rec.drug}`, page.margin, yPos);
-    yPos += 6;
-    
-    yPos = addDataTable(doc,
-      [['Field', 'Details']],
+  if (result.recommendations && result.recommendations.length > 0) {
+    result.recommendations.forEach((rec: any, index: number) => {
+      yPos = checkNewPage(doc, yPos, 50);
+      
+      doc.setFont('times', 'bold');
+      doc.setFontSize(10);
+      doc.setTextColor(...colors.primaryDark);
+      doc.text(`${index + 1}. ${rec.drug}`, page.margin, yPos);
+      yPos += 6;
+      
+      yPos = addDataTable(doc,
+        [['Field', 'Details']],
       [
         ['Indication', rec.indication],
         ['Normal Dose', rec.normal],
@@ -808,7 +809,8 @@ export function generateBNFPDF(result: any, patientInfo?: any) {
     );
     
     yPos += 4;
-  });
+    });
+  }
   
   // Footer
   addFooter(doc, 1);
@@ -977,11 +979,12 @@ export function generateNutritionPDF(result: any, patientInfo?: any) {
   );
   
   // 7-Day Meal Plan
-  doc.addPage();
-  addHeader(doc, '7-DAY NIGERIAN MEAL PLAN', 'Clinical Nutrition Protocol');
-  yPos = 35;
-  
-  result.mealPlan.forEach((day: any, index: number) => {
+  if (result.mealPlan && result.mealPlan.length > 0) {
+    doc.addPage();
+    addHeader(doc, '7-DAY NIGERIAN MEAL PLAN', 'Clinical Nutrition Protocol');
+    yPos = 35;
+    
+    result.mealPlan.forEach((day: any, index: number) => {
     yPos = checkNewPage(doc, yPos, 50);
     
     doc.setFont('times', 'bold');
@@ -1020,7 +1023,8 @@ export function generateNutritionPDF(result: any, patientInfo?: any) {
     doc.setFont('times', 'normal');
     doc.text(day.snacks.join(', '), page.margin + 25, yPos);
     yPos += 10;
-  });
+    });
+  }
   
   // Feeding Recommendations
   yPos = checkNewPage(doc, yPos);
