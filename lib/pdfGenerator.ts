@@ -444,14 +444,14 @@ export function generateSodiumPDF(result: any, patientInfo?: any) {
   yPos = checkNewPage(doc, yPos);
   yPos = addSectionHeader(doc, 'TREATMENT PROTOCOL', yPos);
   
-  doc.setFont('helvetica', 'bold');
+  doc.setFont('times', 'bold');
   doc.setFontSize(9);
   doc.setTextColor(...colors.textSecondary);
   doc.text(`Recommended Fluid: ${result.fluidType}`, page.margin, yPos);
   yPos += 6;
   
   if (result.fluidStrategy) {
-    doc.setFont('helvetica', 'normal');
+    doc.setFont('times', 'normal');
     const strategyLines = doc.splitTextToSize(result.fluidStrategy, page.contentWidth);
     strategyLines.forEach((line: string) => {
       doc.text(line, page.margin, yPos);
@@ -723,7 +723,7 @@ export function generateGFRPDF(result: any, patientInfo?: any) {
   yPos = checkNewPage(doc, yPos);
   yPos = addSectionHeader(doc, 'CLINICAL RECOMMENDATION', yPos);
   
-  doc.setFont('helvetica', 'normal');
+  doc.setFont('times', 'normal');
   doc.setFontSize(9);
   doc.setTextColor(...colors.textSecondary);
   const recommendation = doc.splitTextToSize(result.recommendation, page.contentWidth);
@@ -790,7 +790,7 @@ export function generateBNFPDF(result: any, patientInfo?: any) {
   result.recommendations.forEach((rec: any, index: number) => {
     yPos = checkNewPage(doc, yPos, 50);
     
-    doc.setFont('helvetica', 'bold');
+    doc.setFont('times', 'bold');
     doc.setFontSize(10);
     doc.setTextColor(...colors.primaryDark);
     doc.text(`${index + 1}. ${rec.drug}`, page.margin, yPos);
@@ -844,7 +844,7 @@ export function generateBurnsPDF(result: any, patientInfo?: any) {
       ['Admission', result.admission],
     ],
     yPos,
-    { headerColor: [234, 88, 12] }
+    { headerColor: [0, 0, 0] }
   );
   
   // Affected Areas
@@ -855,7 +855,7 @@ export function generateBurnsPDF(result: any, patientInfo?: any) {
       [['Body Area', 'BSA %']],
       areasData,
       yPos,
-      { headerColor: [234, 88, 12] }
+      { headerColor: [0, 0, 0] }
     );
   }
   
@@ -932,7 +932,7 @@ export function generateBurnsPDF(result: any, patientInfo?: any) {
       ['Monitoring', 'Watch for infection: increased pain, purulent discharge, fever'],
     ],
     yPos,
-    { headerColor: [234, 88, 12] }
+    { headerColor: [0, 0, 0] }
   );
   
   // Footer
@@ -984,40 +984,40 @@ export function generateNutritionPDF(result: any, patientInfo?: any) {
   result.mealPlan.forEach((day: any, index: number) => {
     yPos = checkNewPage(doc, yPos, 50);
     
-    doc.setFont('helvetica', 'bold');
+    doc.setFont('times', 'bold');
     doc.setFontSize(10);
     doc.setTextColor(...colors.primaryDark);
     doc.text(day.day, page.margin, yPos);
     yPos += 6;
     
-    doc.setFont('helvetica', 'normal');
+    doc.setFont('times', 'normal');
     doc.setFontSize(8);
     doc.setTextColor(...colors.textSecondary);
     
-    doc.setFont('helvetica', 'bold');
+    doc.setFont('times', 'bold');
     doc.text('Breakfast:', page.margin, yPos);
-    doc.setFont('helvetica', 'normal');
+    doc.setFont('times', 'normal');
     doc.text(day.breakfast.join(', '), page.margin + 25, yPos);
     yPos += 5;
     
-    doc.setFont('helvetica', 'bold');
+    doc.setFont('times', 'bold');
     doc.text('Lunch:', page.margin, yPos);
-    doc.setFont('helvetica', 'normal');
+    doc.setFont('times', 'normal');
     const lunchText = doc.splitTextToSize(day.lunch.join(', '), page.contentWidth - 25);
     lunchText.forEach((line: string) => {
       doc.text(line, page.margin + 25, yPos);
       yPos += 4;
     });
     
-    doc.setFont('helvetica', 'bold');
+    doc.setFont('times', 'bold');
     doc.text('Dinner:', page.margin, yPos);
-    doc.setFont('helvetica', 'normal');
+    doc.setFont('times', 'normal');
     doc.text(day.dinner.join(', '), page.margin + 25, yPos);
     yPos += 5;
     
-    doc.setFont('helvetica', 'bold');
+    doc.setFont('times', 'bold');
     doc.text('Snacks:', page.margin, yPos);
-    doc.setFont('helvetica', 'normal');
+    doc.setFont('times', 'normal');
     doc.text(day.snacks.join(', '), page.margin + 25, yPos);
     yPos += 10;
   });
@@ -1256,7 +1256,7 @@ export function generateWoundMealPlanPDF(result: any, patientInfo?: any) {
     result.mealPlan.forEach((day: any) => {
       yPos = checkNewPage(doc, yPos, 50);
       
-      doc.setFont('helvetica', 'bold');
+      doc.setFont('times', 'bold');
       doc.setFontSize(10);
       doc.setTextColor(...colors.primaryDark);
       doc.text(day.day, page.margin, yPos);
@@ -1368,12 +1368,12 @@ export function generateWeightReductionPDF(
     result.mealPlan.forEach((day: any) => {
       yPos = checkNewPage(doc, yPos, 30);
       
-      doc.setFont('helvetica', 'bold');
+      doc.setFont('times', 'bold');
       doc.setFontSize(9);
       doc.text(day.day, page.margin, yPos);
       yPos += 5;
       
-      doc.setFont('helvetica', 'normal');
+      doc.setFont('times', 'normal');
       doc.setFontSize(8);
       doc.text(`Breakfast: ${day.breakfast.join(', ')}`, page.margin + 5, yPos);
       yPos += 4;
@@ -1583,7 +1583,7 @@ export function generateConsultLetterPDF(
   
   // Reason for Consultation
   yPos = addSectionHeader(doc, 'REASON FOR CONSULTATION', yPos);
-  doc.setFont('helvetica', 'normal');
+  doc.setFont('times', 'normal');
   doc.setFontSize(9);
   doc.setTextColor(...colors.textSecondary);
   const reasonLines = doc.splitTextToSize(consultReason || 'Not specified', page.contentWidth);
@@ -1597,7 +1597,7 @@ export function generateConsultLetterPDF(
   if (clinicalFindings) {
     yPos = checkNewPage(doc, yPos);
     yPos = addSectionHeader(doc, 'CLINICAL FINDINGS', yPos);
-    doc.setFont('helvetica', 'normal');
+    doc.setFont('times', 'normal');
     doc.setFontSize(9);
     doc.setTextColor(...colors.textSecondary);
     const findingsLines = doc.splitTextToSize(clinicalFindings, page.contentWidth);
@@ -1629,14 +1629,14 @@ export function generateConsultLetterPDF(
       yPos += 4;
     });
     yPos += 4;
-    doc.setFont('helvetica', 'normal');
+    doc.setFont('times', 'normal');
   }
   
   // Recommendations
   if (recommendations) {
     yPos = checkNewPage(doc, yPos);
     yPos = addSectionHeader(doc, 'RECOMMENDATIONS', yPos);
-    doc.setFont('helvetica', 'normal');
+    doc.setFont('times', 'normal');
     doc.setFontSize(9);
     doc.setTextColor(...colors.textSecondary);
     const recLines = doc.splitTextToSize(recommendations, page.contentWidth);
@@ -1654,7 +1654,7 @@ export function generateConsultLetterPDF(
   yPos = checkNewPage(doc, yPos, 50);
   yPos += 15;
   
-  doc.setFont('helvetica', 'normal');
+  doc.setFont('times', 'normal');
   doc.setFontSize(9);
   doc.setTextColor(...colors.textSecondary);
   
@@ -1821,7 +1821,7 @@ export function generateWoundHealingMealPlanPDF(
     result.mealPlan.forEach((day: any, index: number) => {
       yPos = checkNewPage(doc, yPos, 60);
       
-      doc.setFont('helvetica', 'bold');
+      doc.setFont('times', 'bold');
       doc.setFontSize(10);
       doc.setTextColor(...colors.primaryDark);
       doc.text(day.day || `Day ${index + 1}`, page.margin, yPos);
