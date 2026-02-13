@@ -1497,65 +1497,123 @@ export function generateSickleCellPDF(result: any, patientInfo?: any) {
   // Patient Information
   yPos = addPatientInfo(doc, patientInfo, yPos);
   
-  // Crisis Assessment
-  yPos = addSectionHeader(doc, 'CRISIS ASSESSMENT', yPos);
+  // Crisis Risk Assessment
+  yPos = addSectionHeader(doc, 'CRISIS RISK ASSESSMENT', yPos);
   yPos = addDataTable(doc,
     [['Parameter', 'Finding']],
     [
-      ['Crisis Type', result.crisisType],
-      ['Severity', result.severity],
-      ['Pain Score', `${result.painScore}/10`],
-      ['Hemoglobin', `${result.hemoglobin} g/dL`],
+      ['Crisis Risk Level', result.crisisRisk || 'Not assessed'],
+      ['Annual Crisis Frequency', `${result.crisisPerYear || 'N/A'} per year`],
+      ['Current Hemoglobin', result.hb ? `${result.hb} g/dL` : 'Not specified'],
+      ['Pain Level', result.painLevel ? `${result.painLevel}/10` : 'Not specified'],
+      ['Hydration Status', result.hydrationLevel || 'Not specified'],
     ],
     yPos,
-    { headerColor: result.severity === 'Severe' ? colors.danger : colors.warning }
+    { headerColor: colors.primary }
   );
   
-  // Immediate Management
-  yPos = checkNewPage(doc, yPos);
-  yPos = addSectionHeader(doc, 'IMMEDIATE MANAGEMENT', yPos);
-  yPos = addTextSection(doc, result.immediateManagement, yPos, { numbered: true });
-  
-  // Fluid Management
-  if (result.fluidManagement) {
+  // Ulcer Assessment (if applicable)
+  if (result.hasUlcers) {
     yPos = checkNewPage(doc, yPos);
-    yPos = addSectionHeader(doc, 'FLUID MANAGEMENT', yPos);
+    yPos = addSectionHeader(doc, 'LEG ULCER ASSESSMENT', yPos);
     yPos = addDataTable(doc,
-      [['Parameter', 'Recommendation']],
+      [['Parameter', 'Details']],
       [
-        ['IV Fluids', result.fluidManagement.type],
-        ['Rate', result.fluidManagement.rate],
-        ['Target', result.fluidManagement.target],
+        ['Location', result.ulcerLocation || 'Not specified'],
+        ['Size', result.ulcerSizeCm ? `${result.ulcerSizeCm} cm` : 'Not specified'],
+        ['Duration', result.ulcerWeeks ? `${result.ulcerWeeks} weeks` : 'Not specified'],
+        ['Estimated Healing Time', result.healingWeeks ? `${result.healingWeeks} weeks` : 'N/A'],
+        ['Prognosis', result.healingPrognosis || 'N/A'],
       ],
       yPos
     );
-  }
-  
-  // Pain Management
-  yPos = checkNewPage(doc, yPos);
-  yPos = addSectionHeader(doc, 'PAIN MANAGEMENT', yPos);
-  yPos = addTextSection(doc, result.painManagement, yPos, { numbered: true });
-  
-  // Transfusion Indications
-  if (result.transfusionIndications) {
+    
+    // Ulcer Management
     yPos = checkNewPage(doc, yPos);
-    yPos = addAlertBox(doc, 'TRANSFUSION CONSIDERATIONS', 
-      result.transfusionIndications, yPos, 'warning');
+    yPos = addSectionHeader(doc, 'ULCER MANAGEMENT PROTOCOL', yPos);
+    yPos = addTextSection(doc, result.ulcerManagement || [
+      'Daily wound cleansing with normal saline',
+      'Debridement of necrotic tissue as needed',
+      'Hydrocolloid or foam dressings for moisture balance',
+      'Monitor for signs of infection',
+      'Elevation of affected limb when resting',
+    ], yPos);
+    
+    // Wound Healing Nutrients
+    yPos = checkNewPage(doc, yPos);
+    yPos = addSectionHeader(doc, 'WOUND HEALING NUTRITION', yPos);
+    yPos = addTextSection(doc, result.woundHealingNutrients || [], yPos);
   }
   
-  // Monitoring
+  // Nutritional Requirements
   yPos = checkNewPage(doc, yPos);
-  yPos = addSectionHeader(doc, 'MONITORING REQUIREMENTS', yPos);
-  yPos = addTextSection(doc, result.monitoring || [
-    'Vital signs every 4 hours',
-    'Pain assessment every 2-4 hours',
-    'Daily CBC and reticulocyte count',
-    'Monitor hydration status',
-    'Pulse oximetry if respiratory symptoms',
-  ], yPos);
+  yPos = addSectionHeader(doc, 'DAILY NUTRITIONAL REQUIREMENTS', yPos);
+  yPos = addDataTable(doc,
+    [['Nutrient', 'Recommendation']],
+    [
+      ['Fluids', result.fluidLiters ? `${result.fluidLiters}L daily (${result.recommendedFluidML}ml)` : '2.5-3L daily'],
+      ['Calories', result.totalCalories ? `${result.totalCalories} kcal/day` : 'Based on weight'],
+      ['Protein', result.proteinGrams ? `${result.proteinGrams}g/day` : '1.2-1.8g/kg/day'],
+      ['Folic Acid', '5mg daily (mandatory)'],
+    ],
+    yPos,
+    { headerColor: colors.success }
+  );
+  
+  // Nutrition Plan
+  if (result.nutritionPlan && result.nutritionPlan.length > 0) {
+    yPos = checkNewPage(doc, yPos);
+    yPos = addSectionHeader(doc, 'NUTRITION GUIDELINES', yPos);
+    yPos = addTextSection(doc, result.nutritionPlan, yPos);
+  }
+  
+  // Hydration Protocol
+  if (result.hydrationProtocol && result.hydrationProtocol.length > 0) {
+    yPos = checkNewPage(doc, yPos);
+    yPos = addSectionHeader(doc, 'HYDRATION PROTOCOL', yPos);
+    yPos = addTextSection(doc, result.hydrationProtocol, yPos);
+  }
+  
+  // Supplements Page
+  doc.addPage();
+  addHeader(doc, 'SUPPLEMENTS & LIFESTYLE', 'Evidence-Based Recommendations');
+  yPos = 35;
+  
+  // Supplements
+  if (result.supplements && result.supplements.length > 0) {
+    yPos = addSectionHeader(doc, 'RECOMMENDED SUPPLEMENTS', yPos);
+    yPos = addTextSection(doc, result.supplements, yPos);
+  }
+  
+  // Crisis Prevention
+  if (result.crisisPrevention && result.crisisPrevention.length > 0) {
+    yPos = checkNewPage(doc, yPos);
+    yPos = addSectionHeader(doc, 'CRISIS PREVENTION STRATEGIES', yPos);
+    yPos = addTextSection(doc, result.crisisPrevention, yPos);
+  }
+  
+  // Lifestyle Changes
+  if (result.lifestyleChanges && result.lifestyleChanges.length > 0) {
+    yPos = checkNewPage(doc, yPos);
+    yPos = addSectionHeader(doc, 'LIFESTYLE MODIFICATIONS', yPos);
+    yPos = addTextSection(doc, result.lifestyleChanges, yPos);
+  }
+  
+  // Monitoring Schedule
+  if (result.monitoringSchedule && result.monitoringSchedule.length > 0) {
+    yPos = checkNewPage(doc, yPos);
+    yPos = addSectionHeader(doc, 'MONITORING SCHEDULE', yPos);
+    yPos = addTextSection(doc, result.monitoringSchedule, yPos);
+  }
+  
+  // Urgent Warnings
+  if (result.urgentWarnings && result.urgentWarnings.length > 0) {
+    yPos = checkNewPage(doc, yPos, 80);
+    yPos = addAlertBox(doc, 'URGENT WARNING SIGNS', result.urgentWarnings, yPos, 'danger');
+  }
   
   // Footer
-  addFooter(doc, 1);
+  addFooter(doc);
   
   const filename = createFilename(patientInfo?.name, 'Sickle_Cell_Management');
   doc.save(filename);
