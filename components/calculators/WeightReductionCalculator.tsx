@@ -1055,7 +1055,13 @@ export default function WeightReductionCalculator({ patientInfo }: PatientInfoPr
                     ]
                   }
                 ],
-                mealPlan: result.mealPlan || [],
+                mealPlan: result.mealPlan?.days?.map((day: any) => ({
+                  day: day.day,
+                  breakfast: day.meals?.[0]?.items?.slice(0, 3) || [],
+                  lunch: day.meals?.[2]?.items?.slice(0, 3) || [],
+                  dinner: day.meals?.[4]?.items?.slice(0, 3) || [],
+                  snacks: day.meals?.[1]?.items?.slice(0, 2) || [],
+                })) || [],
                 summary: [
                   { label: 'Calories', value: `${result.dailyCalories} kcal` },
                   { label: 'Deficit', value: `${result.calorieDeficit} kcal` },
@@ -1074,7 +1080,12 @@ export default function WeightReductionCalculator({ patientInfo }: PatientInfoPr
                   `Daily Calories: ${result.dailyCalories} kcal`,
                   `Weekly Target: ${result.weeklyWeightLoss} kg loss`,
                 ],
-                mealPlan: result.mealPlan?.slice(0, 3) || [],
+                mealPlan: result.mealPlan?.days?.slice(0, 3)?.map((day: any) => ({
+                  day: day.day,
+                  breakfast: day.meals?.[0]?.items?.slice(0, 2) || [],
+                  lunch: day.meals?.[2]?.items?.slice(0, 2) || [],
+                  dinner: day.meals?.[4]?.items?.slice(0, 2) || [],
+                })) || [],
                 recommendations: [
                   'Caloric deficit for weight loss',
                   'High protein to preserve muscle',

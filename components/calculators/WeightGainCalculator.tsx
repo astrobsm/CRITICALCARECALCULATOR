@@ -904,7 +904,13 @@ export default function WeightGainCalculator({ patientInfo }: PatientInfoProps) 
                     ]
                   }
                 ],
-                mealPlan: result.mealPlan || [],
+                mealPlan: result.mealPlan?.days?.map((day: any) => ({
+                  day: day.day,
+                  breakfast: day.meals?.[0]?.items?.slice(0, 3) || [],
+                  lunch: day.meals?.[2]?.items?.slice(0, 3) || [],
+                  dinner: day.meals?.[4]?.items?.slice(0, 3) || [],
+                  snacks: day.meals?.[1]?.items?.slice(0, 2) || [],
+                })) || [],
                 summary: [
                   { label: 'Calories', value: `${result.dailyCalories} kcal` },
                   { label: 'Surplus', value: `${result.calorieSurplus} kcal` },
@@ -923,7 +929,12 @@ export default function WeightGainCalculator({ patientInfo }: PatientInfoProps) 
                   `Daily Calories: ${result.dailyCalories} kcal`,
                   `Weekly Target: ${result.weeklyWeightGain} kg gain`,
                 ],
-                mealPlan: result.mealPlan?.slice(0, 3) || [],
+                mealPlan: result.mealPlan?.days?.slice(0, 3)?.map((day: any) => ({
+                  day: day.day,
+                  breakfast: day.meals?.[0]?.items?.slice(0, 2) || [],
+                  lunch: day.meals?.[2]?.items?.slice(0, 2) || [],
+                  dinner: day.meals?.[4]?.items?.slice(0, 2) || [],
+                })) || [],
                 recommendations: [
                   'Caloric surplus for healthy weight gain',
                   'High protein for muscle building',

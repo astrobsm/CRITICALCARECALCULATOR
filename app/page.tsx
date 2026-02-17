@@ -59,6 +59,10 @@ export default function Home() {
       const savedPatientInfo = localStorage.getItem(PATIENT_INFO_KEY);
       if (savedPatientInfo) {
         const parsed = JSON.parse(savedPatientInfo);
+        // Ensure comorbidities is always an array (backward compatibility)
+        if (!Array.isArray(parsed.comorbidities)) {
+          parsed.comorbidities = [];
+        }
         setPatientInfo(parsed);
       }
     } catch (e) {

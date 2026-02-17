@@ -1917,8 +1917,70 @@ export function generateWoundHealingMealPlanPDF(
     { headerColor: colors.success }
   );
   
-  // Meal Plan
-  if (result.mealPlan && result.mealPlan.length > 0) {
+  // 7-Day Comprehensive Meal Plan
+  if (result.sampleMealPlan && result.sampleMealPlan.days && result.sampleMealPlan.days.length > 0) {
+    doc.addPage();
+    addHeader(doc, stripEmojis(result.sampleMealPlan.title || '7-DAY WOUND HEALING MEAL PLAN'), stripEmojis(result.sampleMealPlan.subtitle || 'Nigerian-Adapted High-Protein, Nutrient-Dense Menu'));
+    yPos = 35;
+    
+    result.sampleMealPlan.days.forEach((day: any, index: number) => {
+      yPos = checkNewPage(doc, yPos, 80);
+      
+      // Day header
+      doc.setFont('times', 'bold');
+      doc.setFontSize(12);
+      doc.setTextColor(0, 0, 0);
+      doc.text(stripEmojis(day.day || `DAY ${index + 1}`), page.margin, yPos);
+      yPos += 6;
+      
+      // Build meal rows from meals array
+      const mealData: (string | number)[][] = [];
+      if (day.meals && Array.isArray(day.meals)) {
+        day.meals.forEach((meal: any) => {
+          const mealTime = stripEmojis(meal.time || '');
+          const mealItems = Array.isArray(meal.items) 
+            ? meal.items.map((item: string) => stripEmojis(item)).join('\n') 
+            : stripEmojis(String(meal.items || ''));
+          mealData.push([mealTime, mealItems]);
+        });
+      }
+      
+      if (mealData.length > 0) {
+        autoTable(doc, {
+          startY: yPos,
+          head: [['Meal Time', 'Menu Items']],
+          body: mealData,
+          theme: 'grid',
+          headStyles: {
+            fillColor: [0, 0, 0] as [number, number, number],
+            textColor: [255, 255, 255] as [number, number, number],
+            fontStyle: 'bold',
+            fontSize: 9,
+            cellPadding: 3,
+            font: 'times',
+          },
+          bodyStyles: {
+            textColor: [0, 0, 0] as [number, number, number],
+            fontSize: 9,
+            cellPadding: 3,
+            font: 'times',
+          },
+          alternateRowStyles: {
+            fillColor: [245, 245, 245] as [number, number, number],
+          },
+          columnStyles: {
+            0: { fontStyle: 'bold', cellWidth: 45 },
+            1: { cellWidth: 'auto' },
+          },
+          margin: { left: page.margin, right: page.margin },
+        });
+        yPos = (doc as any).lastAutoTable.finalY + 6;
+      }
+      
+      yPos += 2;
+    });
+  } else if (result.mealPlan && result.mealPlan.length > 0) {
+    // Fallback for legacy mealPlan format
     doc.addPage();
     addHeader(doc, '7-DAY NIGERIAN MEAL PLAN', 'Optimized for Wound Healing');
     yPos = 35;
@@ -1953,17 +2015,47 @@ export function generateWoundHealingMealPlanPDF(
     });
   }
   
-  // Healing Foods
-  yPos = checkNewPage(doc, yPos);
-  yPos = addSectionHeader(doc, 'KEY HEALING FOODS', yPos);
-  yPos = addTextSection(doc, result.healingFoods || [
-    'High-protein: Fish (tilapia, mackerel), chicken, eggs, beans, moi-moi',
-    'Vitamin C rich: Oranges, guava, pawpaw, garden eggs, peppers',
-    'Zinc sources: Pumpkin seeds (egusi), meat, fish, beans, groundnuts',
-    'Iron-rich: Liver, ugwu (fluted pumpkin leaves), ewedu, beans',
-    'Vitamin A: Palm oil, carrots, sweet potato leaves, mangoes',
-    'Collagen support: Bone broth (cow foot), fish with bones',
-  ], yPos);
+  // Food Recommendations
+  if (result.foodRecommendations && result.foodRecommendations.length > 0) {
+    yPos = checkNewPage(doc, yPos);
+    yPos = addSectionHeader(doc, 'FOOD RECOMMENDATIONS', yPos);
+    yPos = addTextSection(doc, result.foodRecommendations.map((item: string) => stripEmojis(item)).filter((item: string) => item.trim() !== ''), yPos);
+  }
+
+  // Foods to Avoid
+  if (result.foodsToAvoid && result.foodsToAvoid.length > 0) {
+    yPos = checkNewPage(doc, yPos);
+    yPos = addSectionHeader(doc, 'FOODS TO AVOID / LIMIT', yPos);
+    yPos = addTextSection(doc, result.foodsToAvoid.map((item: string) => stripEmojis(item)), yPos);
+  }
+
+  // Supplement Recommendations
+  if (result.supplementRecommendations && result.supplementRecommendations.length > 0) {
+    yPos = checkNewPage(doc, yPos);
+    yPos = addSectionHeader(doc, 'SUPPLEMENT RECOMMENDATIONS', yPos);
+    yPos = addTextSection(doc, result.supplementRecommendations.map((item: string) => stripEmojis(item)).filter((item: string) => item.trim() !== ''), yPos);
+  }
+
+  // Hydration Protocol
+  if (result.hydrationProtocol && result.hydrationProtocol.length > 0) {
+    yPos = checkNewPage(doc, yPos);
+    yPos = addSectionHeader(doc, 'HYDRATION PROTOCOL', yPos);
+    yPos = addTextSection(doc, result.hydrationProtocol.map((item: string) => stripEmojis(item)).filter((item: string) => item.trim() !== ''), yPos);
+  }
+
+  // Key Healing Foods (fallback if no foodRecommendations)
+  if (!result.foodRecommendations || result.foodRecommendations.length === 0) {
+    yPos = checkNewPage(doc, yPos);
+    yPos = addSectionHeader(doc, 'KEY HEALING FOODS', yPos);
+    yPos = addTextSection(doc, result.healingFoods || [
+      'High-protein: Fish (tilapia, mackerel), chicken, eggs, beans, moi-moi',
+      'Vitamin C rich: Oranges, guava, pawpaw, garden eggs, peppers',
+      'Zinc sources: Pumpkin seeds (egusi), meat, fish, beans, groundnuts',
+      'Iron-rich: Liver, ugwu (fluted pumpkin leaves), ewedu, beans',
+      'Vitamin A: Palm oil, carrots, sweet potato leaves, mangoes',
+      'Collagen support: Bone broth (cow foot), fish with bones',
+    ], yPos);
+  }
   
   // Special Considerations
   if (result.specialConsiderations && result.specialConsiderations.length > 0) {
@@ -1974,13 +2066,15 @@ export function generateWoundHealingMealPlanPDF(
   // Monitoring
   yPos = checkNewPage(doc, yPos);
   yPos = addSectionHeader(doc, 'MONITORING', yPos);
-  yPos = addTextSection(doc, result.monitoring || [
-    'Weekly weight monitoring',
-    'Weekly wound assessment and measurement',
-    'Monitor albumin and prealbumin if available',
-    'Track dietary intake with food diary',
-    'Assess for signs of malnutrition',
-  ], yPos);
+  yPos = addTextSection(doc, (result.monitoringParameters && result.monitoringParameters.length > 0) 
+    ? result.monitoringParameters.map((item: string) => stripEmojis(item)).filter((item: string) => item.trim() !== '')
+    : (result.monitoring || [
+      'Weekly weight monitoring',
+      'Weekly wound assessment and measurement',
+      'Monitor albumin and prealbumin if available',
+      'Track dietary intake with food diary',
+      'Assess for signs of malnutrition',
+    ]), yPos);
   
   // Footer
   addFooter(doc);
