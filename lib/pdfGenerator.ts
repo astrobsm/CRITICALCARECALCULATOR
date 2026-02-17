@@ -1014,12 +1014,13 @@ export function generateNutritionPDF(result: any, patientInfo?: any) {
   );
   
   // 7-Day Meal Plan
-  if (result.mealPlan && result.mealPlan.length > 0) {
+  const nutritionMealDays = Array.isArray(result.mealPlan) ? result.mealPlan : (result.mealPlan?.days || []);
+  if (nutritionMealDays.length > 0) {
     doc.addPage();
     addHeader(doc, '7-DAY NIGERIAN MEAL PLAN', 'Clinical Nutrition Protocol');
     yPos = 35;
     
-    result.mealPlan.forEach((day: any, index: number) => {
+    nutritionMealDays.forEach((day: any, index: number) => {
     yPos = checkNewPage(doc, yPos, 50);
     
     doc.setFont('times', 'bold');
@@ -1293,32 +1294,45 @@ export function generateWoundMealPlanPDF(result: any, patientInfo?: any) {
   
   // Meal Plan
   if (result.mealPlan) {
-    doc.addPage();
-    addHeader(doc, 'DAILY MEAL PLAN', 'Nigerian Foods for Wound Healing');
-    yPos = 35;
-    
-    result.mealPlan.forEach((day: any) => {
-      yPos = checkNewPage(doc, yPos, 50);
-      
-      doc.setFont('times', 'bold');
-      doc.setFontSize(10);
-      doc.setTextColor(...colors.primaryDark);
-      doc.text(day.day, page.margin, yPos);
-      yPos += 6;
-      
-      yPos = addDataTable(doc,
-        [['Meal', 'Menu']],
-        [
-          ['Breakfast', Array.isArray(day.breakfast) ? day.breakfast.join(', ') : (day.breakfast || '')],
-          ['Lunch', Array.isArray(day.lunch) ? day.lunch.join(', ') : (day.lunch || '')],
-          ['Dinner', Array.isArray(day.dinner) ? day.dinner.join(', ') : (day.dinner || '')],
-          ['Snacks', Array.isArray(day.snacks) ? day.snacks.join(', ') : (day.snacks || '')],
-        ],
-        yPos
-      );
-      
-      yPos += 4;
-    });
+    const mealDays = Array.isArray(result.mealPlan) ? result.mealPlan : (result.mealPlan.days || []);
+    if (mealDays.length > 0) {
+      doc.addPage();
+      addHeader(doc, 'DAILY MEAL PLAN', 'Nigerian Foods for Wound Healing');
+      yPos = 35;
+
+      mealDays.forEach((day: any) => {
+        yPos = checkNewPage(doc, yPos, 50);
+
+        doc.setFont('times', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(...colors.primaryDark);
+        doc.text(day.day || 'Day', page.margin, yPos);
+        yPos += 6;
+
+        if (Array.isArray(day.meals)) {
+          const mealData: (string | number)[][] = [];
+          day.meals.forEach((meal: any) => {
+            const items = Array.isArray(meal.items) ? meal.items.filter((i: string) => !i.startsWith('Calories:')).join(', ') : (meal.items || '');
+            mealData.push([meal.time || 'Meal', items]);
+          });
+          if (mealData.length > 0) {
+            yPos = addDataTable(doc, [['Meal', 'Menu']], mealData, yPos);
+          }
+        } else {
+          yPos = addDataTable(doc,
+            [['Meal', 'Menu']],
+            [
+              ['Breakfast', Array.isArray(day.breakfast) ? day.breakfast.join(', ') : (day.breakfast || '')],
+              ['Lunch', Array.isArray(day.lunch) ? day.lunch.join(', ') : (day.lunch || '')],
+              ['Dinner', Array.isArray(day.dinner) ? day.dinner.join(', ') : (day.dinner || '')],
+              ['Snacks', Array.isArray(day.snacks) ? day.snacks.join(', ') : (day.snacks || '')],
+            ],
+            yPos
+          );
+        }
+        yPos += 4;
+      });
+    }
   }
   
   // Healing Foods
@@ -1406,29 +1420,47 @@ export function generateWeightReductionPDF(
   
   // Meal Plan
   if (result.mealPlan) {
-    yPos = checkNewPage(doc, yPos);
-    yPos = addSectionHeader(doc, 'SAMPLE MEAL PLAN', yPos);
-    
-    result.mealPlan.forEach((day: any) => {
-      yPos = checkNewPage(doc, yPos, 30);
-      
-      doc.setFont('times', 'bold');
-      doc.setFontSize(9);
-      doc.text(day.day || 'Day', page.margin, yPos);
-      yPos += 5;
-      
-      doc.setFont('times', 'normal');
-      doc.setFontSize(8);
-      const bfText = Array.isArray(day.breakfast) ? day.breakfast.join(', ') : (day.breakfast || '');
-      const lunchText = Array.isArray(day.lunch) ? day.lunch.join(', ') : (day.lunch || '');
-      const dinnerText = Array.isArray(day.dinner) ? day.dinner.join(', ') : (day.dinner || '');
-      doc.text(`Breakfast: ${bfText}`, page.margin + 5, yPos);
-      yPos += 4;
-      doc.text(`Lunch: ${lunchText}`, page.margin + 5, yPos);
-      yPos += 4;
-      doc.text(`Dinner: ${dinnerText}`, page.margin + 5, yPos);
-      yPos += 6;
-    });
+    const mealDays = Array.isArray(result.mealPlan) ? result.mealPlan : (result.mealPlan.days || []);
+    if (mealDays.length > 0) {
+      doc.addPage();
+      addHeader(doc, result.mealPlan.title || 'SAMPLE MEAL PLAN', result.mealPlan.subtitle || 'Weight Reduction Diet');
+      yPos = 35;
+
+      mealDays.forEach((day: any) => {
+        yPos = checkNewPage(doc, yPos, 50);
+
+        doc.setFont('times', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(...colors.primaryDark);
+        doc.text(day.day || 'Day', page.margin, yPos);
+        yPos += 6;
+
+        // Handle meals array structure (time/items) or flat properties
+        if (Array.isArray(day.meals)) {
+          const mealData: (string | number)[][] = [];
+          day.meals.forEach((meal: any) => {
+            const items = Array.isArray(meal.items) ? meal.items.filter((i: string) => !i.startsWith('Calories:')).join(', ') : (meal.items || '');
+            mealData.push([meal.time || 'Meal', items]);
+          });
+          if (mealData.length > 0) {
+            yPos = addDataTable(doc, [['Meal', 'Menu']], mealData, yPos);
+          }
+        } else {
+          doc.setFont('times', 'normal');
+          doc.setFontSize(8);
+          const bfText = Array.isArray(day.breakfast) ? day.breakfast.join(', ') : (day.breakfast || '');
+          const lunchText = Array.isArray(day.lunch) ? day.lunch.join(', ') : (day.lunch || '');
+          const dinnerText = Array.isArray(day.dinner) ? day.dinner.join(', ') : (day.dinner || '');
+          doc.text(`Breakfast: ${bfText}`, page.margin + 5, yPos);
+          yPos += 4;
+          doc.text(`Lunch: ${lunchText}`, page.margin + 5, yPos);
+          yPos += 4;
+          doc.text(`Dinner: ${dinnerText}`, page.margin + 5, yPos);
+          yPos += 6;
+        }
+        yPos += 4;
+      });
+    }
   }
   
   // Exercise Recommendations
@@ -1502,6 +1534,50 @@ export function generateWeightGainPDF(result: any, patientInfo?: any) {
     'Rice, yam, and plantain',
     'Smoothies with added healthy fats',
   ], yPos);
+  
+  // 7-Day Meal Plan
+  if (result.mealPlan) {
+    const gainMealDays = Array.isArray(result.mealPlan) ? result.mealPlan : (result.mealPlan.days || []);
+    if (gainMealDays.length > 0) {
+      doc.addPage();
+      addHeader(doc, result.mealPlan.title || '7-DAY WEIGHT GAIN MEAL PLAN', result.mealPlan.subtitle || 'Nigerian-Adapted High Calorie Plan');
+      yPos = 35;
+
+      gainMealDays.forEach((day: any, index: number) => {
+        yPos = checkNewPage(doc, yPos, 50);
+
+        doc.setFont('times', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(...colors.primaryDark);
+        doc.text(day.day || `Day ${index + 1}`, page.margin, yPos);
+        yPos += 6;
+
+        if (Array.isArray(day.meals)) {
+          const mealData: (string | number)[][] = [];
+          day.meals.forEach((meal: any) => {
+            const items = Array.isArray(meal.items) ? meal.items.filter((i: string) => !i.startsWith('Calories:')).join(', ') : (meal.items || '');
+            mealData.push([meal.time || 'Meal', items]);
+          });
+          if (mealData.length > 0) {
+            yPos = addDataTable(doc, [['Meal', 'Menu']], mealData, yPos);
+          }
+        } else {
+          doc.setFont('times', 'normal');
+          doc.setFontSize(8);
+          const bfText = Array.isArray(day.breakfast) ? day.breakfast.join(', ') : (day.breakfast || '');
+          const lunchText = Array.isArray(day.lunch) ? day.lunch.join(', ') : (day.lunch || '');
+          const dinnerText = Array.isArray(day.dinner) ? day.dinner.join(', ') : (day.dinner || '');
+          doc.text(`Breakfast: ${bfText}`, page.margin + 5, yPos);
+          yPos += 4;
+          doc.text(`Lunch: ${lunchText}`, page.margin + 5, yPos);
+          yPos += 4;
+          doc.text(`Dinner: ${dinnerText}`, page.margin + 5, yPos);
+          yPos += 6;
+        }
+        yPos += 4;
+      });
+    }
+  }
   
   // Footer
   addFooter(doc, 1);
@@ -1979,13 +2055,15 @@ export function generateWoundHealingMealPlanPDF(
       
       yPos += 2;
     });
-  } else if (result.mealPlan && result.mealPlan.length > 0) {
+  } else if (result.mealPlan) {
     // Fallback for legacy mealPlan format
-    doc.addPage();
-    addHeader(doc, '7-DAY NIGERIAN MEAL PLAN', 'Optimized for Wound Healing');
-    yPos = 35;
+    const fallbackDays = Array.isArray(result.mealPlan) ? result.mealPlan : (result.mealPlan.days || []);
+    if (fallbackDays.length > 0) {
+      doc.addPage();
+      addHeader(doc, '7-DAY NIGERIAN MEAL PLAN', 'Optimized for Wound Healing');
+      yPos = 35;
     
-    result.mealPlan.forEach((day: any, index: number) => {
+      fallbackDays.forEach((day: any, index: number) => {
       yPos = checkNewPage(doc, yPos, 60);
       
       doc.setFont('times', 'bold');
@@ -2013,6 +2091,7 @@ export function generateWoundHealingMealPlanPDF(
       
       yPos += 4;
     });
+    }
   }
   
   // Food Recommendations
