@@ -708,10 +708,11 @@ export default function BNFDrugCalculator({ patientInfo }: PatientInfoProps) {
     }
 
     // Check for drug-comorbidity interactions
-    const hasDiabetes = patientInfo.comorbidities.includes('Diabetes Mellitus');
-    const hasHeartFailure = patientInfo.comorbidities.includes('Heart Failure');
-    const hasLiverDisease = patientInfo.comorbidities.includes('Liver Cirrhosis');
-    const hasCOPD = patientInfo.comorbidities.includes('COPD');
+    const comorbidities = Array.isArray(patientInfo?.comorbidities) ? patientInfo.comorbidities : [];
+    const hasDiabetes = comorbidities.includes('Diabetes Mellitus');
+    const hasHeartFailure = comorbidities.includes('Heart Failure');
+    const hasLiverDisease = comorbidities.includes('Liver Cirrhosis');
+    const hasCOPD = comorbidities.includes('COPD');
 
     let drugWarnings: string[] = [];
     
@@ -791,7 +792,7 @@ export default function BNFDrugCalculator({ patientInfo }: PatientInfoProps) {
       ckdStage,
       recommendations,
       drugWarnings,
-      comorbidities: patientInfo.comorbidities
+      comorbidities: comorbidities
     });
   };
 

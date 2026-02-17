@@ -92,10 +92,11 @@ export default function NutritionCalculator({ patientInfo }: PatientInfoProps) {
     }
 
     // Check comorbidities for dietary modifications
-    const hasDiabetes = patientInfo.comorbidities.includes('Diabetes Mellitus');
-    const hasCKD = patientInfo.comorbidities.includes('Chronic Kidney Disease');
-    const hasHeartFailure = patientInfo.comorbidities.includes('Heart Failure');
-    const hasHypertension = patientInfo.comorbidities.includes('Hypertension');
+    const comorbidities = Array.isArray(patientInfo?.comorbidities) ? patientInfo.comorbidities : [];
+    const hasDiabetes = comorbidities.includes('Diabetes Mellitus');
+    const hasCKD = comorbidities.includes('Chronic Kidney Disease');
+    const hasHeartFailure = comorbidities.includes('Heart Failure');
+    const hasHypertension = comorbidities.includes('Hypertension');
     
     // Curreri Formula for burns
     const basalCalories = 25 * wt;
@@ -153,7 +154,7 @@ export default function NutritionCalculator({ patientInfo }: PatientInfoProps) {
       mealsPerDay: 6, // Small frequent meals for burns
       fluidRequirement: (30 * wt).toFixed(0), // 30ml/kg baseline
       dietaryWarnings,
-      comorbidities: patientInfo.comorbidities,
+      comorbidities: comorbidities,
     };
 
     setResult(calculationResult);

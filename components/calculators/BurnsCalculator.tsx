@@ -98,9 +98,10 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
     const colloidDay2 = totalBSA > 30 ? (0.3 * wt * totalBSA * 0.5) : 0;
 
     // Consider comorbidities for fluid adjustments
-    const hasHeartFailure = patientInfo.comorbidities.includes('Heart Failure');
-    const hasCKD = patientInfo.comorbidities.includes('Chronic Kidney Disease');
-    const hasDiabetes = patientInfo.comorbidities.includes('Diabetes Mellitus');
+    const comorbidities = Array.isArray(patientInfo?.comorbidities) ? patientInfo.comorbidities : [];
+    const hasHeartFailure = comorbidities.includes('Heart Failure');
+    const hasCKD = comorbidities.includes('Chronic Kidney Disease');
+    const hasDiabetes = comorbidities.includes('Diabetes Mellitus');
     
     let fluidWarning = '';
     if (hasHeartFailure) {
@@ -158,7 +159,7 @@ export default function BurnsCalculator({ patientInfo }: PatientInfoProps) {
       proteinRequirement: proteinRequirement.toFixed(0),
       urineOutputTarget: urineOutputTarget.toFixed(1),
       fluidWarning,
-      comorbidities: patientInfo.comorbidities,
+      comorbidities: comorbidities,
       hasDiabetes,
       burnAreas: [
         { area: 'Head', percentage: head },
